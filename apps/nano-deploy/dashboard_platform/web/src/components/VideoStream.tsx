@@ -67,8 +67,17 @@ export function VideoStream({
       pc.ontrack = (event) => {
         if (videoRef.current) {
           const stream = event.streams[0] ?? new MediaStream([event.track]);
-          videoRef.current.srcObject = stream;
-          attachFrameMonitor(videoRef.current);
+          const video = videoRef.current;
+          video.srcObject = stream;
+          // Some mobile browsers do not start a MediaStream element from
+          // autoPlay alone. Explicitly play after metadata is available so a
+          // connected WebRTC track cannot remain a black video rectangle.
+          const startPlayback = () => {
+            void video.play().catch(() => setVideoState("failed"));
+          };
+          video.onloadedmetadata = startPlayback;
+          startPlayback();
+          attachFrameMonitor(video);
         }
       };
 
