@@ -111,7 +111,7 @@ class CaptureStartRequest(BaseModel):
     interval_seconds: float = Field(default=1.0, ge=0.2, le=60.0)
     duration_seconds: float = Field(default=0.0, ge=0.0, le=3600.0)
     max_frames: int = Field(default=0, ge=0, le=10000)
-    jpeg_quality: int = Field(default=95, ge=50, le=100)
+    jpeg_quality: int = Field(default=100, ge=50, le=100)
 
 
 class WebRTCOffer(BaseModel):

@@ -75,6 +75,13 @@ export CYCLONEDDS_URI=file:///path/to/local/cyclonedds_go2.xml
   --manifest /home/unitree/go2move/runtime/data/manifests/go2_videohub_test.csv
 ```
 
+The Dashboard capture button invokes this same script and passes the active
+`CAMERA_SOURCE_TYPE` and `CAMERA_SOURCE` from the Go2 profile. Captured JPEGs
+are published atomically only after a decode check, and each new manifest also
+records the adapter type, image dimensions, JPEG quality, and encoded byte
+count. The default Dashboard capture quality is 100; use `--jpeg-quality` to
+choose a smaller file size for large datasets.
+
 The local CycloneDDS file must bind the Ethernet interface to its configured
 Go2-network address; keep that machine-specific address out of Git.
 

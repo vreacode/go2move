@@ -61,7 +61,9 @@ class CaptureManager:
         return None
 
     @staticmethod
-    def _stream_mode(source: str) -> str:
+    def _stream_mode(source: str, source_type: str = "") -> str:
+        if source_type.strip().lower() in {"go2_ros2", "go2_ros2_videohub", "unitree_sdk2"}:
+            return "visible_raw"
         value = source.lower()
         if "video2" in value or "infrared" in value or "ir_raw" in value:
             return "ir_raw"
@@ -100,7 +102,7 @@ class CaptureManager:
             stream_modes: set[str] = set()
             for row in rows:
                 source = row.get("source", "")
-                stream_modes.add(self._stream_mode(source))
+                stream_modes.add(self._stream_mode(source, row.get("source_type", "")))
                 frame_path = Path(row["frame_path"]).expanduser().resolve()
                 if root not in frame_path.parents or not frame_path.is_file():
                     continue
@@ -175,7 +177,7 @@ class CaptureManager:
                 CaptureFrameItem(
                     name=frame_path.name,
                     captured_at=row.get("captured_at", "") or None,
-                    stream_mode=self._stream_mode(row.get("source", "")),
+                    stream_mode=self._stream_mode(row.get("source", ""), row.get("source_type", "")),
                 )
             )
         return frames

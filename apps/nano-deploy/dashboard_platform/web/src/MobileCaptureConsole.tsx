@@ -543,7 +543,7 @@ export default function MobileCaptureConsole() {
           interval_seconds: interval,
           duration_seconds: durationMinutes * 60,
           max_frames: 0,
-          jpeg_quality: 95,
+          jpeg_quality: 100,
         }),
       });
       setCapture(payload);
