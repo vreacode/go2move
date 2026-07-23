@@ -161,14 +161,20 @@ class LatestFrameVideoTrack(VideoStreamTrack):
         latest_capture_ts = 0.0
         latest_seq = 0
 
+        required_seq = self._last_sent_seq + 1
         while True:
             with self._lock:
                 latest_frame = self._latest_frame
                 latest_capture_ts = self._latest_capture_ts
                 latest_seq = self._latest_seq
-            if latest_frame is not None:
+            if latest_frame is not None and latest_seq >= required_seq:
                 break
             if time.time() - wait_started > self.settings.webrtc_capture_open_timeout_ms / 1000:
+                self.log_buffer.add(
+                    "system",
+                    "warning",
+                    f"webrtc timed out waiting for a new frame source={self.source_label} required_seq={required_seq}",
+                )
                 raise MediaStreamError
             await asyncio.sleep(0.01)
 

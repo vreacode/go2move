@@ -9,9 +9,31 @@ imported here.
 
 from __future__ import annotations
 
+import os
+import threading
 import time
 from pathlib import Path
 from typing import Any, Protocol
+
+
+_RCLPY_INIT_LOCK = threading.Lock()
+
+
+def _ensure_rclpy_initialized(rclpy: Any) -> None:
+    """Initialize the process-wide ROS context exactly once.
+
+    A Dashboard can have more than one WebRTC peer over its lifetime. An
+    individual camera adapter must therefore never shut down the process-wide
+    rclpy context when that peer closes.
+    """
+
+    with _RCLPY_INIT_LOCK:
+        if not rclpy.ok():
+            rclpy.init(args=None)
+
+
+def _ros_node_name(prefix: str) -> str:
+    return f"{prefix}_{os.getpid()}_{time.monotonic_ns()}"
 
 
 class CameraAdapter(Protocol):
@@ -72,12 +94,11 @@ class Go2Ros2FrontVideoAdapter:
 
         if resolution not in {"video720p", "video360p", "video180p"}:
             raise ValueError("resolution must be video720p, video360p, or video180p")
-        if not rclpy.ok():
-            rclpy.init(args=None)
+        _ensure_rclpy_initialized(rclpy)
         self._rclpy = rclpy
         self._cv2 = cv2
         self._np = np
-        self._node = Node("go2_front_camera_adapter")
+        self._node = Node(_ros_node_name("go2_front_camera_adapter"))
         self._latest = None
         self._resolution = resolution
         self._subscription = self._node.create_subscription(
@@ -111,8 +132,9 @@ class Go2Ros2FrontVideoAdapter:
         if self._node is not None:
             self._node.destroy_node()
             self._node = None
-        if self._rclpy.ok():
-            self._rclpy.shutdown()
+        # rclpy owns a process-wide context. This adapter may be one of
+        # several WebRTC readers, so release only this node and leave the
+        # context alive for other readers and future reconnects.
 
 
 class Go2Sdk2FrontVideoAdapter:
@@ -213,8 +235,7 @@ class Go2Ros2VideoHubAdapter:
         from rclpy.qos import HistoryPolicy, QoSProfile, ReliabilityPolicy
         from unitree_api.msg import Request, Response
 
-        if not rclpy.ok():
-            rclpy.init(args=None)
+        _ensure_rclpy_initialized(rclpy)
         base = (source or "/api/videohub").rstrip("/")
         if base.endswith("/request"):
             request_topic = base
@@ -227,7 +248,7 @@ class Go2Ros2VideoHubAdapter:
         self._cv2 = cv2
         self._np = np
         self._request_type = Request
-        self._node = Node("go2_camera_videohub_adapter")
+        self._node = Node(_ros_node_name("go2_camera_videohub_adapter"))
         self._timeout_seconds = max(float(timeout_seconds), 0.2)
         self._response = None
         self._request_id = 0
@@ -279,8 +300,8 @@ class Go2Ros2VideoHubAdapter:
         if self._node is not None:
             self._node.destroy_node()
             self._node = None
-        if self._rclpy.ok():
-            self._rclpy.shutdown()
+        # Do not call rclpy.shutdown() here: the context is shared by all
+        # camera adapters in the long-running Agent process.
 
 
 def open_camera(source: str, source_type: str = "opencv") -> CameraAdapter:
