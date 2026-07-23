@@ -1,0 +1,22 @@
+[Unit]
+Description=Go2 data-only dashboard server
+After=network-online.target tailscaled.service nano-board-agent.service
+Wants=network-online.target
+Requires=nano-board-agent.service
+ConditionPathExists=/home/unitree/go2move/deployment/go2/go2.env
+
+[Service]
+Type=simple
+WorkingDirectory=/home/unitree/go2move
+EnvironmentFile=/home/unitree/go2move/deployment/go2/go2.env
+Environment=PYTHONNOUSERSITE=1
+Environment=PYTHONUNBUFFERED=1
+ExecStartPre=/usr/bin/systemctl is-active --quiet tailscaled.service
+ExecStart=/home/unitree/go2move/.venv/bin/uvicorn dashboard_platform.server.app:app --app-dir /home/unitree/go2move/apps/nano-deploy --host 0.0.0.0 --port 8080
+Restart=on-failure
+RestartSec=3
+StandardOutput=append:/home/unitree/go2move/runtime/logs/server.log
+StandardError=append:/home/unitree/go2move/runtime/logs/server-error.log
+
+[Install]
+WantedBy=default.target

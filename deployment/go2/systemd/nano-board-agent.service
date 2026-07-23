@@ -1,0 +1,21 @@
+[Unit]
+Description=Go2 data-only board agent
+After=network-online.target tailscaled.service
+Wants=network-online.target
+ConditionPathExists=/home/unitree/go2move/deployment/go2/go2.env
+
+[Service]
+Type=simple
+WorkingDirectory=/home/unitree/go2move
+EnvironmentFile=/home/unitree/go2move/deployment/go2/go2.env
+Environment=PYTHONNOUSERSITE=1
+Environment=PYTHONUNBUFFERED=1
+ExecStartPre=/usr/bin/systemctl is-active --quiet tailscaled.service
+ExecStart=/home/unitree/go2move/.venv/bin/uvicorn dashboard_platform.agent.app:app --app-dir /home/unitree/go2move/apps/nano-deploy --host 0.0.0.0 --port 9001
+Restart=on-failure
+RestartSec=3
+StandardOutput=append:/home/unitree/go2move/runtime/logs/agent.log
+StandardError=append:/home/unitree/go2move/runtime/logs/agent-error.log
+
+[Install]
+WantedBy=default.target

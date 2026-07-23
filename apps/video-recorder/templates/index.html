@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web 视频录制程序</title>
+    <!-- Bootstrap CSS -->
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <!-- HLS.js for video streaming -->
+    <script src="/static/hls.js@latest"></script>
+    <style>
+        body { background-color: #f8f9fa; }
+        .video-container { position: relative; }
+        .recording-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            display: none; /* Initially hidden */
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+        }
+        .live-status {
+            font-size: 0.8rem;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+        }
+        .online { background-color: #d1e7dd; color: #0f5132; }
+        .offline { background-color: #f8d7da; color: #842029; }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4 text-center">Web 视频录制程序</h1>
+
+        <!-- 全局控制 -->
+        <div class="card mb-4">
+            <div class="card-header">全局控制</div>
+            <div class="card-body text-center">
+                <button id="start-all-btn" class="btn btn-success mx-2">全部开始录制</button>
+                <button id="stop-all-btn" class="btn btn-danger mx-2">全部停止录制</button>
+            </div>
+        </div>
+        
+        <!-- 实时视频流 -->
+        <div class="row" id="live-streams-container">
+            <!-- 视频流播放器将由JS动态生成 -->
+        </div>
+
+        <!-- 已保存的视频 -->
+        <div class="card mt-5">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                已保存的视频
+                <button id="refresh-list-btn" class="btn btn-sm btn-outline-primary">刷新列表</button>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>文件名</th>
+                            <th>录制开始时间 (UTC)</th>
+                            <th>文件大小</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="video-list-body">
+                        <!-- 视频列表将由JS动态生成 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const streams = {{ streams | tojson }};
+    const streamNames = Object.keys(streams);
+    
+    const liveStreamsContainer = document.getElementById('live-streams-container');
+    const videoListBody = document.getElementById('video-list-body');
+    const hlsInstances = {};  // 存储HLS实例
+
+    // --- 初始化函数 ---
+
+    function initializeUI() {
+        createStreamPlayers();
+        updateStreamStatus();
+        fetchAndRenderVideoList();
+        setInterval(updateStreamStatus, 5000); // 每5秒更新一次状态
+    }
+
+    function createStreamPlayers() {
+        liveStreamsContainer.innerHTML = '';
+        streamNames.forEach(name => {
+            const col = document.createElement('div');
+            col.className = 'col-md-6 mb-4';
+            col.innerHTML = `
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>${name}</span>
+                        <span id="status-badge-${name}" class="live-status"></span>
+                    </div>
+                    <div class="video-container">
+                        <video id="video-${name}" width="100%" controls muted autoplay playsinline></video>
+                        <div id="rec-indicator-${name}" class="recording-indicator"></div>
+                    </div>
+                    <div class="card-body text-center">
+                        <button id="start-btn-${name}" data-stream="${name}" class="btn btn-primary btn-sm mx-1">开始录制</button>
+                        <button id="stop-btn-${name}" data-stream="${name}" class="btn btn-warning btn-sm mx-1">停止录制</button>
+                    </div>
+                </div>
+            `;
+            liveStreamsContainer.appendChild(col);
+            initializeHlsPlayer(name);
+        });
+    }
+
+    function initializeHlsPlayer(name) {
+        const video = document.getElementById(`video-${name}`);
+        const hlsUrl = `/live/${name}/stream.m3u8`;
+        
+        // 清理之前的实例
+        if (hlsInstances[name]) {
+            hlsInstances[name].destroy();
+        }
+        
+        if (Hls.isSupported()) {
+            const hls = new Hls({
+                enableWorker: false,
+                lowLatencyMode: true,
+                backBufferLength: 0,
+                maxBufferLength: 2,
+                maxMaxBufferLength: 4,
+                maxBufferSize: 10 * 1000 * 1000,
+                maxBufferHole: 0.1,
+                liveSyncDurationCount: 1,
+                liveMaxLatencyDurationCount: 2,
+                liveDurationInfinity: true,
+                highBufferWatchdogPeriod: 1,
+                manifestLoadingTimeOut: 10000,
+                manifestLoadingMaxRetry: 4,
+                manifestLoadingRetryDelay: 500,
+                levelLoadingTimeOut: 10000,
+                levelLoadingMaxRetry: 4,
+                levelLoadingRetryDelay: 500,
+                fragLoadingTimeOut: 20000,
+                fragLoadingMaxRetry: 6,
+                fragLoadingRetryDelay: 500
+            });
+            
+            hlsInstances[name] = hls;
+            hls.loadSource(hlsUrl);
+            hls.attachMedia(video);
+            
+            hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                console.log(`HLS manifest parsed for ${name}`);
+                video.play().catch(e => console.log('Autoplay was prevented for ' + name));
+            });
+            
+            hls.on(Hls.Events.ERROR, function (event, data) {
+                console.error(`HLS error on ${name}:`, data.type, data.details, data);
+                
+                if (data.fatal) {
+                    switch(data.type) {
+                        case Hls.ErrorTypes.NETWORK_ERROR:
+                            console.log(`Network error on ${name}, trying to recover...`);
+                            hls.startLoad();
+                            break;
+                        case Hls.ErrorTypes.MEDIA_ERROR:
+                            console.log(`Media error on ${name}, trying to recover...`);
+                            hls.recoverMediaError();
+                            break;
+                        default:
+                            console.log(`Fatal error on ${name}, destroying and recreating...`);
+                            hls.destroy();
+                            // 延迟重新初始化
+                            setTimeout(() => {
+                                initializeHlsPlayer(name);
+                            }, 3000);
+                            break;
+                    }
+                }
+            });
+            
+            hls.on(Hls.Events.FRAG_LOADED, function (event, data) {
+                console.log(`Fragment loaded for ${name}: ${data.frag.sn}`);
+            });
+            
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = hlsUrl;
+            video.addEventListener('loadedmetadata', () => {
+                video.play().catch(e => console.log('Autoplay was prevented for ' + name));
+            });
+            video.addEventListener('error', (e) => {
+                console.error(`Video error for ${name}:`, e);
+                // 延迟重新加载
+                setTimeout(() => {
+                    video.load();
+                }, 3000);
+            });
+        }
+    }
+
+    // --- 数据获取与渲染 ---
+
+    async function fetchAndRenderVideoList() {
+        try {
+            const response = await fetch('/api/videos');
+            if (!response.ok) throw new Error('Failed to fetch video list');
+            const videos = await response.json();
+            renderVideoList(videos);
+        } catch (error) {
+            console.error('Error fetching videos:', error);
+            videoListBody.innerHTML = '<tr><td colspan="4" class="text-center text-danger">加载视频列表失败</td></tr>';
+        }
+    }
+
+    function renderVideoList(videos) {
+        videoListBody.innerHTML = '';
+        if (videos.length === 0) {
+            videoListBody.innerHTML = '<tr><td colspan="4" class="text-center">没有已保存的视频</td></tr>';
+            return;
+        }
+        videos.forEach(video => {
+            const tr = document.createElement('tr');
+            const sizeMB = (video.size / (1024 * 1024)).toFixed(2);
+            const startTime = video.start_time ? new Date(video.start_time).toLocaleString() : 'N/A';
+            tr.innerHTML = `
+                <td><a href="${video.url}" target="_blank">${video.filename}</a></td>
+                <td>${startTime}</td>
+                <td>${sizeMB} MB</td>
+                <td>
+                    <button class="btn btn-sm btn-info btn-rename" data-filename="${video.filename}">重命名</button>
+                    <button class="btn btn-sm btn-danger btn-delete" data-filename="${video.filename}">删除</button>
+                </td>
+            `;
+            videoListBody.appendChild(tr);
+        });
+    }
+
+    async function updateStreamStatus() {
+        try {
+            const response = await fetch('/api/status');
+            if (!response.ok) throw new Error('Failed to fetch status');
+            const statuses = await response.json();
+
+            streamNames.forEach(name => {
+                const status = statuses[name];
+                const startBtn = document.getElementById(`start-btn-${name}`);
+                const stopBtn = document.getElementById(`stop-btn-${name}`);
+                const recIndicator = document.getElementById(`rec-indicator-${name}`);
+                const statusBadge = document.getElementById(`status-badge-${name}`);
+
+                // 更新录制状态
+                if (status.recording) {
+                    startBtn.disabled = true;
+                    stopBtn.disabled = false;
+                    recIndicator.style.display = 'block';
+                } else {
+                    startBtn.disabled = false;
+                    stopBtn.disabled = true;
+                    recIndicator.style.display = 'none';
+                }
+                
+                // 更新直播流在线状态
+                if (status.live_online) {
+                    statusBadge.textContent = '在线';
+                    statusBadge.className = 'live-status online';
+                } else {
+                    statusBadge.textContent = '离线';
+                    statusBadge.className = 'live-status offline';
+                }
+            });
+        } catch (error) {
+            console.error('Error updating status:', error);
+        }
+    }
+
+    // --- 事件监听 ---
+
+    // 使用事件委托处理所有按钮点击
+    document.body.addEventListener('click', async (e) => {
+        const target = e.target;
+        
+        // 单个录制控制
+        const streamName = target.dataset.stream;
+        if (streamName) {
+            if (target.id.startsWith('start-btn-')) {
+                await fetch(`/api/record/start/${streamName}`, { method: 'POST' });
+            } else if (target.id.startsWith('stop-btn-')) {
+                await fetch(`/api/record/stop/${streamName}`, { method: 'POST' });
+                await fetchAndRenderVideoList(); // 停止后立即刷新列表
+            }
+            await updateStreamStatus();
+        }
+
+        // 全局控制
+        if (target.id === 'start-all-btn') {
+            await fetch('/api/record/start_all', { method: 'POST' });
+            await updateStreamStatus();
+        } else if (target.id === 'stop-all-btn') {
+            await fetch('/api/record/stop_all', { method: 'POST' });
+            await updateStreamStatus();
+            await fetchAndRenderVideoList();
+        }
+
+        // 文件列表操作
+        const filename = target.dataset.filename;
+        if (filename) {
+            if (target.classList.contains('btn-delete')) {
+                if (confirm(`确定要删除文件 ${filename} 吗？`)) {
+                    await fetch(`/api/videos/${filename}`, { method: 'DELETE' });
+                    await fetchAndRenderVideoList();
+                }
+            } else if (target.classList.contains('btn-rename')) {
+                const newFilename = prompt(`为 ${filename} 输入新的文件名:`, filename);
+                if (newFilename && newFilename !== filename) {
+                    await fetch(`/api/videos/${filename}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ new_filename: newFilename })
+                    });
+                    await fetchAndRenderVideoList();
+                }
+            }
+        }
+        
+        // 刷新按钮
+        if (target.id === 'refresh-list-btn') {
+            await fetchAndRenderVideoList();
+        }
+    });
+
+    // --- 启动 ---
+    initializeUI();
+});
+</script>
+
+</body>
+</html>

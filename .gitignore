@@ -1,0 +1,66 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+/deployment/go2/go2.env
+*.pem
+*.key
+*secret*
+*credential*
+
+# Python / Node environments and generated output
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+node_modules/
+dist/
+build/
+install/
+log/
+logs/
+*.tsbuildinfo
+
+# Robot runtime data and recordings
+**/runtime/**
+**/events/**
+**/rec/**
+**/rec_lidar/**
+**/runs/**
+*.bag
+*.db3
+*.mcap
+*.mp4
+*.mkv
+*.avi
+*.mov
+*.jpg
+*.jpeg
+*.png
+
+# Model weights and deployment binaries
+*.pt
+*.onnx
+*.engine
+*.trt
+*.so
+
+# Large archives and temporary exports
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.tmp
+*.swp
+
+# IDE / local workspace files
+.idea/
+.vscode/
+.codex/
+**/.gradle/
+**/local.properties
+
+# Local source notes may contain credentials or private network details.
+/说明文档/

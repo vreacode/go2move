@@ -1,0 +1,9 @@
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.6
+httpx>=0.27.2
+pydantic-settings>=2.6.0
+psutil>=6.0.0
+aiortc>=1.9.0
+av>=12.3.0
+# Python 3.8 compatibility for Pydantic's evaluation of modern annotations.
+eval-type-backport>=0.2.0

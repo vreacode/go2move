@@ -1,0 +1,38 @@
+collision_monitor:
+  ros__parameters:
+    # Humble uses geometry_msgs/msg/Twist in this stack.
+    enable_stamped_cmd_vel: false
+    enabled: true
+    base_frame_id: base_footprint
+    odom_frame_id: odom_combined
+    cmd_vel_in_topic: /cmd_vel
+    cmd_vel_out_topic: /cmd_vel_safe
+    transform_tolerance: 0.3
+    source_timeout: 0.6
+    stop_pub_timeout: 0.8
+    polygons: [PolygonStop, PolygonSlow]
+
+    # Front safety zones for the forward-only Ackermann profile. The static
+    # costmaps remain responsible for full-path obstacle planning; this node
+    # is the last, low-latency velocity gate.
+    PolygonStop:
+      type: polygon
+      points: [0.85, 0.40, 0.85, -0.40, 0.05, -0.40, 0.05, 0.40]
+      action_type: stop
+      min_points: 4
+      visualize: true
+      polygon_pub_topic: /collision_monitor/stop_zone
+
+    PolygonSlow:
+      type: polygon
+      points: [1.35, 0.55, 1.35, -0.55, -0.10, -0.55, -0.10, 0.55]
+      action_type: slowdown
+      slowdown_ratio: 0.35
+      min_points: 4
+      visualize: true
+      polygon_pub_topic: /collision_monitor/slow_zone
+
+    observation_sources: [scan]
+    scan:
+      type: scan
+      topic: /scan

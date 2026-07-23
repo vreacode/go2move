@@ -1,0 +1,12 @@
+# Dataset images, labels, exports, and local manifests stay on the device.
+local/
+raw/
+images/
+labels/
+exports/
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.txt
+*.csv

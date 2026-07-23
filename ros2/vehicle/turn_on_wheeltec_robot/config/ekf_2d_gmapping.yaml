@@ -1,0 +1,48 @@
+### EKF config for 2D gmapping ###
+ekf_2d:
+  ros__parameters:
+    frequency: 50.0
+    two_d_mode: true
+    publish_tf: true
+
+    map_frame: map         # gmapping 会发布 map->odom
+    odom_frame: odom       # 这里会被 launch 里的 odom_frame 覆盖
+    base_link_frame: base_link
+    world_frame: odom
+
+    # 轮速里程计（从底盘串口获取）
+    odom0: /odom
+    odom0_config: [true,  true,  false,
+                   false, false, true,
+                   true,  false, false,
+                   false, false, true,
+                   false, false, false]
+    odom0_differential: false
+    odom0_relative: false
+    odom0_queue_size: 1
+    odom0_nodelay: false
+
+    # Yesense IMU（launch 会把 imu0 覆盖为实际话题）
+    imu0: /imu/data
+    imu0_config: [false, false, false,
+                  false, false, false,
+                  false, false, false,
+                  false, false, false,
+                  false, false, false]
+    imu0_differential: false
+    imu0_relative: false
+    imu0_queue_size: 10
+    imu0_remove_gravitational_acceleration: true
+
+    # 过程噪声（保守一些，减少静止抖动）
+    process_noise_covariance: [
+      0.05, 0.0,  0.0,  0.0,  0.0,  0.0,
+      0.0,  0.05, 0.0,  0.0,  0.0,  0.0,
+      0.0,  0.0,  1.0,  0.0,  0.0,  0.0,
+      0.0,  0.0,  0.0,  0.05, 0.0,  0.0,
+      0.0,  0.0,  0.0,  0.0,  0.05, 0.0,
+      0.0,  0.0,  0.0,  0.0,  0.0,  0.05
+    ]
+
+    # 关闭控制输入
+    use_control: false

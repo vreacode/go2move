@@ -1,0 +1,12 @@
+{
+  "name": "CarMove Field Console",
+  "short_name": "CarMove",
+  "description": "通过 Tailscale 采集和监控小车现场数据",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f1f5f9",
+  "theme_color": "#f1f5f9",
+  "orientation": "portrait",
+  "lang": "zh-CN",
+  "icons": []
+}
