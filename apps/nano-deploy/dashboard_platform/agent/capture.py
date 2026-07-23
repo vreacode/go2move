@@ -65,7 +65,7 @@ class CaptureManager:
         value = source.lower()
         if "video2" in value or "infrared" in value or "ir_raw" in value:
             return "ir_raw"
-        if "video1" in value or "visible" in value:
+        if "video1" in value or "visible" in value or "videohub" in value or "frontvideostream" in value:
             return "visible_raw"
         return "unknown"
 

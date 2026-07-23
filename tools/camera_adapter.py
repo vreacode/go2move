@@ -192,6 +192,97 @@ class Go2Sdk2FrontVideoAdapter:
         self._released = True
 
 
+class Go2Ros2VideoHubAdapter:
+    """Request one JPEG from Go2's official ROS2 ``videohub`` API.
+
+    The Go2 ROS2 feature pack exposes the same read-only video request as the
+    SDK2 client on ``/api/videohub/request`` and returns the JPEG on
+    ``/api/videohub/response``.  This path is useful on systems where the
+    Python SDK's native DDS binding is not stable, while retaining the
+    official Unitree wire protocol.  ``source`` can be ``/api/videohub`` or a
+    full request topic name.
+    """
+
+    api_id = 1001  # VIDEO_API_ID_GETIMAGESAMPLE; read-only camera sample
+
+    def __init__(self, source: str = "/api/videohub", timeout_seconds: float = 3.0) -> None:
+        import cv2
+        import numpy as np
+        import rclpy
+        from rclpy.node import Node
+        from rclpy.qos import HistoryPolicy, QoSProfile, ReliabilityPolicy
+        from unitree_api.msg import Request, Response
+
+        if not rclpy.ok():
+            rclpy.init(args=None)
+        base = (source or "/api/videohub").rstrip("/")
+        if base.endswith("/request"):
+            request_topic = base
+            response_topic = base[: -len("/request")] + "/response"
+        else:
+            request_topic = base + "/request"
+            response_topic = base + "/response"
+
+        self._rclpy = rclpy
+        self._cv2 = cv2
+        self._np = np
+        self._request_type = Request
+        self._node = Node("go2_camera_videohub_adapter")
+        self._timeout_seconds = max(float(timeout_seconds), 0.2)
+        self._response = None
+        self._request_id = 0
+        qos = QoSProfile(
+            depth=10,
+            history=HistoryPolicy.KEEP_LAST,
+            reliability=ReliabilityPolicy.RELIABLE,
+        )
+        self._publisher = self._node.create_publisher(Request, request_topic, qos)
+        self._subscription = self._node.create_subscription(Response, response_topic, self._on_response, qos)
+
+    def _on_response(self, message: Any) -> None:
+        if self._request_id and int(message.header.identity.id) == self._request_id:
+            self._response = message
+
+    def isOpened(self) -> bool:  # noqa: N802 - matches cv2.VideoCapture
+        return self._node is not None
+
+    def read(self) -> tuple[bool, Any]:
+        if self._node is None:
+            return False, None
+        request = self._request_type()
+        self._request_id = time.monotonic_ns()
+        self._response = None
+        request.header.identity.id = self._request_id
+        request.header.identity.api_id = self.api_id
+        request.header.lease.id = 0
+        request.header.policy.priority = 0
+        request.header.policy.noreply = False
+        request.parameter = ""
+        request.binary = []
+        self._publisher.publish(request)
+
+        deadline = time.monotonic() + self._timeout_seconds
+        while time.monotonic() < deadline and self._response is None:
+            self._rclpy.spin_once(self._node, timeout_sec=0.05)
+        if self._response is None or int(self._response.header.status.code) != 0:
+            return False, None
+
+        payload = bytes((int(value) & 0xFF for value in self._response.binary))
+        if not payload:
+            return False, None
+        frame = self._cv2.imdecode(self._np.frombuffer(payload, dtype=self._np.uint8), self._cv2.IMREAD_COLOR)
+        if frame is None or frame.size == 0:
+            return False, None
+        return True, frame
+
+    def release(self) -> None:
+        if self._node is not None:
+            self._node.destroy_node()
+            self._node = None
+        if self._rclpy.ok():
+            self._rclpy.shutdown()
+
+
 def open_camera(source: str, source_type: str = "opencv") -> CameraAdapter:
     """Open a configured source without guessing that a URL is RTSP."""
 
@@ -199,6 +290,8 @@ def open_camera(source: str, source_type: str = "opencv") -> CameraAdapter:
         return Go2Ros2FrontVideoAdapter(source or "/frontvideostream")
     if source_type == "unitree_sdk2":
         return Go2Sdk2FrontVideoAdapter(source)
+    if source_type == "go2_ros2_videohub":
+        return Go2Ros2VideoHubAdapter(source or "/api/videohub")
     if source_type != "opencv":
         raise ValueError(f"unsupported camera source type: {source_type}")
     return OpenCVCameraAdapter(source)

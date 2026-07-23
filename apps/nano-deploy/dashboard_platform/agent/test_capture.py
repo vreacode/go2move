@@ -11,6 +11,10 @@ from .logs import LogBuffer
 
 
 class CaptureGalleryTests(unittest.TestCase):
+    def test_unitree_video_sources_are_visible_light(self):
+        self.assertEqual(CaptureManager._stream_mode("/api/videohub"), "visible_raw")
+        self.assertEqual(CaptureManager._stream_mode("/frontvideostream"), "visible_raw")
+
     def write_manifest(self, root: Path, name: str, rows: list[list[str]]) -> None:
         manifest_dir = root / "manifests"
         manifest_dir.mkdir(parents=True, exist_ok=True)

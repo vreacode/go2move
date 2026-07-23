@@ -29,11 +29,20 @@ The real local configuration is `go2.env`, which is ignored by Git. Start from
 `go2.env.example`; never put passwords, tokens, private addresses, or camera
 credentials in the example file.
 
-## Current camera decision
+## Camera adapters
 
-The upper computer currently has no `/dev/video*`, no verified RTSP/WebRTC
-process, and no confirmed Go2 ROS 2 video topic. Therefore the first test uses
-`runtime/testdata/go2_offline_test.mp4` through the OpenCV adapter.
+The profile does not assume that a Go2 camera is RTSP. The available explicit
+adapters are:
+
+- `opencv`: local MP4, USB index, or a separately verified URL;
+- `go2_ros2`: the official `/frontvideostream` message;
+- `go2_ros2_videohub`: the official read-only video sample API, returning one
+  JPEG per request;
+- `unitree_sdk2`: the official SDK2 `VideoClient` camera API.
+
+On this upper computer, `go2_ros2_videohub` is the verified live path. The
+`/frontvideostream` topic is discoverable but its byte sequences are malformed
+when decoded by the installed Foxy middleware, so it is not selected.
 
 The official Go2 ROS 2 front-camera path can later use the optional adapter in
 `tools/camera_adapter.py`:
@@ -52,6 +61,22 @@ source /path/to/unitree_ros2/setup.sh
 That adapter only subscribes to JPEG bytes in the official Go2 front-video
 message. It does not import or call Sport, low-level, stand, lie-down, or
 velocity-control APIs.
+
+The verified live adapter can be tested with:
+
+```bash
+source /home/unitree/go2_ros2_ws/setup_go2_foxy.sh
+export CYCLONEDDS_URI=file:///path/to/local/cyclonedds_go2.xml
+/home/unitree/go2move/.venv/bin/python \
+  /home/unitree/go2move/tools/collect_rtsp_frames.py \
+  --source /api/videohub \
+  --source-type go2_ros2_videohub \
+  --output /home/unitree/go2move/runtime/data/images/go2_videohub_test \
+  --manifest /home/unitree/go2move/runtime/data/manifests/go2_videohub_test.csv
+```
+
+The local CycloneDDS file must bind the Ethernet interface to its configured
+Go2-network address; keep that machine-specific address out of Git.
 
 ## Tailscale
 

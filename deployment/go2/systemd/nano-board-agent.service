@@ -11,7 +11,7 @@ EnvironmentFile=/home/unitree/go2move/deployment/go2/go2.env
 Environment=PYTHONNOUSERSITE=1
 Environment=PYTHONUNBUFFERED=1
 ExecStartPre=/usr/bin/systemctl is-active --quiet tailscaled.service
-ExecStart=/home/unitree/go2move/.venv/bin/uvicorn dashboard_platform.agent.app:app --app-dir /home/unitree/go2move/apps/nano-deploy --host 0.0.0.0 --port 9001
+ExecStart=/bin/bash -lc 'if [ -n "${GO2_ROS2_SETUP_BASH:-}" ] && [ -f "${GO2_ROS2_SETUP_BASH}" ]; then source "${GO2_ROS2_SETUP_BASH}"; fi; if [ -n "${GO2_CYCLONEDDS_URI:-}" ]; then export CYCLONEDDS_URI="${GO2_CYCLONEDDS_URI}"; fi; exec /home/unitree/go2move/.venv/bin/uvicorn dashboard_platform.agent.app:app --app-dir /home/unitree/go2move/apps/nano-deploy --host 0.0.0.0 --port 9001'
 Restart=on-failure
 RestartSec=3
 StandardOutput=append:/home/unitree/go2move/runtime/logs/agent.log

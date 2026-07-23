@@ -25,11 +25,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--source", required=True, help="RTSP URL, camera index, or video file")
     parser.add_argument(
         "--source-type",
-        choices=("opencv", "go2_ros2", "unitree_sdk2"),
+        choices=("opencv", "go2_ros2", "go2_ros2_videohub", "unitree_sdk2"),
         default="opencv",
         help=(
             "source adapter; opencv handles files/USB/verified URLs, "
-            "go2_ros2 reads /frontvideostream, unitree_sdk2 reads the official Go2 front camera"
+            "go2_ros2 reads /frontvideostream, go2_ros2_videohub requests a JPEG "
+            "from the official API, unitree_sdk2 reads the official SDK2 camera"
         ),
     )
     parser.add_argument(

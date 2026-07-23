@@ -3,6 +3,7 @@
 .env.*
 !.env.example
 /deployment/go2/go2.env
+/deployment/go2/cyclonedds_*.xml
 *.pem
 *.key
 *secret*
