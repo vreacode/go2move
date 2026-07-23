@@ -126,6 +126,11 @@ function App() {
   const [useFallback, setUseFallback] = useState(false);
   const cruiseSteeringRequestRef = useRef<Promise<void> | null>(null);
   const cruiseSteeringDesiredRef = useRef<"center" | "left" | "right">("center");
+  const go2VideoHub = status?.camera_source_type === "go2_ros2_videohub";
+
+  useEffect(() => {
+    if (go2VideoHub) setUseFallback(true);
+  }, [go2VideoHub]);
 
   function selectTab(tab: SidebarTab) {
     setActiveTab(tab);

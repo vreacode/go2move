@@ -252,6 +252,11 @@ export default function MobileCaptureConsole() {
   const [cruisePending, setCruisePending] = useState<"prepare" | "start" | "stop" | "">("");
   const cruiseSteeringRequestRef = useRef<Promise<void> | null>(null);
   const cruiseSteeringDesiredRef = useRef<"center" | "left" | "right">("center");
+  const go2VideoHub = status?.camera_source_type === "go2_ros2_videohub";
+
+  useEffect(() => {
+    if (go2VideoHub) setUseFallback(true);
+  }, [go2VideoHub]);
 
   const online = !!status?.agent_online && !!status?.board_online;
   const cameraOnline = videoState === "connected";

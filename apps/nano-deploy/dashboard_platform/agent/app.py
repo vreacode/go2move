@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 import time
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 from typing import AsyncIterator
 
@@ -24,6 +25,7 @@ from .runtime import BaseBringupManager, CommandRunner, DevScreenRecordingManage
 from .sensors import SensorBridgeManager
 from .schemas import CaptureStartRequest, ControlRequest, CruiseStartRequest, CruiseSteeringRequest, GimbalPulseRequest, LoginlessAck, MediaRecordingStartRequest, MediaSnapshotRequest, ModelStartRequest, MotionArmRequest, MotionModeRequest, MotionOverrideRequest, NavigationPointRequest, PresetRequest, WebRTCOffer
 from .webrtc import WebRTCManager
+from tools.camera_adapter import open_camera
 
 settings = AgentSettings()
 log_buffer = LogBuffer(settings.log_buffer_size)
@@ -701,23 +703,72 @@ async def preview_mjpeg(mode: str = Query(default="visible_raw")) -> StreamingRe
     if not source_url:
         raise HTTPException(status_code=409, detail=f"{mode} is not configured")
 
-    async def generate() -> AsyncIterator[bytes]:
+    executor: ThreadPoolExecutor | None = None
+    try:
         import cv2
+        loop = asyncio.get_running_loop()
+        executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="go2-mjpeg-camera")
+        capture = await loop.run_in_executor(executor, open_camera, source_url, settings.camera_source_type)
+        opened = await loop.run_in_executor(executor, capture.isOpened)
+    except Exception as exc:
+        if executor is not None:
+            with suppress(Exception):
+                executor.shutdown(wait=False)
+        raise HTTPException(status_code=502, detail=f"camera adapter unavailable: {exc}") from exc
+    if not opened:
+        with suppress(Exception):
+            await loop.run_in_executor(executor, capture.release)
+            executor.shutdown(wait=False)
+        raise HTTPException(status_code=502, detail="camera adapter opened without an active video source")
 
-        cap = cv2.VideoCapture(source_url)
-        cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+    def encode_frame(frame):
+        if frame is None or not getattr(frame, "size", 0):
+            return None
+        height, width = frame.shape[:2]
+        max_width = max(int(settings.webrtc_output_width), 2)
+        max_height = max(int(settings.webrtc_output_height), 2)
+        scale = min(max_width / width, max_height / height, 1.0)
+        if scale < 1.0:
+            output_width = max(2, int(width * scale) // 2 * 2)
+            output_height = max(2, int(height * scale) // 2 * 2)
+            frame = cv2.resize(frame, (output_width, output_height), interpolation=cv2.INTER_AREA)
+        ok, jpeg = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 82])
+        return jpeg.tobytes() if ok else None
+
+    async def generate() -> AsyncIterator[bytes]:
+        nonlocal capture
+        failures = 0
         try:
             while True:
-                ok, frame = cap.read()
-                if not ok:
+                ok, frame = await loop.run_in_executor(executor, capture.read)
+                if not ok or frame is None:
+                    failures += 1
+                    if failures >= 5:
+                        with suppress(Exception):
+                            await loop.run_in_executor(executor, capture.release)
+                        try:
+                            capture = await loop.run_in_executor(
+                                executor, open_camera, source_url, settings.camera_source_type
+                            )
+                            opened = await loop.run_in_executor(executor, capture.isOpened)
+                        except Exception:
+                            opened = False
+                        failures = 0 if opened else failures
                     await asyncio.sleep(0.05)
                     continue
-                ok, jpeg = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 80])
-                if not ok:
+                failures = 0
+                jpeg_bytes = await loop.run_in_executor(executor, encode_frame, frame)
+                if not jpeg_bytes:
                     continue
-                yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + jpeg.tobytes() + b"\r\n"
-                await asyncio.sleep(0.03)
+                yield b"--frame\r\nContent-Type: image/jpeg\r\nContent-Length: " + str(len(jpeg_bytes)).encode() + b"\r\n\r\n" + jpeg_bytes + b"\r\n"
+                await asyncio.sleep(0.04)
         finally:
-            cap.release()
+            with suppress(Exception):
+                await loop.run_in_executor(executor, capture.release)
+            executor.shutdown(wait=False)
 
-    return StreamingResponse(generate(), media_type="multipart/x-mixed-replace; boundary=frame")
+    return StreamingResponse(
+        generate(),
+        media_type="multipart/x-mixed-replace; boundary=frame",
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache"},
+    )

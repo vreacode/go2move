@@ -82,6 +82,11 @@ records the adapter type, image dimensions, JPEG quality, and encoded byte
 count. The default Dashboard capture quality is 100; use `--jpeg-quality` to
 choose a smaller file size for large datasets.
 
+For the Go2 videohub profile, the live Dashboard view defaults to the
+authenticated HTTP/MJPEG proxy because it is more compatible with mobile
+browsers than browser WebRTC. The WebRTC path remains available from the UI
+for testing.
+
 The local CycloneDDS file must bind the Ethernet interface to its configured
 Go2-network address; keep that machine-specific address out of Git.
 

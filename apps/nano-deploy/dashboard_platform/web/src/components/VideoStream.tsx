@@ -200,6 +200,11 @@ export function VideoStream({
             alt="fallback preview"
             src={`${API_BASE}/api/stream/fallback?token=${encodeURIComponent(token)}&mode=${encodeURIComponent(mode)}`}
             className="h-full w-full object-contain"
+            onLoad={(event) => {
+              setVideoState("connected");
+              setStreamStats({ width: event.currentTarget.naturalWidth, height: event.currentTarget.naturalHeight, frozen: false, frameAgeMs: 0 });
+            }}
+            onError={() => setVideoState("failed")}
           />
         )}
         <div className="absolute left-3 top-3 flex items-center gap-2 rounded bg-black/60 px-2 py-1 text-[11px] font-mono text-white backdrop-blur">
