@@ -8,6 +8,21 @@ Go2 upper computer. It is intentionally data-only:
 - disabled: Go2 motion, ROS navigation, Wheeltec chassis, `/cmd_vel_*`, C16,
   `slam_toolbox`, Nav2, SIYI ZT6, battery serial, pose, LiDAR, and IMU.
 
+## LiDAR preference
+
+When the LiDAR phase is authorized, this profile will prefer the user-mounted
+Hesai XT on the dog's back. The built-in Go2 LiDAR remains disabled in the
+example configuration, and the Hesai driver is not started until its physical
+connection, model, network interface, and live packets are verified. The
+current stage only records this selection as configuration; it does not start
+any LiDAR, SLAM, Nav2, or motion process.
+
+The isolated official Hesai ROS 2 driver workspace is:
+`/home/unitree/hesai_ros2_ws`. It is outside this repository and is not part of
+the GoMove commit. The expected future data path is UDP port `2368`, PTC port
+`9347`, and ROS topic `/hesai_xt/points`; the device IP is intentionally blank
+until it is discovered from the actual network.
+
 The real local configuration is `go2.env`, which is ignored by Git. Start from
 `go2.env.example`; never put passwords, tokens, private addresses, or camera
 credentials in the example file.

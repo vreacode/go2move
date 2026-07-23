@@ -139,6 +139,18 @@ class AgentSettings(BaseSettings):
     status_cache_seconds: float = 1.0
 
     lidar_enabled: bool = True
+    # Sensor selection is explicit so a Go2 deployment can prefer an
+    # externally mounted Hesai unit without changing the generic vehicle
+    # defaults used by the legacy deployment.
+    lidar_primary_source: str = "generic"
+    go2_builtin_lidar_enabled: bool = True
+    hesai_enabled: bool = False
+    hesai_device_ip: str = ""
+    hesai_udp_port: int = 2368
+    hesai_ptc_port: int = 9347
+    hesai_point_topic: str = "/hesai_xt/points"
+    hesai_ros2_setup_bash: str = ""
+    hesai_config_path: str = ""
     lidar_ip: str = ""
     lidar_msop_port: int = 2363
     lidar_difop_port: int = 2364
