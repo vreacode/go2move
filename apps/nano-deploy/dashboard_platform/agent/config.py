@@ -34,6 +34,7 @@ class AgentSettings(BaseSettings):
     camera_rtsp_ir_url: str = ""
     camera_rtsp_url: str = ""
     camera_source_type: str = "opencv"
+    camera_source: str = ""
     camera_source_label: str = "configured_camera"
     camera_live_confirmed: bool = False
     ir_camera_enabled: bool = True
@@ -193,7 +194,7 @@ class AgentSettings(BaseSettings):
 
     @property
     def visible_rtsp_url(self) -> str:
-        return self.camera_rtsp_visible_url or self.camera_rtsp_url or self.model_default_source
+        return self.camera_source or self.camera_rtsp_visible_url or self.camera_rtsp_url or self.model_default_source
 
     @property
     def ir_rtsp_url(self) -> str:

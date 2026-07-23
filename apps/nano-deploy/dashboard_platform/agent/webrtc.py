@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import fractions
 import os
+import sys
 import threading
 import time
 from contextlib import suppress
@@ -15,6 +16,14 @@ from av import VideoFrame
 
 from .config import AgentSettings
 from .logs import LogBuffer
+
+# The user service starts Uvicorn with ``apps/nano-deploy`` as its app-dir.
+# Add the repository root explicitly so the shared tools camera adapters are
+# importable in both systemd and direct test invocations.
+_PROJECT_ROOT = str(Path(__file__).resolve().parents[4])
+if _PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, _PROJECT_ROOT)
+from tools.camera_adapter import open_camera
 
 VIDEO_CLOCK_RATE = 90000
 VIDEO_TIME_BASE = fractions.Fraction(1, VIDEO_CLOCK_RATE)
@@ -260,6 +269,71 @@ class RtspVideoTrack(LatestFrameVideoTrack):
             cap.release()
 
 
+class AdapterVideoTrack(LatestFrameVideoTrack):
+    """WebRTC track for explicit non-RTSP camera adapters."""
+
+    def __init__(
+        self,
+        settings: AgentSettings,
+        log_buffer: LogBuffer,
+        source: str,
+        source_type: str,
+        mode_label: str,
+    ) -> None:
+        self.source = source
+        self.source_type = source_type
+        super().__init__(settings, log_buffer, source_label=f"{mode_label}:{source_type}:{source}")
+
+    def _capture_loop(self) -> None:
+        capture = None
+        while not self._stop_event.is_set():
+            try:
+                if capture is None or not capture.isOpened():
+                    if capture is not None:
+                        capture.release()
+                    capture = open_camera(self.source, self.source_type)
+                    self.log_buffer.add(
+                        "system",
+                        "info",
+                        f"webrtc adapter capture opened source_type={self.source_type} opened={capture.isOpened()}",
+                    )
+                    if not capture.isOpened():
+                        time.sleep(0.3)
+                        continue
+
+                ok, frame = capture.read()
+                if not ok or frame is None:
+                    self._read_failures += 1
+                    if self._read_failures in {1, 10, 20, 30}:
+                        self.log_buffer.add(
+                            "system",
+                            "warning",
+                            f"webrtc adapter read failed count={self._read_failures} source_type={self.source_type}",
+                        )
+                    if self._read_failures >= 30:
+                        capture.release()
+                        capture = None
+                        self._read_failures = 0
+                        time.sleep(0.2)
+                    else:
+                        time.sleep(0.02)
+                    continue
+
+                self._read_failures = 0
+                self._publish_frame(frame, time.time())
+            except Exception as exc:
+                self.log_buffer.add("system", "error", f"webrtc adapter capture loop error: {exc!r}")
+                if capture is not None:
+                    with suppress(Exception):
+                        capture.release()
+                    capture = None
+                time.sleep(0.5)
+
+        if capture is not None:
+            with suppress(Exception):
+                capture.release()
+
+
 class SnapshotVideoTrack(LatestFrameVideoTrack):
     def __init__(self, settings: AgentSettings, log_buffer: LogBuffer) -> None:
         self.snapshot_path = settings.snapshot_path / "latest.jpg"
@@ -327,6 +401,14 @@ class WebRTCManager:
             return SnapshotVideoTrack(self.settings, self.log_buffer)
         if stream_mode == "ir_raw":
             return RtspVideoTrack(self.settings, self.log_buffer, self.settings.ir_rtsp_url, "ir_raw")
+        if self.settings.camera_source_type != "opencv":
+            return AdapterVideoTrack(
+                self.settings,
+                self.log_buffer,
+                self.settings.visible_rtsp_url,
+                self.settings.camera_source_type,
+                "visible_raw",
+            )
         return RtspVideoTrack(
             self.settings,
             self.log_buffer,
