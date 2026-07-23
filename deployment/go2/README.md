@@ -21,7 +21,9 @@ The isolated official Hesai ROS 2 driver workspace is:
 `/home/unitree/hesai_ros2_ws`. It is outside this repository and is not part of
 the GoMove commit. The expected future data path is UDP port `2368`, PTC port
 `9347`, and ROS topic `/hesai_xt/points`; the device IP is intentionally blank
-until it is discovered from the actual network.
+until it is discovered from the actual network. When the sensor bridge is
+explicitly enabled later, the Go2 profile selects this workspace and topic
+automatically instead of the legacy C16 topic.
 
 The real local configuration is `go2.env`, which is ignored by Git. Start from
 `go2.env.example`; never put passwords, tokens, private addresses, or camera

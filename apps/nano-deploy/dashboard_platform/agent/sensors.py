@@ -63,6 +63,10 @@ class SensorBridgeManager:
 
     def _setup_commands(self) -> list[str]:
         commands: list[str] = []
+        if self.settings.lidar_primary_source.strip().lower() in {"hesai", "hesai_xt"}:
+            hesai_setup = self.settings.hesai_ros2_setup_bash.strip()
+            if hesai_setup:
+                commands.append(f"source {shlex.quote(hesai_setup)}")
         if self.settings.ros2_lidar_setup_bash:
             commands.append(f"source {shlex.quote(self.settings.ros2_lidar_setup_bash)}")
         for raw in self.settings.ros2_imu_setup_bash.split(";"):
@@ -70,6 +74,13 @@ class SensorBridgeManager:
             if path:
                 commands.append(f"source {shlex.quote(path)}")
         return commands
+
+    def _lidar_topic(self) -> str:
+        if self.settings.lidar_primary_source.strip().lower() in {"hesai", "hesai_xt"}:
+            topic = self.settings.hesai_point_topic.strip()
+            if topic:
+                return topic
+        return self.settings.lidar_point_topic
 
     def _bridge_command(self) -> str:
         module_path = Path(__file__).with_name("sensor_bridge.py")
@@ -81,7 +92,7 @@ class SensorBridgeManager:
                     shlex.quote(self.settings.ros2_bridge_python_bin),
                     shlex.quote(str(module_path)),
                     "--lidar-topic",
-                    shlex.quote(self.settings.lidar_point_topic),
+                    shlex.quote(self._lidar_topic()),
                     "--imu-topic",
                     shlex.quote(self.settings.imu_topic),
                     "--max-points",
