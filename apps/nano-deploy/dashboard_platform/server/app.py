@@ -6,7 +6,7 @@ from typing import AsyncIterator, Literal
 import httpx
 from fastapi import Depends, FastAPI, Header, HTTPException, Query, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
+from fastapi.responses import FileResponse, JSONResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 
@@ -712,6 +712,31 @@ async def api_stream_fallback(
                 yield chunk
 
     return StreamingResponse(generate(), media_type="multipart/x-mixed-replace; boundary=frame")
+
+
+@app.get("/api/stream/snapshot")
+async def api_stream_snapshot(
+    authorization: str | None = Header(default=None),
+    mode: str = Query(default="visible_raw"),
+) -> Response:
+    header_token = _extract_token(authorization)
+    if header_token != settings.auth_token:
+        raise HTTPException(status_code=403, detail="invalid token")
+    selected_mode = mode if mode in {"visible_raw", "ir_raw"} else "visible_raw"
+    async with bridge.client.stream(
+        "GET",
+        f"{bridge.base_url}/preview.jpg",
+        headers={"Authorization": f"Bearer {bridge.token}"},
+        params={"mode": selected_mode},
+        timeout=10.0,
+    ) as response:
+        response.raise_for_status()
+        content = await response.aread()
+    return Response(
+        content=content,
+        media_type="image/jpeg",
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache"},
+    )
 
 
 @app.websocket("/ws/status")

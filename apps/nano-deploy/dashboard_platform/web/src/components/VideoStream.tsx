@@ -21,6 +21,7 @@ export function VideoStream({
 }) {
   const [videoState, setVideoState] = useState<ConnectionState>("idle");
   const [streamStats, setStreamStats] = useState<StreamStats>({});
+  const [snapshotUrl, setSnapshotUrl] = useState("");
 
   useEffect(() => {
     onStateChange?.(videoState);
@@ -33,6 +34,49 @@ export function VideoStream({
   const frameWatchTimerRef = useRef<number | null>(null);
   const reconnectingRef = useRef(false);
   const lastFrameAtRef = useRef(0);
+  const snapshotUrlRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!token || !useFallback) return;
+    let cancelled = false;
+    let retryTimer: number | null = null;
+    setVideoState("connecting");
+
+    const pollSnapshot = async () => {
+      try {
+        const response = await fetch(`${API_BASE}/api/stream/snapshot?mode=${encodeURIComponent(mode)}`, {
+          headers: { Authorization: `Bearer ${token}` },
+          cache: "no-store",
+        });
+        if (!response.ok) throw new Error(`snapshot ${response.status}`);
+        const blob = await response.blob();
+        const nextUrl = URL.createObjectURL(blob);
+        if (cancelled) {
+          URL.revokeObjectURL(nextUrl);
+          return;
+        }
+        if (snapshotUrlRef.current) URL.revokeObjectURL(snapshotUrlRef.current);
+        snapshotUrlRef.current = nextUrl;
+        setSnapshotUrl(nextUrl);
+        setVideoState("connected");
+      } catch (_error) {
+        if (!cancelled) setVideoState("reconnecting");
+      } finally {
+        if (!cancelled) retryTimer = window.setTimeout(pollSnapshot, 250);
+      }
+    };
+
+    void pollSnapshot();
+    return () => {
+      cancelled = true;
+      if (retryTimer) window.clearTimeout(retryTimer);
+      if (snapshotUrlRef.current) {
+        URL.revokeObjectURL(snapshotUrlRef.current);
+        snapshotUrlRef.current = null;
+      }
+      setSnapshotUrl("");
+    };
+  }, [token, useFallback, mode]);
 
   useEffect(() => {
     if (!token || useFallback) return;
@@ -198,7 +242,7 @@ export function VideoStream({
         ) : (
           <img
             alt="fallback preview"
-            src={`${API_BASE}/api/stream/fallback?token=${encodeURIComponent(token)}&mode=${encodeURIComponent(mode)}`}
+            src={snapshotUrl || undefined}
             className="h-full w-full object-contain"
             onLoad={(event) => {
               setVideoState("connected");

@@ -4,14 +4,14 @@ import asyncio
 import json
 import time
 from concurrent.futures import ThreadPoolExecutor
-from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager, suppress
 from typing import AsyncIterator
 
 import httpx
 from pathlib import Path
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Query
-from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
+from fastapi.responses import FileResponse, JSONResponse, Response, StreamingResponse
 
 from .config import AgentSettings
 from .battery import BatteryManager
@@ -25,6 +25,7 @@ from .runtime import BaseBringupManager, CommandRunner, DevScreenRecordingManage
 from .sensors import SensorBridgeManager
 from .schemas import CaptureStartRequest, ControlRequest, CruiseStartRequest, CruiseSteeringRequest, GimbalPulseRequest, LoginlessAck, MediaRecordingStartRequest, MediaSnapshotRequest, ModelStartRequest, MotionArmRequest, MotionModeRequest, MotionOverrideRequest, NavigationPointRequest, PresetRequest, WebRTCOffer
 from .webrtc import WebRTCManager
+from .preview_cache import PreviewCacheManager
 from tools.camera_adapter import open_camera
 
 settings = AgentSettings()
@@ -41,6 +42,7 @@ map_manager = MapManager(settings)
 media_manager = MediaManager(settings, log_buffer)
 capture_manager = CaptureManager(settings, log_buffer)
 dev_screen_recording_manager = DevScreenRecordingManager(settings, log_buffer)
+preview_cache_manager = PreviewCacheManager()
 status_collector = StatusCollector(settings, model_manager, base_manager, sensor_manager, pose_manager, motion_manager, battery_manager)
 webrtc_manager = WebRTCManager(settings, log_buffer)
 siyi_gimbal_lock = asyncio.Lock()
@@ -78,6 +80,7 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     await base_manager.stop()
     await motion_manager.stop()
     await webrtc_manager.close()
+    preview_cache_manager.stop()
 
 
 app = FastAPI(title=settings.app_name, lifespan=lifespan)
@@ -721,20 +724,6 @@ async def preview_mjpeg(mode: str = Query(default="visible_raw")) -> StreamingRe
             executor.shutdown(wait=False)
         raise HTTPException(status_code=502, detail="camera adapter opened without an active video source")
 
-    def encode_frame(frame):
-        if frame is None or not getattr(frame, "size", 0):
-            return None
-        height, width = frame.shape[:2]
-        max_width = max(int(settings.webrtc_output_width), 2)
-        max_height = max(int(settings.webrtc_output_height), 2)
-        scale = min(max_width / width, max_height / height, 1.0)
-        if scale < 1.0:
-            output_width = max(2, int(width * scale) // 2 * 2)
-            output_height = max(2, int(height * scale) // 2 * 2)
-            frame = cv2.resize(frame, (output_width, output_height), interpolation=cv2.INTER_AREA)
-        ok, jpeg = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 82])
-        return jpeg.tobytes() if ok else None
-
     async def generate() -> AsyncIterator[bytes]:
         nonlocal capture
         failures = 0
@@ -757,7 +746,14 @@ async def preview_mjpeg(mode: str = Query(default="visible_raw")) -> StreamingRe
                     await asyncio.sleep(0.05)
                     continue
                 failures = 0
-                jpeg_bytes = await loop.run_in_executor(executor, encode_frame, frame)
+                jpeg_bytes = await loop.run_in_executor(
+                    executor,
+                    _encode_preview_frame,
+                    cv2,
+                    frame,
+                    settings.webrtc_output_width,
+                    settings.webrtc_output_height,
+                )
                 if not jpeg_bytes:
                     continue
                 yield b"--frame\r\nContent-Type: image/jpeg\r\nContent-Length: " + str(len(jpeg_bytes)).encode() + b"\r\n\r\n" + jpeg_bytes + b"\r\n"
@@ -770,5 +766,48 @@ async def preview_mjpeg(mode: str = Query(default="visible_raw")) -> StreamingRe
     return StreamingResponse(
         generate(),
         media_type="multipart/x-mixed-replace; boundary=frame",
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache"},
+    )
+
+
+def _encode_preview_frame(cv2, frame, max_width: int, max_height: int) -> bytes | None:
+    """Downscale a preview frame and encode it as one complete JPEG."""
+
+    if frame is None or not getattr(frame, "size", 0):
+        return None
+    height, width = frame.shape[:2]
+    scale = min(max(int(max_width), 2) / width, max(int(max_height), 2) / height, 1.0)
+    if scale < 1.0:
+        output_width = max(2, int(width * scale) // 2 * 2)
+        output_height = max(2, int(height * scale) // 2 * 2)
+        frame = cv2.resize(frame, (output_width, output_height), interpolation=cv2.INTER_AREA)
+    ok, jpeg = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 82])
+    return jpeg.tobytes() if ok else None
+
+
+@app.get("/preview.jpg", dependencies=[Depends(verify_token)])
+async def preview_jpeg(mode: str = Query(default="visible_raw")) -> Response:
+    """Return one complete preview JPEG for browsers that reset MJPEG images."""
+
+    if mode == "ir_raw" and not settings.ir_camera_enabled:
+        raise HTTPException(status_code=409, detail="IR camera is disabled for this device profile")
+    source_url = settings.ir_rtsp_url if mode == "ir_raw" else settings.visible_rtsp_url
+    if not source_url:
+        raise HTTPException(status_code=409, detail=f"{mode} is not configured")
+
+    cache = preview_cache_manager.get(
+        mode,
+        source_url,
+        settings.camera_source_type,
+        settings.webrtc_output_width,
+        settings.webrtc_output_height,
+    )
+    loop = asyncio.get_running_loop()
+    jpeg_bytes = await loop.run_in_executor(None, cache.get, 5.0)
+    if not jpeg_bytes:
+        raise HTTPException(status_code=504, detail="camera preview cache is not ready")
+    return Response(
+        content=jpeg_bytes,
+        media_type="image/jpeg",
         headers={"Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache"},
     )
