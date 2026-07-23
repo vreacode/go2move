@@ -26,7 +26,7 @@ import type { ConnectionState, LogItem, MapEntry, MapMetadata, MapPoint, MediaIt
 type LoginResponse = { token: string; username: string };
 
 const workspaceMeta: Record<SidebarTab, { eyebrow: string; title: string; description: string }> = {
-  live: { eyebrow: "LIVE OPERATIONS", title: "实时监控", description: "查看双光视频、模型状态与车辆即时操控。" },
+  live: { eyebrow: "LIVE OPERATIONS", title: "实时监控", description: "查看可见光视频、模型状态与数据采集任务。" },
   navigation: { eyebrow: "MAP & NAVIGATION", title: "建图导航", description: "管理地图、建图流程与自主导航任务。" },
   perception: { eyebrow: "MEDIA & INTELLIGENCE", title: "媒体与感知", description: "管理录像、拍照、检测事件与系统日志。" },
   diagnostics: { eyebrow: "SYSTEM HEALTH", title: "系统诊断", description: "核对底盘链路、设备资源和控制模式。" },
@@ -153,6 +153,13 @@ function App() {
     if (logFilter === "all") return logs;
     return logs.filter((item) => item.channel === logFilter);
   }, [logs, logFilter]);
+
+  const irCameraEnabled = status?.ir_camera_enabled ?? false;
+  const cameraLiveConfirmed = status?.camera_live_confirmed ?? false;
+
+  useEffect(() => {
+    if (!irCameraEnabled && videoSourceMode === "ir_raw") setVideoSourceMode("visible_raw");
+  }, [irCameraEnabled, videoSourceMode]);
 
   const manualControlBlocked =
     !!status?.motion_state &&
@@ -878,7 +885,7 @@ function App() {
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <StatusPill tone={status?.agent_online ? "good" : "danger"}>设备 {status?.agent_online ? "在线" : "离线"}</StatusPill>
-          <StatusPill tone={videoState === "connected" ? "good" : videoState === "failed" ? "danger" : "warn"}>视频 {videoState === "connected" ? "已连接" : videoState === "failed" ? "已断开" : "重连中"}</StatusPill>
+          <StatusPill tone={videoState === "connected" ? "good" : videoState === "failed" ? "danger" : "warn"}>视频 {videoState === "connected" ? (cameraLiveConfirmed ? "实时" : "离线测试") : videoState === "failed" ? "已断开" : "重连中"}</StatusPill>
           <StatusPill tone={status?.mapping_running ? "good" : "neutral"}>建图 {status?.mapping_running ? "运行中" : "空闲"}</StatusPill>
           <StatusPill tone={status?.navigation_running ? "good" : "neutral"}>导航 {status?.navigation_running ? "运行中" : "空闲"}</StatusPill>
           <div className="ml-2 h-4 w-px bg-divider"></div>
@@ -893,8 +900,8 @@ function App() {
         {activeTab === "live" ? <div id="section-live" className="grid gap-5 xl:grid-cols-12">
           <div className="h-full xl:col-span-8">
             <Panel
-              title="实时视频 (双光融合)"
-              subtitle="左侧为可见光/检测结果，右侧为红外流。"
+              title={irCameraEnabled ? "实时视频 (双光融合)" : "实时视频 (可见光)"}
+              subtitle={irCameraEnabled ? "左侧为可见光/检测结果，右侧为红外流。" : cameraLiveConfirmed ? "当前为已确认的 Go2 可见光视频。" : "当前为离线 MP4 测试源，尚未接通 Go2 实时摄像头。"}
               className="h-full min-h-[780px] flex flex-col"
               right={
                 <div className="flex items-center gap-2">
@@ -927,18 +934,14 @@ function App() {
                 </div>
               }
             >
-              <div className="grid grid-cols-2 gap-3 flex-1 min-h-[300px]">
+              <div className={classNames("grid gap-3 flex-1 min-h-[300px]", irCameraEnabled ? "grid-cols-2" : "grid-cols-1")}>
                 <VideoStream
                   mode={videoSourceMode}
                   token={token}
                   useFallback={useFallback}
                   onStateChange={setVideoState}
                 />
-                <VideoStream
-                  mode="ir_raw"
-                  token={token}
-                  useFallback={useFallback}
-                />
+                {irCameraEnabled ? <VideoStream mode="ir_raw" token={token} useFallback={useFallback} /> : null}
               </div>
               <div className="mt-4 rounded-xl border border-base bg-card/50 p-4">
                 <div className="mb-3 flex flex-wrap items-center justify-between gap-3">

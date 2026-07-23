@@ -254,7 +254,9 @@ export default function MobileCaptureConsole() {
   const cruiseSteeringDesiredRef = useRef<"center" | "left" | "right">("center");
 
   const online = !!status?.agent_online && !!status?.board_online;
-  const cameraOnline = !!cameraStatus?.connected;
+  const cameraOnline = videoState === "connected";
+  const irCameraEnabled = status?.ir_camera_enabled ?? false;
+  const cameraLiveConfirmed = status?.camera_live_confirmed ?? false;
   const chassisReady = baseReady(status);
   const cruiseActive = status?.motion_state?.cruise_active ?? false;
   const cruiseSteering = status?.motion_state?.cruise_steering ?? "center";
@@ -262,6 +264,10 @@ export default function MobileCaptureConsole() {
   const latestFrameUrl = capture?.latest_frame
     ? `${API_BASE}/api/capture/latest?token=${encodeURIComponent(token)}&v=${capture.frames_saved}`
     : "";
+
+  useEffect(() => {
+    if (!irCameraEnabled && streamMode === "ir_raw") setStreamMode("visible_raw");
+  }, [irCameraEnabled, streamMode]);
 
   useEffect(() => {
     if (!token) return;
@@ -605,7 +611,7 @@ export default function MobileCaptureConsole() {
         <span className={`mobile-status-dot ${online ? "is-good" : "is-bad"}`} />
         <strong>{online ? "小车在线" : "等待小车"}</strong>
         <span className="mobile-status-divider" />
-        <span>{cameraOnline ? "视频已连接" : "视频未连接"}</span>
+        <span>{cameraOnline ? (cameraLiveConfirmed ? "实时视频已连接" : "离线测试画面") : "视频未连接"}</span>
         <span className="mobile-status-divider" />
         <span className={chassisReady ? "mobile-status-ready" : ""}>{chassisReady ? "底盘就绪" : "底盘待检查"}</span>
         <button onClick={logout}>退出</button>
@@ -619,7 +625,7 @@ export default function MobileCaptureConsole() {
           <section className="mobile-video-card">
             <VideoStream mode={streamMode} token={token} useFallback={useFallback} onStateChange={setVideoState} />
             <div className="mobile-video-footer">
-              <span className={`mobile-video-state ${videoState === "connected" ? "is-good" : ""}`}><span />{videoState === "connected" ? "实时画面" : "正在连接"}</span>
+              <span className={`mobile-video-state ${videoState === "connected" ? "is-good" : ""}`}><span />{videoState === "connected" ? (cameraLiveConfirmed ? "实时画面" : "离线测试画面") : "正在连接"}</span>
               <button onClick={() => setUseFallback((value) => !value)}>{useFallback ? "切回低延迟" : "备用画面"}</button>
             </div>
           </section>
@@ -635,9 +641,9 @@ export default function MobileCaptureConsole() {
               <button className={streamMode === "visible_raw" ? "is-active" : ""} onClick={() => setStreamMode("visible_raw")} disabled={!!capture?.running}>
                 <strong>可见光</strong><small>video1 · 1920×1080</small>
               </button>
-              <button className={streamMode === "ir_raw" ? "is-active" : ""} onClick={() => setStreamMode("ir_raw")} disabled={!!capture?.running}>
+              {irCameraEnabled ? <button className={streamMode === "ir_raw" ? "is-active" : ""} onClick={() => setStreamMode("ir_raw")} disabled={!!capture?.running}>
                 <strong>红外</strong><small>video2 · 640×512</small>
-              </button>
+              </button> : null}
             </div>
             <div className="mobile-form-grid">
               <label className="mobile-field mobile-field-wide"><span><MapPinIcon />场景名称</span><input value={scene} onChange={(event) => setScene(event.target.value)} disabled={!!capture?.running} placeholder="例如 gate_a_day" /></label>
@@ -668,7 +674,7 @@ export default function MobileCaptureConsole() {
             <Metric label="IMU" value={status?.imu_online ? "在线" : "停止"} tone={status?.imu_online ? "good" : "neutral"} />
           </div>
           <BaseHealth status={status} />
-          <section className="mobile-detail-card"><div className="mobile-detail-row"><span>视频源</span><strong>{status?.current_video_source || "--"}</strong></div><div className="mobile-detail-row"><span>分辨率目标</span><strong>video1 / 可见光</strong></div><div className="mobile-detail-row"><span>云台状态</span><strong>{cameraStatus?.status?.motion_mode_name || "--"} · {cameraStatus?.attitude?.yaw_deg?.toFixed(1) ?? "--"}° yaw</strong></div><div className="mobile-detail-row"><span>电池</span><strong>{batteryDetailLabel(status)}{status?.battery_status?.charging ? " · 充电中" : ""}</strong></div><div className="mobile-detail-row"><span>控制模式</span><strong>{status?.motion_state?.mode || "dry_run"}</strong></div></section>
+          <section className="mobile-detail-card"><div className="mobile-detail-row"><span>视频源</span><strong>{status?.camera_source_label || status?.current_video_source || "--"}</strong></div><div className="mobile-detail-row"><span>分辨率目标</span><strong>可见光</strong></div><div className="mobile-detail-row"><span>云台状态</span><strong>{cameraStatus?.status?.motion_mode_name || "--"} · {cameraStatus?.attitude?.yaw_deg?.toFixed(1) ?? "--"}° yaw</strong></div><div className="mobile-detail-row"><span>电池</span><strong>{batteryDetailLabel(status)}{status?.battery_status?.charging ? " · 充电中" : ""}</strong></div><div className="mobile-detail-row"><span>控制模式</span><strong>{status?.motion_state?.mode || "dry_run"}</strong></div></section>
           <section className="mobile-cruise-card">
             <div className="mobile-cruise-heading"><div><span className="mobile-eyebrow">MOTION ASSIST</span><h2>匀速前进</h2></div><span className={cruiseActive ? "mobile-cruise-status is-active" : "mobile-cruise-status"}>{cruiseActive ? (cruiseSteering === "center" ? "直行中" : cruiseSteering === "left" ? "左修正" : "右修正") : "待启动"}</span></div>
             <p className="mobile-cruise-copy">底盘持续保持低速前进，按住左右键修正方向，松开后自动回到直行。</p>

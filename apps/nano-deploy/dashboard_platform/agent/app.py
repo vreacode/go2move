@@ -528,6 +528,8 @@ async def capture_gallery_frame(group: str, frame_name: str) -> FileResponse:
 
 @app.post("/capture/start", dependencies=[Depends(verify_token)])
 async def capture_start(request: CaptureStartRequest) -> dict:
+    if request.stream_mode == "ir_raw" and not settings.ir_camera_enabled:
+        raise HTTPException(status_code=409, detail="IR camera is disabled for this device profile")
     try:
         return (await capture_manager.start(request)).model_dump()
     except (RuntimeError, ValueError) as exc:
@@ -549,6 +551,8 @@ async def capture_latest() -> FileResponse:
 
 @app.post("/media/recording/start", dependencies=[Depends(verify_token)])
 async def media_recording_start(request: MediaRecordingStartRequest) -> dict:
+    if request.stream_mode == "ir_raw" and not settings.ir_camera_enabled:
+        raise HTTPException(status_code=409, detail="IR camera is disabled for this device profile")
     try:
         return (await media_manager.start_recording(request.stream_mode)).model_dump()
     except RuntimeError as exc:
@@ -562,6 +566,8 @@ async def media_recording_stop() -> dict:
 
 @app.post("/media/snapshot", dependencies=[Depends(verify_token)])
 async def media_snapshot(request: MediaSnapshotRequest) -> dict:
+    if request.stream_mode == "ir_raw" and not settings.ir_camera_enabled:
+        raise HTTPException(status_code=409, detail="IR camera is disabled for this device profile")
     try:
         return (await media_manager.take_snapshot(request.stream_mode)).model_dump()
     except RuntimeError as exc:
@@ -671,6 +677,8 @@ async def pose_stream() -> StreamingResponse:
 async def stream_webrtc_offer(offer: WebRTCOffer) -> dict:
     if not (settings.visible_rtsp_url or settings.model_default_source):
         raise HTTPException(status_code=400, detail="visible camera rtsp url is not configured")
+    if offer.stream_mode == "ir_raw" and not settings.ir_camera_enabled:
+        raise HTTPException(status_code=409, detail="IR camera is disabled for this device profile")
     if offer.stream_mode == "ir_raw" and not settings.ir_rtsp_url:
         raise HTTPException(status_code=409, detail="ir stream is not configured")
     if offer.stream_mode == "annotated" and not (settings.snapshot_path / "latest.jpg").exists():
@@ -684,6 +692,8 @@ async def preview_mjpeg(mode: str = Query(default="visible_raw")) -> StreamingRe
     if not settings.allow_mjpeg_fallback:
         raise HTTPException(status_code=404, detail="fallback disabled")
 
+    if mode == "ir_raw" and not settings.ir_camera_enabled:
+        raise HTTPException(status_code=409, detail="IR camera is disabled for this device profile")
     if mode == "ir_raw":
         source_url = settings.ir_rtsp_url
     else:

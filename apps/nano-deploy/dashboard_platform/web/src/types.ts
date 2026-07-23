@@ -97,6 +97,10 @@ export type SystemStatus = {
   board_name?: string;
   current_video_source?: string | null;
   current_video_mode?: "visible_raw" | "ir_raw" | "annotated";
+  camera_source_type?: string;
+  camera_source_label?: string;
+  camera_live_confirmed?: boolean;
+  ir_camera_enabled?: boolean;
   current_model?: string | null;
   current_map_name?: string | null;
   mapping_running?: boolean;

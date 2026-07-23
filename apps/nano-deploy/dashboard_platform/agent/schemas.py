@@ -215,6 +215,10 @@ class AgentStatus(BaseModel):
     board_online: bool
     current_video_source: str | None
     current_video_mode: Literal["visible_raw", "ir_raw", "annotated"] = "visible_raw"
+    camera_source_type: str = "opencv"
+    camera_source_label: str = "configured_camera"
+    camera_live_confirmed: bool = False
+    ir_camera_enabled: bool = True
     current_model: str | None
     current_map_name: str | None = None
     mapping_running: bool = False

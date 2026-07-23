@@ -34,6 +34,9 @@ class AgentSettings(BaseSettings):
     camera_rtsp_ir_url: str = ""
     camera_rtsp_url: str = ""
     camera_source_type: str = "opencv"
+    camera_source_label: str = "configured_camera"
+    camera_live_confirmed: bool = False
+    ir_camera_enabled: bool = True
     capture_script: Path = Path("/home/nvidia/carmove/tools/collect_rtsp_frames.py")
     capture_workdir: Path = Path("/home/nvidia/carmove")
     capture_output_root: Path = Path("/home/nvidia/carmove/datasets/local/roadside_v1")
