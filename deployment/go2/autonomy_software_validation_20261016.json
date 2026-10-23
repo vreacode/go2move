@@ -1,0 +1,19 @@
+{
+  "tested_at": "2026-10-16T10:23:09+0800",
+  "passed": true,
+  "tests_run": 64,
+  "failure_count": 0,
+  "error_count": 0,
+  "duration_s": 19.869823150999764,
+  "modules": [
+    "test_local_autonomy",
+    "test_autonomy_session",
+    "test_autonomy_worker",
+    "test_rotation_guard",
+    "test_rotation_worker"
+  ],
+  "synthetic_motion_only": true,
+  "physical_walking_validated": false,
+  "failures": [],
+  "errors": []
+}

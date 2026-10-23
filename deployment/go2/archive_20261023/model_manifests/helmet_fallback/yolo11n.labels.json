@@ -1,0 +1,16 @@
+{
+  "labels": [
+    "Hardhat",
+    "Mask",
+    "NO-Hardhat",
+    "NO-Mask",
+    "NO-Safety Vest",
+    "Person",
+    "Safety Cone",
+    "Safety Vest",
+    "machinery",
+    "vehicle"
+  ],
+  "source": "ONNX embedded names metadata",
+  "model_sha256": "1eb7911cbfcae972da752a7cd9d3939c8e060f0bf0f7e8b4d0ab6cd979703165"
+}

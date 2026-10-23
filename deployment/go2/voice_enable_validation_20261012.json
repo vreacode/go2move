@@ -1,0 +1,30 @@
+{
+  "observed_at": "2026-10-12T09:47:42+08:00",
+  "onsite_confirmed": true,
+  "voice_enabled": true,
+  "audio_connected": true,
+  "asr_model_available": true,
+  "motion_enabled": false,
+  "microphone_probe": {
+    "seconds": 2.0,
+    "frames": 101,
+    "samples": 32000,
+    "sample_rate": 16000,
+    "rms": 1250.7171910922748,
+    "intent": "uncertain",
+    "executed": false,
+    "speech_returned": false
+  },
+  "offline_synthesis": {
+    "verified": true,
+    "sample_rate": 22050,
+    "duration_seconds": 2.527936507936508
+  },
+  "physical_speaker_output_verified_this_session": false,
+  "validation": {
+    "frontend_build": "passed",
+    "ui_cases_passed": 11,
+    "backend_cases_passed": 5
+  },
+  "automatic_service_start_enabled": false
+}

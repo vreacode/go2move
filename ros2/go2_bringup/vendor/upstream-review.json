@@ -1,0 +1,30 @@
+{
+  "policy": "Reuse upstream implementations before creating adapters; backup before all changes",
+  "reviewed": [
+    "go2_robot README, dependencies.repos, Issues 34/41/42/50 and dependency source branches humble/foxy-devel/humble-devel",
+    "unitree-go2-slam-nav2 README, launches, Nav2 params, sport_ctrl and issues",
+    "autonomy_stack_go2 README, PointLIO configs, transform_everything, pathFollower and issues"
+  ],
+  "reuse": {
+    "robot": "Official Unitree URDF and meshes",
+    "hesai": "go2_description 6d8b497994c6ccb0e814fdaafb02aed37254745b: robots/go2_description.urdf.xacro xyz .15/0/.12 yaw pi/2, sensor mesh reused with license",
+    "converter": "pointcloud_to_laserscan Foxy branch upstream",
+    "slam": "slam_toolbox foxy-devel upstream 4786e90c06a4dc6fa811c5057d4e88387fba3829",
+    "nav2": "Existing Foxy NavfnPlanner/RegulatedPurePursuit/LifecycleManager, upstream Go2 launch and parameter patterns adapted"
+  },
+  "necessary_adapters": [
+    "Go2 UDP reader bound to existing secondary address 192.168.123.99; local TCP middleware without sysctl changes",
+    "Receive-only state conversion of existing Unitree LowState/SportModeState; no sport request, joy, cmd_vel endpoints",
+    "NX receive-time stamping because hardware sport clock differs by ~1774 seconds",
+    "Planar odom/base_footprint decomposition; fixed lidar transform owned only by URDF/RSP",
+    "Node startup staggered and discovery avoids self peers and redundant bidirectional initial peer connections"
+  ],
+  "slam_choice": "2D slam_toolbox is minimal Foxy-compatible first working mapping path using XT16 projected scans and existing dog odometry. h-naderi RTABMap ICP is a future 3D alternative, requires dependencies; CMU PointLIO defaults require calibrated L1 IMU/data formats and include motion interfaces, not a drop-in XT16 solution. No custom SLAM implementation.",
+  "limits": [
+    "Physical yaw/translation calibration is baseline reuse, not precision calibration",
+    "Static initial map; traversal/loop closure not tested",
+    "Go2 sport error_code 1001 passed through without interpretation",
+    "No robot movement; Nav2 cmd_vel isolated as /nav2/cmd_vel_preview with no Unitree bridge",
+    "Remote desktop RViz rendering slower than sensor stream; initial known RViz shader warning does not prevent displayed map"
+  ]
+}

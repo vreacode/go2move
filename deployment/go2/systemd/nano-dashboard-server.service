@@ -1,8 +1,7 @@
 [Unit]
 Description=Go2 data-only dashboard server
-After=network-online.target tailscaled.service nano-board-agent.service
+After=network-online.target tailscaled.service
 Wants=network-online.target
-Requires=nano-board-agent.service
 ConditionPathExists=/home/unitree/go2move/deployment/go2/go2.env
 
 [Service]

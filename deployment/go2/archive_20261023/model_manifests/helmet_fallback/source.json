@@ -1,0 +1,7 @@
+{
+  "repo": "https://huggingface.co/yihong1120/Construction-Hazard-Detection",
+  "revision": "212ee245136b4e330f84b409f67f3d35eff59f42",
+  "license": "AGPL-3.0",
+  "original_cart_weights_found": false,
+  "purpose": "Demo fallback, not the original cart model"
+}

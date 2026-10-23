@@ -1,0 +1,816 @@
+原训练安全帽模型接入（2026-10-23）
+- 从 /home/unitree/go2move/models.rar 的 models/helmet.pt 提取用户原训练 YOLOv5s 权重，原文件不变；模型类别为 helmet、head。
+- 复用项目原 YOLOv5 源码在独立 Python 工具环境导出 ONNX，生产服务继续使用本机 TensorRT FP16；未向现有 .venv、ROS 或系统 Python 安装/升级 torch。
+- 配置 deployment/go2/config/helmet_model.json 选择原模型；备用 YOLO11n 文件保留。源文件/配置修改前已使用既有平台备份工具备份。
+- 适配 YOLOv5 的 objectness×class 概率、独立类别 NMS、letterbox 坐标，以及原导出含三个辅助头时选择最终预测输出。编译采用现有卷积策略，关闭耗时的 JIT 卷积候选；生成缓存后不重复编译。
+- 输出对齐：14 个检测与 PyTorch 对应，最小框 IoU 0.9887，最大分数差 0.0061。FP16 编译有少量极小权重转换告警，此样本数值验证通过，不等同全量精度认证。
+- 24 项相关 Python 测试通过（6项新增解码/哈希/类别映射测试），安全帽 UI 测试与生产前端构建通过；页面显示“原训练安全帽模型”。
+- 连续 60.10 秒真实输入、隔离记录验证：298 帧，4.96 Hz，最大采集帧间隔 0.424 秒，最大处理完成时图像龄 0.471 秒，零错误。空场实测不代表多人现场精度/帧率保证。
+- 三张公开样图原模型待确认数为5/4/0，备用模型20/4/2；第一张总人数分别18/24（备用模型还补充Person框），这只是功能样例，不能当成统一标注的准确率对比。个别历史人物裁剪仍有漏检/错分风险；不能承诺消除全部待确认。
+- 三帧连续确认、头部归属检查及遮挡待确认机制保持不变。未将未检测到帽子直接视为违规。
+- 服务已切换并通过本地/鉴权代理检查，原目标照片和11条安全帽记录保留。恢复切换前停止状态，模型已加载。
+使用：刷新网页 → 安全帽多人识别 → 确认“模型：原训练安全帽模型” → 开始识别。
+现场最少验收：一人戴帽一人不戴帽，头部完整入镜各保持几秒，再试多人重叠/转身。先核对真人是否正确，不以模型分数代替正确率。
+未发送运动、姿态或语音指令。D435i、雷达、SLAM及网络配置未变。
+证据：/home/unitree/go2_ros2_ws/validation/helmet_original_20261023
+
+照片找人目标列表与画面刷新优化（2026-10-23）
+已完成：
+- 拍照、上传、描述目标自动进入持久目标列表；切换目标不覆盖旧照片。支持名称搜索、缩略图、发现次数与重新选用。
+- 导入当前参考与已有发现记录里的参考照片；当前共2个目标、7条发现记录，原目标及原记录ID保留。
+- 支持删除目标和单条发现记录。删除目标保留历史证据；删除发现记录保留目标。删除当前目标会停止本次查找，不会自动恢复。
+- 删除前备份；目录中的已删照片保留供恢复，不承诺安全擦除。已删条目不再经列表、选用或图片接口访问。
+- 找人/安全帽前端刷新间隔统一250ms，安全帽记录查询改为每3秒；找人记录刷新亦节流。机身相机采集仍5FPS，未提高USB/SDK采集负载。
+- 照片找人推理循环缩短等待，并使ByteTrack保留时长匹配5FPS上限；没有改变匹配阈值及三帧确认规则。
+验证：
+- 97项Python回归通过，其中7项是新目标列表/删除生命周期测试；目标列表、12项找人UI和安全帽录像交互测试通过；生产前端构建通过。
+- 真浏览器：找人画面约3.6至4.0次/秒更新；安全帽约8秒录像得到29至34帧，均可完整解码。手机端列表正常，无横向溢出。
+- 60次、约59秒空场采样：安全帽处理约4.21Hz，采样最大画面龄约0.458秒，零接口/推理错误。这不是多人场景精度或长期稳定性保证。
+- 真实接口鉴权无Token返回401，目标照片/状态/记录均200。真实用户数据未用于删除测试，删除在隔离目录验证。
+当前：机身相机、安全帽识别、Dashboard运行；照片查找未自动启动；闲置D435i采集/缓存服务已停止，未改其配置或自启状态。无运动/语音指令。
+操作：刷新网页→照片 / 描述找人→目标列表；点“选为目标”后再开始查找；目标卡和发现记录卡均有删除按钮，需要在页面中确认。
+修改/新增：person_targets.py、person_target_actions.py、person_search.py、person_history.py、person_history_actions.py、Dashboard server/app.py、Go2TargetLibrary.tsx、Go2PersonPanel.tsx、Go2HelmetPanel.tsx、相关测试和前端dist。
+源码修改前已按原备份机制保存；历史SQLite迁移和删除使用一致性数据库快照备份。
+证据：/home/unitree/go2_ros2_ws/validation/target_library_20261023/
+
+【2026-10-23 D435i 换端口复测】
+D435i 换端口复测，2026-10-23
+已读取真实 RGB、原始深度及对齐深度，USB 3.0 5000Mbps，物理端口2-2.2（此前2-2.3-3）。型号D435i，非D455i。
+仅启动已有go2-depth-camera.service，无配置/固件修改、无USB重置、无运动指令。机身相机安全帽识别源保持native。
+60秒观察：RGB 10.96Hz，原始深度9.16Hz，对齐深度8.93Hz，640x480；时间戳无倒退。最后原始深度有效89.44%，对齐深度有效97.51%，当前画面近处木板，深度中位数约0.58m。
+同步缓存60次采样均通过RGB-D配对校验，约3帧/秒，采样最大帧龄1.70秒。运行累计fps受先前长时间断流影响，不代表当前缓存速率。
+仍有USB控制传输错误/流启动失败和endpoint132看门狗报错，RGB最大帧间隔1.08秒；可读取但不满足本次严格稳定标准。不将订阅端收帧速率等同USB丢包数。本次未验证IMU/点云，配置中二者关闭。
+建议：安全帽检测先继续使用机身1920x1080画面；稳定后使用D435i彩色+对齐深度测距，为后续跟随提供距离，需先解决USB卡顿并验证安装外参。当前不启用移动跟随。
+详细证据：/home/unitree/go2_ros2_ws/validation/depth_reconnect_20261023/stream_check.json
+彩色实拍：/home/unitree/go2_ros2_ws/validation/depth_reconnect_20261023/rgb_latest.jpg
+
+视觉稳定性/完整性检查（2026-10-23，最新验收）
+- 用户要求自行检测；空场连续179秒约4.08Hz/零接口错误，全部修复后再连续59秒约4.19Hz/零错误，采样帧龄最大0.55/0.53秒。
+- 发现并先备份修复：落盘失败内存幽灵记录、静止同像素新帧不累计、Helmet启动取消保存目标恢复、Helmet错误串扰照片找人状态。
+- 58项Python回归通过；真实模型公开样例隔离验证通过；三轮视觉起停通过。
+- 独立Firefox110真实桌面/手机页面、5秒WebM录制下载、VP8逐帧解码及JSON导出通过，无横向溢出；临时profile/登录已清除，未动用户浏览器。
+- 原参考照片已恢复、/target.jpg HTTP200、7条历史保留；当前安全帽检测运行，照片找人未启动，无运动/语音命令、无自启动修改。
+- 仍用机身相机，D435i USB问题未处理；现场唯一帽子两人/三人试拍和长遮挡效果、长时运行仍待验收。
+- 报告HELMET_STABILITY_REPORT_20261023.txt，摘要helmet_stability_validation_20261023.json，证据/home/unitree/go2_ros2_ws/validation/helmet_stability_20261023。
+
+Dashboard Internal Server Error 修复（2026-10-23）
+- 用户页面报Internal Server Error；复现/api/camera/status HTTP500，安全帽/status/records/preview一直HTTP200。
+- 根因：视觉启动脚本漏启本机nano-board-agent.service，Dashboard旧的设备状态请求ConnectError未处理。
+- 已确认现有Agent配置go2_data_only=true、enable_motion_control=false、motion_control_mode=dry_run，启动只读Agent；未改配置或自启动。
+- 修改前备份start_helmet_demo.sh、start_go2_media.sh，两者补启nano-board-agent；server/app.py增加RequestError→明确503响应，避免泄露底层错误。
+- 新增test_dashboard_unavailable.py通过，两个脚本bash语法通过；重启Dashboard后验证系统状态、相机状态、媒体状态、安全帽状态和预览均HTTP200。
+- 安全帽检测持续运行；未发送运动/姿态/语音命令。用户刷新前端以清掉旧的初始报错。
+
+安全帽多人视觉整合（2026-10-23，最新任务范围）
+- 用户要求整合安全帽多人识别、未戴者自动记录与画面追踪，移动跟随暂不推进。
+- 原小车helmet.pt在本机未找到，采用固定revision开源YOLO11n PPE ONNX，本机TensorRT FP16编译并核验10类嵌入metadata与SHA256。
+- 复用YOLOX+ByteTrack，三帧明确未戴才逐人记录；头部遮挡/关联歧义均待确认，独立截图与证据不会覆盖原找人历史。
+- 桌面/手机端统一视觉入口，新增人数/状态/轨迹、导出和浏览器Demo录像按钮。录像真实浏览器编码及现场帽子道具尚未验收。
+- 15项新增Python+27项原找人回归、界面模拟点击/录像测试、前端构建通过；真实模型公开样例独立记录链路通过，未混入线上历史。
+- D435i本轮USB断开后重新枚举，重试set_xu资源不可用；明确切换到稳定机身摄像头做本轮RGB视觉，未继续折腾相机硬件或修改固件。
+- 当前启动bash deployment/go2/start_helmet_demo.sh，默认native，--rgbd可选；只启动静止视觉与Dashboard，无运动/音频命令、无自启动修改。
+- 报告HELMET_DEMO_REPORT_20261023.txt；汇总helmet_demo_validation_20261023.json；公开样例证据在/home/unitree/go2_ros2_ws/validation/helmet_demo_20261023/。
+- 下一步现场两人/三人一顶帽子试拍，每组头部完整入镜停留5秒，然后缓慢左右移动验证编号；机器狗保持静止。
+
+媒体启动深度相机修复（2026-10-21）
+- start_go2_media.sh 旧版未启动 depth/rgbd 服务，USB 已识别但服务 inactive。
+- 修改前备份；入口现复用 start_person_rgbd.sh，默认启动 D435i RGB-D 并验证新鲜画面后选择来源；--native 可切回机身相机。
+- 补上桌面终端用户 D-Bus 地址处理；未就绪不静默回退，不改自启动。
+- 本轮已启动 RGB-D/找人服务。三次 JPEG HTTP200、640×480、帧43→53、匹配深度通过，缓存约1.3Hz（不是原始ROS频率）。
+- 已检查 bash 语法；未执行运动、姿态或语音命令。既有暂停条件不变。
+
+D435i 深度寻人接入（2026-10-18T21:47:26.078914+08:00，当前相机来源以本节为准）
+- 用户要求现在接入，参考 Unitree-Go2-Robot/go2_robot；已复用标准 RealSense 驱动思路并使用既有 Foxy 适配。
+- 当前找人使用 D435i 640×480 彩色＋对齐深度，候选前向距离随照片保存并在网页显示；校验不匹配则无距离。
+- Python 73 项、界面 12 项和前端构建通过；30 秒预热实机流检查、8 帧真实相机＋检测模型链路通过，无现场人物。
+- 原目标、4 条历史及照片保留；服务已切换并运行，未启用运动/音频或修改自启动，当前任务未开始。
+- 未标定机身外参，只有相机光轴 Z 深度；真人测距、冷启动可靠性、移动寻人实机验收待完成。
+- 启动 bash deployment/go2/start_person_rgbd.sh；退回机身相机加 --native；活动任务须先结束再切换。
+- 报告 DEPTH_SEARCH_INTEGRATION_REPORT_20261018.txt；机器汇总 depth_search_integration_validation_20261018.json。
+- 证据目录 runtime/validation/rgbd_integration_20261018/（项目根目录 runtime，不是 deployment/go2/runtime）。
+
+核心寻人收尾（2026-10-18T21:13:44.499011+08:00，优先于下文辅助功能建议）
+- 用户要求尽快收尾重要工作；已降低“停止原因展示”等辅助工作优先级，遥控器问题归官方。
+- 已启动现有native-camera/person-search，真实1920×1080约5fps；未改自启动和运动暂停，未发送动作或音频指令。
+- 修复人工否认后重复候选、其他人被并入旧记录；按当前任务排除已否认轨迹，换轨迹独立记录，拒绝旧在途结果。
+- 核心80项+真实模型历史4项通过；公开样例真实模型HTTP流程从上传到确认、照片保存、重启保留通过。
+- 修复已重载person-search；原目标和4条发现历史保留，公开样例未写入线上历史。
+- 收尾报告：SEARCH_CORE_CLOSEOUT_REPORT_20261018.txt；机器汇总：search_core_closeout_validation_20261018.json。
+- 当前可用：静止拍照/上衣颜色找人、候选确认/否认、照片与历史记录；移动寻人实机闭环、现场真人效果及自由语言规划仍待完成。
+- 后续优先核心任务验收，不把附加诊断页面或遥控器维修当作主线。
+
+项目范围修正（2026-10-18T20:55:18.639234+08:00，优先于下文旧的下一步建议）
+- 用户明确：遥控走不动属于遥控器/宇树官方的问题，不建议项目修改，与本项目无关。
+- 后续不安排遥控器故障排查、修补或固件修改，不把“先修好遥控器”列为软件推进的前置任务。
+- “官方通病”为用户提供的背景，本轮未独立核实，不将其写成项目诊断结论。
+- 下一项聚焦项目自身：将自动任务停止原因显示到网页并写入任务报告；每轮交付实际改动、验证结果和简短报告。
+- 本次仅修正项目范围与交接说明，未修改控制逻辑、服务或既有运动暂停设置。
+
+导航/建图写入器健康门禁补齐（2026-10-18T20:41:45.569313+08:00，本节为本轮软件推进）
+- 用户要求继续推进项目，每轮都必须有实际价值并提供报告；后续轮次保持“改动→验证→报告→交接”。
+- 通用ROS2/SDK2写入器接入复用健康门禁；过热/故障/遥控接管/陈旧输入停止并锁存，静止观察或尚未首次运动时也不能自动恢复。
+- 子进程独立时限1..60秒；ROS退出先取消运动定时器，再处理停车回执。未改变自主行走/扫描专用门禁。
+- 原有71项与新增15项通过，共86个不同测试方法；实际SDK解释器8项纯门禁通过。
+- 人类报告：NAVIGATION_HEALTH_GUARD_REPORT_20261018.txt；机器报告：navigation_health_guard_validation_20261018.json。
+- 原有改动保留，源码先备份；无真实DDS、机器人指令、服务切换或运动解锁。软件通过不等于实机导航通过。
+- 下一项：把guard_reason透传到导航任务/前端并验证；既有手动行走异常与运动暂停仍有效。
+
+PPT与手机界面设计素材（2026-10-18T20:27:31+08:00）
+- 用户要求按AirStar参考PDF提供PPT设计素材，并询问是否需要App界面。
+- 设计方向：复用现有前端做手机网页入口；蓝白配色沿用FRONTEND_STYLE.md。本轮未部署或修改线上前端。
+- 素材目录presentation_assets/seeklight_20261018：5张讲演页（项目总览、手机界面、架构、演示流程、研究切入）、4张独立手机界面（任务/搜索/复核/记录）、透明Go2概念插图；含PNG与SVG。
+- 附5页矢量PDF和5页PNG排版PPTX；PPT页内文字未拆成原生文本框，SVG保留文字/图形源信息。界面、人物、地图和数值均为设计示意，不是实机运行证据。
+- Qt生成图片已逐页目视检查；PPTX由独立LibreOffice临时profile导出，验证ZIP/5页XML并重新打开渲染；未修改办公用户profile或安装依赖。
+- build_assets.py可重新生成，使用说明.txt解释现有基础/待联调边界。全部素材修改前通过go2_platform_write备份。
+- 本轮没有启动/停止机器人服务、发布运动/导航/音频命令，既有运动暂停仍有效。
+- 此前10月14日导航准备在阅读旧保护逻辑后被用户切换任务打断，本会话当时未实施承诺的导航温度/故障/手柄保护补齐或实机验收；后续应检查实际代码再继续。
+
+遥控也无法正常行走，只读排查与散热暂停（2026-10-16，最新状态）
+- 用户在“遥控是否能够正常迈步”的问题后回复“无法正常行走”。当前手动行走前提
+  未满足；暂停SDK试走，不继续升速，也不把先前机身位移视为步行成功。
+- 本轮仅只读查询和订阅，没有运动/姿态/步态/模式/服务切换指令。
+  主机快照：已知运动进程为空、运动写入锁可用，所查本地ROS运动话题发布者为空。
+  该结论仅覆盖已查主机及ROS域，不能排除其他设备或本体控制源。
+- 原生low/sport持续接收，12电机故障码零；运控mcf，版本1.0.0.1。
+  只读查询原生避障enable=true，未关闭或修改；不能据此确定不迈步的原因。
+  GetState数据空、速度档位-1及服务status原值均不证明行走就绪或某服务异常。
+- 使用机器人直连DDS后，8秒收到L1点云123帧、状态40帧，雷达error_state零、
+  上报点云丢包率零。先前本地平台DDS的零帧不能用于判断雷达故障。
+  雷达有数据不代表避障判断正确；不解释未核实单位的原始IMU/转速及全零range_obstacle。
+- 后续90秒只读窗口low1798、sport1799，遥控轴全零，两个独立wireless话题零帧。
+  用户未确认在此窗口实际推杆，不能因此断定遥控器损坏；输入检查已因温度暂停。
+- 最新保存健康快照为趴卧约0.0665米、最高68℃、12故障零、motion_allowed=false。
+  已请保持趴卧散热；温度超过自主启动门槛，但不能断言它是最初不迈步的原因。
+- 尚待现场反馈：宇树App的报警文字/错误码（或明确无报警），以及手动控制时是
+  只晃动不抬脚、抬脚不稳，还是完全无响应。未收到这些信息前，不重复要求站起试走。
+- 证据runtime/autonomy/diagnosis-20261016T034359338596Z/，
+  汇总autonomy_manual_failure_diagnosis_20261016.json，说明GO2_WALKING_DIAGNOSIS.txt。
+  控制代码本轮未改，80项已测源码哈希全部一致；没有以软件测试代替实机验收。
+- 下文按时间保留历史，旧“尚未执行/授权保留/等待站起”均已被最新结果覆盖。
+  一次0.10米/秒、8秒标定已执行且未迈步，不自动安排额外提速、切模式、关避障或重启。
+
+0.10米每秒标定完成但未迈步（2026-10-16，历史记录）
+- 用户回复“已节所站稳”，按“已解锁站稳”理解；实测站高0.320米、MCF100、
+  最高64℃、故障零、遥控归零，净空0.890米。80项已测源码哈希一致。
+- 完成已明确授权的0.10米/秒、8秒、1米半径、只前进标定。非零命令约3.57秒，
+  指令在0.10上限约2.64秒，里程计最大变化0.0802米；无前进->停稳振荡或启动异常。
+  用户明确回复“没有迈步”，脚部受力记录始终有载荷。不能视为实际步行或避障验收。
+- 三次零Move/StopMove均0，瞬时退出水平速率仍0.0650米/秒；已请手柄趴下休息。
+  后续只读2秒已是趴卧约0.0667米，三维速率最大0.000000846米/秒、12故障零，
+  最高64℃。该窗口确认当前停稳，不证明没有手柄干预的自动制动距离。
+- 证据runtime/autonomy/calibration-20261016T033253627817Z/（execution.json、
+  stopped_readonly.json、authorization.json），汇总autonomy_calibration_010_result_20261016.json。
+  这次0.10前进标定已实际执行；不能擅自再执行额外的提速或改姿态/步态试验。
+- 当前假设包括低速未触发迈步，但根因未确认。提高SDK速度之前已异步请用户先散热，
+  之后仅用遥控在空旷平地向前走1至2步并停稳，反馈“遥控能正常迈步/也不能迈步”。
+  目前尚未收到该项反馈。应先区分本体/运控状态与SDK低速阈值，不反复让用户仅站起。
+- 运行/tmp/go2_manual_walk_observe.py仅订阅原生low/sport 90秒，采样各1798、无解析错误；
+  键值[0,32,288]为本次卧倒相关输入，全部摇杆零，没有记录到手动前进。
+  raw证据同目录manual_walk_readonly.json；该只读观察进程已结束，无遗留运动进程。
+- 软件源码本轮未修改，80项回归仍为已测版本。更高速度未获授权；若确需提高，
+  先做好短时、独立位移限制的可审阅方案，再请求明确的新参数授权。
+  当前自主迈步/自主避障尚未完成，不把软件completed=true等同于步行成功。
+
+锁定站立预检修正与手动解锁准备（2026-10-16）
+- 用户本次“ok了”后确实站起约0.330米，79项源码哈希一致，净空0.869米、故障零。
+  执行已明确同意的0.10米/秒、8秒、1米范围、只前进标定；约4.1秒在启动准备时中止。
+- 未发出非零前进Move；MCF初始1002，零速度/StopMove使其转100并调整机身，触发原有
+  0.20米/秒实测速度门禁。不能将此认作0.10迈步实验，也不自动放宽门槛或重试。
+  三次停车应答0；之后只读2秒窗口最大三维速率0.0206、最终水平速率0.00040米/秒，
+  12电机故障零，温度64℃。已请用户手柄趴下休息；最后健康读取仍站立约0.321米。
+- 本次原始证据runtime/autonomy/calibration-20261016T032213923949Z/（execution.json、
+  stopped_readonly.json、authorization.json）；汇总autonomy_calibration_execution_20261016.json。
+- 核实宇树官方双手遥控器手册第8页：L2+A是站立锁定/卧倒，单按START是解除锁定/默认步态。
+  手册https://marketing.unitree.com/article/zh/Go2/Handheld_Remote_Control.html
+  按键表https://doc-cdn.unitree.com/static/2025/12/22/7b370601b51d4db097b4dc646b153e2d_2481x3509.png
+  已在/tmp/go2-official-remote-page-7.png实际查看；勿指示L2+START（该组合是跑步）。
+- 修正父进程健康预检及原生AutonomyGuard：本机实测MCF1001/1002锁定状态直接拒绝；
+  不再靠零速度/StopMove解除该锁定，取消1001/1002->100准备转换例外，原速度/姿态等门禁保持。
+  80项回归通过，证据autonomy_unlock_validation_20261016.json；未实机验证修正版。
+  备份/tmp/go2-autonomy-unlock-before-20261016，无遗留运动进程。
+- 已异步请现场先趴下散热，之后站起并单按START解锁、摇杆归零，回复“已解锁站稳”。
+  必须收到这项具体准备确认或取得明确的现场解锁证据，不能仅据旧StopMove留下的100认定
+  用户已经按START。当前0.10米/秒、8秒标定授权保留，不要再请求相同许可。
+  后续先确认温度/站姿/遥控/净空并使用新目录，才继续尚未完成的只前进标定。
+  自主迈步、实机避障仍未验收，不能把小幅机身移动或假SDK测试当作物理成功。
+
+单次起步标定已获授权（2026-10-16）
+- 用户明确回复“同意”：只授权一次0.10米/秒、最多8秒、半径1米、只前进、遇障停止标定。
+  授权已记录，禁止下轮重复请求相同许可；此次非零速度尚未执行，授权未被消耗。
+- 最新79项软件回归通过，源文件哈希未变化。只读等待120秒仍趴卧约0.067米、
+  最高61℃、12故障零，站姿门禁未放行，没有运动指令或姿态命令。
+- 本次目录runtime/autonomy/calibration-20261016T031912819957Z；authorization.json与
+  standing_clearance.json记录本次授权和未通过的站姿检查。只读等待进程已退出，没有遗留控制进程。
+- 已请用户遥控站稳并保持、人员退后约2米，实际站姿/遥控/温度/净空满足后即可直接执行
+  已授权标定，不需再询问笼统许可。下一轮重新只读核验，使用新的证据目录，不覆盖本次文件。
+- 完整参数、未迈步观察及历史成功对照见下文。autonomy_step_diagnosis_20261016.json
+  的next_calibration授权已更新true，executed仍false。
+
+持续指令未迈步的定位与标定准备（2026-10-16）
+- 用户“ok了”后实测站高0.330米、最高56℃、故障零、遥控归零，净空0.860米。
+  按已确认0.08米/秒、1米半径、最多20秒运行；实际约12秒退出。
+  runtime/autonomy/onsite-20261016T031134945769Z/execution.json。
+- 前进期间没有再次进入settling，非零上限0.08持续约5.88秒；仍然5秒无进展而停。
+  最大里程计变化0.0651米，实测水平速率峰值0.0922米/秒。用户随后明确确认：
+  “机身前倾或晃动，脚没有迈步”。不能算实际步行，更未验收实机自主避障。
+- 退出三次停车应答0，但瞬时速度仍0.0517米/秒；额外三次StopMove均0后只读观察2秒，
+  最大三维速率0.000000862米/秒、最高58℃，已确认停稳。
+  只读证据同目录stopped_readonly.json。后来仍站立约0.307米，最高61℃，已请用户手柄趴下休息。
+- 对照历史SDK2以0.20米/秒指令确实前进约0.205米的记录，当前低速不起步属于待证假设，
+  没有自动升速或切模式/步态/BalanceStand，也没有执行以前的0.20米/秒动作。
+- 已异步请求一次明确的新速度授权：0.10米/秒、最多8秒、半径1米的只前进标定。
+  当前授权尚未收到。普通“ok”若是在明确回应这项请求，可作为该次标定的同意，
+  仍须实际站姿/遥控/温度/净空满足，禁止把预选选项当作已同意。
+- 已实现--forward-only：父进程遇到需要转向/受阻就结束，原生进程也拒绝任意非零yaw；
+  两层均拒绝超过8秒；增加native_low脚部受力与关节状态采样。原自主限速上界仍0.10。
+  79项软件回归通过，尚未执行0.10标定。完整命令：
+  bash deployment/go2/start_local_autonomy.sh --execute --onsite-confirmed --forward-only --radius 1 --speed 0.10 --duration 8 --output <新的证据路径>
+- 证据autonomy_step_diagnosis_20261016.json、autonomy_calibration_validation_20261016.json；
+  备份/tmp/go2-autonomy-calibration-before-20261016。没有遗留运动进程。
+
+前进期间反复停车修正（2026-10-16）
+- 站姿和净空检查通过，最近扫描0.855米；执行已确认的半径1米、0.08米/秒、20秒复测。
+  证据runtime/autonomy/onsite-20261016T030241280Z/execution.json。
+- 启动同步此次成功，非零Move确实发出；里程计最大离起点约0.0618米，但前进->停稳21次，
+  因原几何决策在每次前进周期都检查偏航速率0.035门槛，引起走停振荡。
+  未验收稳定行走，也未观察到障碍驱动转向。指令上限0.08，实测瞬时水平速率峰值0.182米/秒。
+- 到时退出，三次零速度/StopMove均0；原生最终水平速率约0.000001米/秒、yaw零，12故障零。
+  已通知用户手柄趴下，遥测确认高度0.067米、最高59℃，无自主控制进程持续运行。
+- 修正纯决策：停稳门槛只用于起步和已发起的转向结束；转向结束连续0.25秒停稳才再前进。
+  正常前进保留原障碍/速度/位移/姿态/遥控保护；增加与原生一致的0.30弧度/秒偏航上限。
+  75项软件回归全部通过；该修正版尚未实机验收。备份/tmp/go2-autonomy-walking-before-20261016。
+- 证据autonomy_walking_execution_20261016.json、autonomy_walking_validation_20261016.json。
+  现场监护和同限速、最多20秒复测授权延续；已异步请用户站稳后继续，不重复索要笼统许可。
+- 修正后只读等待120秒，仍趴卧约0.067米、最高56℃、12故障零；未再次执行运动。
+  runtime/autonomy/onsite-20261016T030726008024Z/standing_clearance.json记录ready=false、命令数零。
+  当前没有等待/控制进程遗留；下轮先实际确认站稳与净空再继续同限速复测。
+
+同步后的停稳等待修正（2026-10-16）
+- 用户再次确认后，实测站高0.330米、最高约51℃、故障零，最近扫描0.849米；
+  进行了同限速20秒执行准备。非零速度尚未发出，就因同步后暂时未停稳而中止。
+- 同步前MCF状态1002，零速度/StopMove应答0后变100；原生速度短暂约0.062米/秒，
+  yaw约0.113弧度/秒，里程计最大变化约4.46毫米。属于启动同步阶段观察，未验收行走。
+- 立即用native_stop.py补发三次StopMove，均code0，结束无关节故障；请用户手柄趴下休息。
+- 修正启动等待：仅在已发停车同步的有界阶段允许实测的1001/1002->100转换；
+  保留原位置/tick/丢包/温度基线，不再每周期重新创建guard。
+  同步后至少0.75秒且连续0.5秒速度<=0.025米/秒、yaw<=0.04才就绪。
+  其余姿态/温度/故障/遥控等门禁保留；3秒未停稳或准备位移>0.08米中止。
+  一旦尝试过停车同步，即使没有非零Move，退出也补发三次停止请求。
+- 新增真实短暂速度反馈与准备超时等假SDK用例；72项软件测试全部通过。
+  实机效果仍待站稳后再次同限速、1米半径、最多20秒复测，不需要再次索要笼统授权。
+- 当前用户已趴卧休息，最高温度约53℃、故障零；只读等待站稳中，没有再次非零请求。
+- 证据autonomy_settle_execution_20261016.json、autonomy_settle_validation_20261016.json；
+  修改前备份/tmp/go2-autonomy-settle-before-20261016。未改变运控模式、步态、站起策略。
+
+第一次执行尝试及启动同步修正（2026-10-16）
+- 用户清场后，趴卧净空曾达到约0.687米，随后站立净空约0.727米、温度约58℃、故障零。
+  在已说明的1米/0.08米每秒/最多30秒范围内执行一次尝试。
+- 执行请求发出后5秒无有效里程计进展，自动停车；最大位移约0.000646米，
+  三次零速度/StopMove均成功。不能将motion_started=true解释成实际行走成功。
+- 只读SDK查询：sport版本1.0.0.1，运控mcf，速度档位返回-1，GetState成功但data空。
+  起立后状态未准备好是待证假设，尚未确认根因；没有切换运控、改步态、提高速度。
+- 新增autonomy启动阶段：健康站立且收到零速度后先零速度/StopMove同步，
+  等待至少0.75秒后建立执行基线；同步拒绝或异常禁止非零请求。
+  增加同步前后状态、实际里程计和SDK请求记录；相关假SDK转态/故障回归通过。
+- 复核发现第一版安全圆误用0.25米半宽，已修正为nav2_motion_test.yaml的完整轮廓：
+  +/-0.45米、+/-0.35米并包含0.01米padding；当前净空0.704123米。
+  新增直接读取导航配置的回归。此前JSON阈值保留历史证据，不改写成修正版。
+- 修正版68项软件测试通过；没有将假SDK验证当成实机修复成功。
+- 用户已遥控趴卧休息，温度降到约55℃；修正后只读等待120秒期间仍趴卧，第二次执行未启动。
+  需要实际遥控站稳、人员离开约2米后复查净空，再做同限速、20秒复测。
+  未重复发送行走请求，既有现场监护与测试授权继续用于本任务；不要重复索要笼统授权。
+- 汇总autonomy_execution_validation_20261016.json，回归autonomy_revision_validation_20261016.json。
+  原文件备份/tmp/go2-autonomy-sync-before-20261016。物理自主避障尚未验收。
+
+现场低速试走准备与预检（2026-10-16）
+- 用户答复“可以完成”现场准备，随后遥测确认手柄已让机器狗站稳：高度约0.330米、
+  姿态正常、12电机故障码零、手柄归零。1米/0.08米每秒/30秒试走范围已说明。
+- 站立后只读预览仍拒绝：最近回波约0.455米；6秒三维采集59帧云/60帧扫描，
+  近点主要在右侧，0.45..0.635米范围内高度约0.286..0.633米；物理来源尚未现场确认。
+- 随后120秒仅监测净空，最近回波持续约0.45..0.49米，未达到保守0.635米净空。
+  未运行execute、未创建运动控制客户端，没有Move/StopMove/姿态/步态/导航目标指令。
+- 等待期间关节最高温度由约33℃升到56℃以上，无当前故障；已请用户先手柄趴下休息，
+  清开机身中心周围约1.5米的人员/物品，或核实右侧及前右回波的真实来源后再复查。
+- 不降低避障阈值、不随意屏蔽近点、不改变雷达外参；尚未完成物理行走与动态避障验收。
+- 证据autonomy_onsite_preflight_20261016.json，包含详细runtime/autonomy/onsite-*目录。
+  后续同一任务在场地与站姿确实满足后可继续已说明的单次低速测试，无须重复请求笼统授权。
+
+小范围自主行走与避障软件推进（2026-10-16）
+- 新增local_autonomy.py、run_local_autonomy.py、autonomy_guard.py及start_local_autonomy.sh。
+  默认半径1米、0.08米/秒、30秒；扫描几何预览与显式执行分开，完整用法见LOCAL_AUTONOMY.txt。
+- 前方受阻先停车再选安全方向原地转向；近边界向中心，过近/无路/传感器异常时停止。
+  复用原导航机身尺寸外接圆加0.12米净空，不缩小footprint；不倒退、不横移、不自动改姿态或步态。
+- 原生SDK增加autonomy独立遥测/位移/tick门禁；SDK和ROS测试writer共享锁，
+  超时、手柄接管、电机故障、过热等中止；停止应答写入报告，故障不自动恢复。
+- 64项软件测试全通过：局部几何、180秒运动仿真、源时间戳防重放、会话故障、
+  假SDK写入器及原扫描门禁回归；没有把仿真位移作为实机运动证据。
+- 已恢复health/platform/interfaces只读服务，均未启用自启动；深度相机未启动。
+  60秒验收雷达/scan约10Hz、odom约20Hz，扫描年龄最大0.168秒，无运动发布者。
+- 当前实机趴卧约0.066米，12电机故障码零；真实预览最近扫描点0.460米，
+  低于0.635米保守净空，正确拒绝运动。本轮没有真实运动/姿态/导航目标或声音指令。
+- 既有两次失稳及scan_policy双false记录保留；真正试走需处理此前失稳、稳定站立、现场监护。
+  用户本轮提出自主行走目标，未把静止软件验收标记为物理行走/动态避障验收。
+- 三份autonomy_*_validation_20261016.json保存证据；原文件备份/tmp/go2-autonomy-before-20261016。
+
+研究与展示方向确认（2026-10-14T17:08:53+08:00）
+- 用户指定33页图片型PDF“组合 1(1)(1).pdf”为后续展示参考，已逐页预览并详读系统架构/部署/总结/分层控制页。
+- 借鉴AirStar的“多模态任务→受限工具调用→地图导航与近距观察→证据反馈”；不将无人机飞行代码直接移植成Go2控制。
+- 展示主线：拍照/语音目标→去命名区域→多点停步观察→处理动态/遮挡→候选确认→停车播报与记录。
+- 论文暂定稀疏XT16遮挡/漏检的可观测性条件风险估计与安全导航；需近邻查新、基线与消融验证，非已完成创新。
+- 本机Foxy Nav2当前使用RPP，有DWB，没有已部署MPPI。先复用当前导航，后续单独评估研究控制器；未改ROS架构。
+- 当前只有网页后台active，主要感知/寻人/语音用户服务inactive；未在本轮启动、升级或执行真实运动/音频。
+- 已备份后保存详细路线deployment/go2/RESEARCH_DEMO_PLAN.txt；包含模块映射、最小演示、阶段验收与轮值交接字段。
+
+网页机身麦克风收听排查与修复（2026-10-12T11:25:55+08:00，本节为当前收听行为；后文为历史记录）
+- 用户反馈5秒收听听不清。检查最近录音均为16kHz单声道16位PCM，5秒/80000样本，无削波；
+  WebRTC在线，VUI enable=1。不能从这些指标认定麦克风硬件损坏或精确归因于风扇/距离。
+- 最新原录音11:03:01窗口RMS约1001..1351，总RMS1097，20ms窗口变化2.75dB。
+  固定词表识别为空，通用模型也只返回低置信度单字，约0.21；背景声主导/远距离人声为推断，尚无现场原话与距离。
+- 已确认网页转写模式被固定PHRASES限制：清晰公开中文样本被识别为[unk]、conf0；
+  同一样本通用模式转写conf约0.91。已修复 execute=false 时不加载指令词表；
+  execute=true 保留固定词表与0.65门槛。网页依然只转写，人工确认后才能执行，不增加自然对话模型。
+- 新增准备/收听/识别阶段，网页收听期间每500ms读取真实阶段；提示靠近机身，看到正在收听后说话。
+  标明声音来源为机器狗身上的麦克风。新增低音量/平稳背景声/不可靠转写提示，指标仅用于提示，不自动放宽执行门槛。
+- 录音器返回音量变化与input_source；最后一次识别与录音指标保存在runtime/voice/last_listen.json，status可读取。
+  收听与识别串行，并发收听返回409；录音失败/取消仍关闭接收开关，结束阶段回到idle。
+- 网页构建通过，后台18项、界面15项通过；已有原录音与清晰样本经真实本地ASR子进程对照通过。
+  沙箱内异步测试出现回调超时，沙箱外同一批隔离测试全部通过；实机服务识别子进程也完成。
+- 已重启go2-voice.service加载修复，网页新资产已实际HTTP核验；未改ASR模型或播报音色。
+  2秒机身实测101帧/32000样本，RMS1011、变化2dB，模式restricted_vocabulary=false。
+  这是无参考原话的链路检查，不能作为现场人声准确率验收；没有执行命令或播报，结束receiving=false、capture=idle。
+- 现场建议：机器狗旁约半米做对照，等待网页正在收听后说报告状态；记录原话、距离、显示结果后继续判断收音/模型因素。
+- 证据：voice_microphone_diagnosis_20261012.json；备份：/tmp/go2-microphone-diagnosis-x78pfydz。结束健康在线、无故障、动作继续暂停。
+
+成熟中文语音包与机身提示音导入（2026-10-12T10:56:17+08:00，本节为当前音色；后文为历史记录）
+- 已按用户要求从官方来源下载 Kokoro v1.1-zh 的 sherpa-onnx FP32 包；Apache-2.0，103说话人，100中文，24kHz。
+  官方模型：https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh
+  ONNX发布：https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/kokoro-multi-lang-v1_1.tar.bz2
+  压缩包 SHA256：a3f4c73d043860e3fd2e5b06f36795eb81de0fc8e8de6df703245edddd87dbad，下载后核对通过。
+- 模型与 sherpa-onnx/sherpa-onnx-core 1.13.8 位于 deployment/go2/runtime/tts 的隔离目录；未升级现有ROS、Python或系统SDK。
+  先试的INT8模型在两个音色产生NaN，未启用；FP32五种音色均通过有限样本与24kHz WAV检查。
+- 网页“机身播报音色”开放女声001/002/003、男声009/010，保留“原合成童声”。
+  当前选定 kokoro_zf001/中文女声001，设置持久化于 config/tts_settings.json。
+  官方没有儿童年龄标签，不能将这五个音色称为真人儿童声音；原eSpeak童声为备用选项。
+- 任意文字由NX离线合成，经过有效样本检查再通过现有AudioHub播报；模型释放GIL，在线连接心跳继续运行。
+  实测短句初次合成约9..18秒；相同文字与音色使用WAV缓存。缓存上限128条，神经合成失败会明确返回备用音色原因。
+- 已把打招呼、准备就绪、没有听清、发现提示四条WAV存入机身音频库；每条UUID经实际读取确认。
+  使用受限 go2_voice_pack_ 文件名，不纳入临时播报删除集合；重复导入复用四条，原有1条保留，最终音频库5条。
+  manifest：runtime/voice/imported_voice_pack.json；不会在导入时自动播放。
+- 已重启 go2-voice.service 与 nano-dashboard-server.service，未更改自启动。
+  重连时一次LAN signaling无answer；经现有播报接口重试恢复，未改网络或机器人固件。
+  “你好，我是小机器狗。”真实播报返回engine=kokoro、cached=true、delivered=true及AudioHub ACK；尚无用户听感反馈。
+- 网页构建通过、界面13项、后台12项通过；真实新增接口未认证请求均401，网页已服务新JS资产。
+  机身导入与重复导入验证通过；结束时只读遥测在线、无故障、最高40°C、趴下高度约0.066m，动作仍未解锁。
+- 证据：voice_neural_pack_validation_20261012.json；源码、旧dist、记录备份：/tmp/go2-neural-voice-4yqufkt3。
+  使用：刷新网页 → 机身语音助手 → 机身播报音色 → 输入文字 → 机身扬声器播报。
+
+机身中文童声设置（2026-10-12T09:58:25+08:00，本节为当前音色；后文为历史记录）
+- 用户要求把机身播报换成小孩音色。native_audio.py 默认改为 cmn+f4、pitch75、rate165。
+  使用本地eSpeak合成童声效果，仍有电子感；没有下载新的真人/神经网络音色。
+- 实际离线合成通过，22.05kHz单声道16位PCM，没有波形削波。
+- 已通过当前语音服务发送“你好，我是小机器狗。”试听，机器人AudioHub确认成功；
+  返回的新音色参数确认已生效。本次未取得用户对实际听感的反馈。
+- 修改后无需重启语音服务，每次合成子进程会读取新默认值；机身音频已开启，运动继续暂停。
+- 证据：voice_child_style_validation_20261012.json；修改前源码备份：/tmp/go2-child-voice-s7i1w71b。
+
+机身音频现场开启（2026-10-12T09:47:42+08:00，本节为当前状态；后文为历史记录）
+- 用户明确请求开启机身音频，并确认在现场、机器狗已稳定趴下。
+- media_policy.json voice_enabled=true，保留失稳事件与原暂停原因、automatic_resume=false。
+  已启动 go2-voice.service，未设置开机自启动。运动、姿态、导航的暂停策略继续保留。
+- 前端去掉固定暂停标志，按后台 voice_policy 开放按钮；状态请求超时8秒、每10秒刷新。
+  收听5秒只转写（execute=false/speak=false），写入可编辑指令框，确认后手动执行并播报。
+  收听失败或取消也关闭麦克风接收开关。
+- 真实音频连接成功；2秒麦克风检测收到101帧、32000样本，RMS约1251；没有清晰语句，未执行任务/播报。
+  中文Vosk模型加载通过，eSpeak离线合成通过；本轮尚未现场验证扬声器实际发声。
+- 网页构建、界面11项及后台5项测试通过；证据 voice_enable_validation_20261012.json。
+  源码、配置、旧dist和交接记录备份：/tmp/go2-body-audio-enable-1nnpe8y7。
+
+D435I确认与重启后相机复测（2026-10-10T20:13:15+08:00，本节为当前状态；后文为历史记录）
+- 用户确认相机为SDK识别的D435I，serial233622071429；型号差异已解决，不再以D455作为当前设备。
+  原生SDK重新读取D435I，USB3.2，FW05.13.00.55；未重置硬件、未刷固件。
+- 本机刚重启，原感知服务未自启动；本轮恢复health/platform/interfaces/depth-camera纯感知服务。
+  四个服务active/disabled，未开启自启动；标准驱动motion=false，无sport/request、cmd_vel、lowcmd发布者。
+  雷达/扫描/点云别名约10Hz，odom/joints/IMU约20Hz，map约1Hz；只读6项验收通过。
+- 新增probe_depth_camera.cpp：SDK分传感器、同时采集对照均收到Depth、RGB、Accel、Gyro。
+  说明设备能够输出四路数据；不能据ROS全模式失败就断言线缆或硬件损坏。
+- 完整对齐/彩色点云模式仍不稳定：第一次60s收到RGB约11.25Hz、深度14.73Hz、IMU184.33Hz、彩色云3.93Hz。
+  发现降采样后对齐图320x240、CameraInfo640x480不一致；完整d435i.yaml已去掉decimation，保留depth-only降采样。
+  去掉降采样后图/Info尺寸一致，但ROS重启后RGB和彩色点云仍0，完整模式不能标记通过。
+- 修复validate_depth_camera.py的IMU NumPy bool JSON保存错误；新增原始/完整模式分别验收、
+  图/CameraInfo尺寸、frame、内参检查，防止“有数据”被误报成可用于三维定位。
+- 已保留d435i_raw.yaml稳定基线：RGB/Depth/IMU开启，sync/align/点云/filters关闭。
+  30秒实测RGB14.99Hz、深度14.99Hz、IMU197.90Hz；最大时间戳年龄约0.10/0.063/0.040秒。
+  RGB/深度均640x480，图和内参匹配，时间戳无倒退；相机内部TF可用，SDK固件未改。
+  go2-depth-camera.service的source/user unit现在指向d435i_raw.yaml；原depth-only配置仍保留。
+  启动脚本新增 --raw；start_mapping_with_depth.sh纳入只读interfaces，并删除过期depth-only/手柄行动提示。
+- SDK有IMU默认校准/短暂Motion Module failure日志；当前IMU数值有限且静止加速度约9.7m/s2，
+  这不证明IMU精度已标定或所有重启都可靠。完整处理模式原因未最终定位，不自动启用避障。
+- 仍未确认相机安装位置/朝向及base_link外参；没有设置猜测TF，没有运动/姿态/导航/机身音频指令。
+  当前12电机关节故障位全0、温度约31..33度；历史失稳后的动作/语音暂停策略仍保留。
+- 下一步：排查ROS对齐/彩色云链路；确认安装位置并标定外参；静态障碍预览；最后安排现场低速验收。
+- 证据：/home/unitree/go2_ros2_ws/validation/camera_followup_20261010/status.json；
+  详细ROS记录ros_raw_streams.json、失败完整模式记录ros_full_streams_optimized.json、原生simultaneous记录。
+  配置/脚本/unit修改前备份；未改网络、ROS版本、系统SDK、固件或机器人动作策略。
+
+go2_robot 复现软件推进（2026-10-10T17:40:40+08:00，本节为当前状态；后文为历史记录）
+- 工程：/home/unitree/go2move；网页源码 apps/nano-deploy/dashboard_platform/web；
+  网页 http://100.105.98.99:8080/（同Tailscale），局域网 http://10.100.51.249:8080/。
+  登录admin，密码读取本地 deployment/go2/go2.env 的AUTH_PASSWORD，不在日志/交接中保存。
+- 上游6包：go2_ros2_ws/upstream_foxy_src，独立安装 upstream_foxy_install，全部编译成功。
+  基于上游humble源码作Foxy适配；Ubuntu20.04/Foxy保持原状，不等于Humble原样复现。
+  依赖nlohmann/json v3.11.3放独立deps目录；来源commit及补丁在validation/reproduction_20261010。
+- 标准9服务已接入，独立进程 go2_driver_node 运行；go2-interfaces.service当前active/disabled。
+  motion_enabled=false且参数运行中不可修改；没有sport/request、cmd_vel、lowcmd发布者。
+  publish_state=false，现有state_bridge继续提供状态/TF；Hesai点云保留原header转发/pointcloud。
+  隔离domain87、loopback假输入验证51项通过；包括服务门禁、编码、限速、250ms watchdog、重复odom。
+  测试命令只在隔离ROS域中产生；本轮实机运动、姿态、导航目标、机身音频指令均0。
+- 修复3份Nav2配置被Foxy0.4.7忽略的障碍范围/碰撞时间等参数。
+  domain88真实插件仅configure验证每份6项通过；没有发送导航目标，原footprint/inflation不缩小。
+- go2-platform.service当前active/disabled：XT16雷达、state_bridge、scan、SLAM在线；
+  rviz=false、nav2_preview=false；未启用任何导航运动桥，未改为自启动。
+  实机只读6项验收通过：/lidar_points、/pointcloud、/scan约10Hz；odom/关节/IMU约20Hz；map约1Hz。
+  map->base_footprint、odom->base_footprint、base_link->hesai_lidar连通；雷达外参保持原配置。
+- 网页root/JS/CSS与登录HTTP200；health/person状态可用，相机为机身摄像头约5Hz；
+  深度相机不能用该机身画面代替验收。voice服务503、board-agent未运行，相关整合仍待完成。
+  当前health无故障报警，历史两次失稳/过热后的动作与语音持久暂停策略保持；无故障不自动解锁。
+- 用户报D455i；官方产品名D455且内置IMU，已有独立d455.yaml/d455_depth_only.yaml。
+  当前SDK实际识别Intel RealSense D435I，serial233622071429，FW05.13.00.55，USB3.2，8086:0b3a。
+  尚未确认目标D455是否接入，不切换现有depth相机unit、不刷固件、不设置猜测安装外参。
+  本轮未启动深度camera；完整RGB/Depth/IMU/彩色点云、挂载姿态及深度障碍接入待实机验证。
+- 独立上游环境：source /home/unitree/go2move/deployment/go2/source_upstream_go2_foxy.sh。
+  当前数据系统用start_go2_platform.sh；标准接口用start_go2_interfaces.sh（固定motion=false）。
+  确认D455实际接入后可用 start_depth_camera.sh --model d455 [--depth-only]；
+  validate_depth_camera.py支持 --model d455。相机流验收并不证明安装外参已标定。
+- 下一步需要：确认D455i是已连接还是拟换设备；相机安装位置、镜头朝向及相对机身的尺寸/角度。
+  之后验证完整相机流和TF，再安排现场低速导航/避障验收；真实动作仍需现场确认。
+- 证据汇总：/home/unitree/go2_ros2_ws/validation/reproduction_20261010/reproduction_status.json。
+  修改前备份源码/配置；保留原工程改动，没有commit/push、系统升级或网络/固件改动。
+
+2026-10-09 D435i接入与手柄建图准备（当前状态）
+- 真实USB设备Intel RealSense D435I，8086:0b3a，序列号233622071429，USB3.2/5000Mbps；不是D455。
+- 固件05.13.00.55未修改。原ROS2 Foxy和系统SDK2.50.0保留。
+- 官方librealsense2.51.1 RSUSB独立安装到go2_ros2_ws/deps；复用realsense-ros3.2.3仅重编译相机包，private realsense_rsusb_install。
+- 两套SDK/相机软件重置均未恢复RGB和IMU。完整配置启用RGB640x480/15、深度、align、pointcloud、gyro200、accel100；保留d435i.yaml。
+- 当前go2-depth-camera.service使用d435i_depth_only.yaml：RGB/IMU/align关闭，RS2_STREAM_ANY生成纯XYZ几何点云。
+- 复用SDK decimation倍率2、stereo_module.frames_queue_size=1，输出深度320x240；改善原8.38Hz/1.59s延迟。
+- 连续60.0秒最终实测：深度15.00Hz，点云14.98Hz。
+  最大帧间隔0.225s，最大时间戳年龄0.351s，倒退0；有效深度约80%、点云约6.1万点、采样XYZ有限且非零。
+- topic /camera/depth/image_rect_raw、/camera/depth/color/points（名称沿用上游；当前没有RGB字段），frame=d435i_depth_optical_frame。
+- RViz已实看深度图/点云；go2-depth-rviz为临时用户服务，无导航操作工具。截图depth_camera_rviz_20261009.png。
+- 雷达/SLAM已按用户要求启动：/lidar_points、/scan约10Hz，/odom约20Hz，/map1Hz；map->base_footprint连通；hesai外参不改。
+  一键：/home/unitree/go2move/deployment/go2/start_mapping_with_depth.sh（只启动接收、建图、相机；没有运动/导航控制桥）。
+- 关节故障位全0、温度约30..35度，仍趴着；未发速度/姿态/导航/声音RPC，自动运动/语音策略继续暂停。
+- 还需用户物理重插相机10秒，优先绕过USB扩展坞直连；不能据当前软件日志断言是线缆、供电或相机硬件中的哪一种。
+- 摄像头是否已安装及朝向尚未回复，未设置base_link->d435i_link假外参。相机尚未接入Nav2障碍层或视觉SLAM。
+- 重插后应先停止depth服务、将用户unit切回完整d435i.yaml（备份后编辑），再验证RGB/Depth/IMU及彩色点云。
+- 所有源码、配置、unit及脚本修改前均备份到go2_ros2_ws/backups/platform-20261005-194025/revisions。
+- 证据depth_camera_setup_20261009.json、depth_camera_rsusb_probe_20261009.json、depth_camera_validation_20261009.json、depth_camera_realtime_validation_20261009.json。
+
+自动选点与巡航软件验收（2026-10-07T11:28:08+0800，最新状态）
+- 页面已上线“地图自动选点”：选择已保存地图，自动选3点，地图编号显示；无需填写坐标。
+  已保存最新地图候选路线 3175e1a9b77b4f23b1bde2673a0e1525；静态参考点不是实时狗的位置。
+- 接好异步模拟前往/到达/停稳/观察/结束与取消；找到、未找到、导航失败、取消4分支
+  经实际Dashboard认证接口验证通过。演练不调用SDK、不生成真人发现记录。
+- Foxy NavigateToPose成功、拒绝、失败、取消等待终态已用真实ROS action通信验证，
+  限localhost/domain77隔离测试；未连接实机导航。依次通行/动态避障仍未实测。
+- 修复4张旧map.yaml：free_thresh 0.25->0.196，并修复后续map_saver_cli保存参数。
+  已安装Foxy map_server验证：未知格3239原被误判空地，修复后正确保留未知；
+  全部原文件先备份，PGM/SLAM posegraph不变。选点额外排除205灰度未知格和净空不足。
+- 回归通过：地图15、控制器及原流程32、认证API6、UI42、隔离ROS action8；
+  installed map_server往返验证通过。前端index-0nfWNv1D.js已构建部署且HTTP200。
+- 原目标ID、JPEG与2条发现记录不变，当前识别任务未运行；用户可开始静止识别。
+  camera/person/health/dashboard在线，voice/platform/board-agent停止，SDK运动worker0。
+- RL_0 0x04驱动过热仍存在；真实巡航、扫描及机身语音暂停，重启不会自动解锁。
+  本轮无运动/姿态/机身音频指令；D435i待线。修改前备份，未升级ROS或改网络/固件。
+- 证据：patrol_auto_validation_20261007.json、patrol_action_validation_20261007.json、
+  saved_map_roundtrip_validation_20261007.json、map_metadata_fix_20261007.json。
+
+寻人功能补全（2026-10-07T11:07:24+0800，当前状态）
+- 已上线拍照/描述两种入口。复用YOLOX-Tiny、ByteTrack、OSNet与OpenCV HSV，
+  描述只支持红橙黄绿蓝紫黑白灰9种单色上衣；颜色占比不是身份确认。
+  否定、多色、帽子/性别等未实现属性明确拒绝，避免静默忽略条件。
+- 任务默认120秒，可30..600秒；显示进度、候选待确认、超时、停止、中断、
+  人工确认完成。重启不续跑，结束任务不因旧帧/旧审核复活。
+- 发现记录可“是目标/不是目标/撤回”，保留审核时间；后续自动观测不覆盖人工标签。
+  认证JSON导出包含证据图片引用、分数类别及人工状态；原2条记录与原目标照保留。
+- 一句话任务：拍照（触发原多人选择UI）、开始找人、停止找人、找人状态、
+  找穿红色上衣的人；只连接视觉服务，不调用运动/原生音频。区域和运动请求拒绝。
+  NX复用现有Vosk本地识别上传录音，录音不落盘不送云，先显示文字再由用户发送。
+  当前网页是HTTP，浏览器麦克风不可用时明确提示使用手机输入法语音；未改网络。
+- 新增Go2TaskCommand及精简目标/任务/历史UI。录音与请求有会话代次隔离，
+  换登录、卸载、延迟权限回调、error->stop不能改写新会话或复活旧录音。
+- 实机静止任务30秒通过：处理47帧、按时timed_out、speak=false，无错误。
+  摄像头持续约5Hz。原目标JPEG哈希与ID不变，2条历史及人工状态不变。
+  已测试新认证接口、非法描述400、不存在审核404、JSON导出200、
+  真实本地Vosk静音录音不误执行、扫描start409、运动worker0。
+- 81项软件测试通过（描述任务及旧生命周期/模拟声音34，历史8，命令11，
+  工作台UI10，反馈UI9，录音竞态9）；验证search_features_validation_20261007.json。
+- 当前最后任务已结束，用户可直接点开始新任务；camera/person/health/dashboard在线，
+  voice/platform/board-agent均inactive。左后髋约53℃但0x04仍在，未发运动/姿态/机身音频。
+- 软件与runtime修改前备份；服务停后整份备份person_search数据，SQLite升级另先作
+  一致快照；没有修改ROS、雷达、网络、固件或自启动策略。
+- 剩余实机阻塞：热故障仍未解除；自主巡航/避障/机身音频未恢复验证；D435i待线。
+  描述筛选已接入并经合成帧验证，真实衣着/光照准确率尚需现场样例评价。
+
+趴卧软件推进（2026-10-07T10:53:57+0800，当前状态）
+- 用户同意继续不需站立的软件工作；本轮没有发送运动/姿态/机身音频指令。
+- 已恢复相机、相机ROS、静止识别、Dashboard，并新启动纯DDS只读健康监控。
+  go2-voice/go2-platform/nano-board-agent均inactive；运动worker为0。
+  健康/相机/person等服务仍disabled，未增加自启动。
+- 健康接口GET /api/go2/health已认证：12关节温度、故障位、机身高度、电量；
+  数据超过2秒或进程退出显示离线；无故障也永不授予运动许可。
+  最后左后髋61℃、右后髋58℃，RL_0仍0x04驱动过热，动作继续暂停。
+- 页面增加健康条与默认关闭的手机/电脑本机新发现播报；刷新/旧历史不补播，
+  换目标/停止清队列。机身语音按钮禁用，未现场验证浏览器是否实际发声。
+- 原目标照片和2条记录保留，静止识别active=true/speak=false，1920x1080约5Hz，
+  新帧持续处理error=null；未注入测试记录。扫描接口仍409且双false门禁。
+- 修复SDK非零Move抛异常后遗漏停止重试：先标记已尝试，再调用Move，
+  即使异常也最终StopMove；9条全假SDK回归与26条guard测试通过。
+- 新健康模块24条、前端反馈9条、健康HTTP5场景验证通过；tsc/build通过。
+  产物index-B_a-wri2.js；验证prone_software_validation_20261007.json。
+- Dashboard旧Requires曾连带启动data-only agent；已备份去掉该依赖并停agent，
+  最终单独运行页面。未启用硬件控制，运动worker全程未运行。
+- 源码/配置/服务/dist修改前均备份。遥测启动前备份一次，1Hz采样仅原子替换，
+  避免把每帧运行数据无限加入备份。
+- 软件启动：bash /home/unitree/go2move/deployment/go2/start_go2_media.sh
+  页面：http://100.105.98.99:8080 。本轮无需起立；热故障原因仍需检修，
+  温度下降不能自动解锁，之后实际动作必须另行现场确认。
+
+左后髋驱动过热已由官方故障位确认（2026-10-07 10:38，当前结论）
+- 用户确认仍通电趴着；已建议现在正常关机，不必等待只读取证完成。
+- 纯DDS补采motor.reserve：仅电机9/RL_0 reserve[0]=4，其余11个0；
+  RL0温度75℃(事后由84℃下降)，RR0 68℃，SOC56%、29.836V，站高7.61cm。
+- 官方Read_motor_errors和Fault_service确认reserve[0]的bit2/0x04为Driver overheat，
+  source309。因此驱动过热报警已确认，不再只是温度线索；不是绕组过热0x10。
+  reserve[1]全525是当前电机通信频率，lost0不代表无热故障；fan_frequency全0不自行解读。
+- 官方文档：先关机休息再恢复；反复出现应联系技术支持。保护可能需重启解除，
+  不应仅因事后温度下降就解锁；为何后髋反复过热(散热/负载/受力/关节)仍待检查。
+- 数据/来源：robot_motor_raw_fault_20261007-1038.json；
+  https://support.unitree.com/home/en/developer/Read_motor_errors
+  原始正文 https://doc-cdn.unitree.com/6/198/en/6_198_en
+- readonly采样器已备份补采电机故障、q/dq/tau、fan/版本原始字段。
+  rotation-only worker与guard已备份增加12关节故障全零门禁；缺失/非零拒绝。
+  guard26项离线测试通过；未启动任何实机服务、未发姿态/运动/音频指令。
+- 所有项目机器人服务及数据agent仍停止；动作/语音持久暂停不变。
+
+再次突发失稳（2026-10-07 10:30，最高优先当前状态）
+- 用户报告再次突然摔倒。此前没有执行试转：scan_policy双false，10:28启动接口409，
+  正式运动worker0；voice/platform一直inactive，现场只有静音识别/相机与数据agent。
+- 已停止person-search/native-camera/native-camera-ros/voice/platform/nano-board-agent，
+  不发送任何运动/姿态/语音RPC，不通过程序再次起立。保留Dashboard与网络/SSH。
+  上述服务原本只有nano-board-agent enabled，现已备份并disable防止重启恢复；其余本来disabled。
+- 10:30:43纯DDS订阅：左后髋84℃、右后髋74℃，SOC58%、29.916V，机身高度7.88cm；
+  手柄采样keys/axes均0，motor_lost全0；error100/mode0与原先站立相同，不能当新故障码。
+  热状态与两次失稳同时存在，缺跌倒瞬间与内部故障记录，不能断定热保护或排除硬件/控制故障。
+- 已建议用正常流程关机，不连续重启起立，手避开关节；等待现场报警/手柄操作/关机信息。
+- 保存证据robot_second_fall_20261007-1030.json。所有后续动作/语音/自主测试保持暂停，
+  用户要求“最大功率”是软件推进，不能解释为忽略真实异常运行。
+
+一键原地扫描找人（2026-10-07 10:28，当前状态）
+- 默认前端已改为“原地扫描找人”，无需地图/坐标；手动巡航设置折进高级项。
+- 复用现有机身相机、YOLOX/ByteTrack/OSNet、发现历史与SDK2 Move/StopMove。
+  软件流程：先观察，再按20/40/60/80度分段慢转，停稳后用3个独立新帧且同track
+  确认疑似目标。只允许正向yaw<=0.15rad/s，线速度恒0；本轮上限90度，
+  底层累计85度即停留余量，位移0.10m、总45s限制；不自动返回或前进。
+- 新rotation-only worker独立检查站高、姿态、遥控输入、DDS新鲜、温度/电量、
+  错误码变化/电机丢包、角度与漂移，命令断流或退出停止；不请求姿态/步态切换。
+  起步<65℃、运行<70℃是本次软件保守阈值，不是厂商保护阈值。
+- 实机未执行：用户此次90度许可的预检失败，10:20:35左后髋83℃(窗口84℃)、
+  右后髋74℃，SOC61%，站高31.66cm，手柄输入0；突发失稳原因仍未确定。
+  已请用户用手柄正常趴下休息，未发送转动/前进/趴下/起立/语音命令。
+- config/scan_policy.json enabled=false、physical_validated=false持久暂停；前端
+  显示原因且禁用开始。重启/冷却均不会自动解锁；此轮授权没有执行或续期。
+  原生避障尚未与此SportClient路径联动；不宣称自主巡航或避障已通过实机验证。
+- 新API /scan/status、/scan/start、/scan/stop带Dashboard鉴权。held start实测409，
+  未认证401；启动并发/中途停止、旧证据/换目标/相机中断均有离线测试。
+- 已部署：person-search、Dashboard重载；目标照片、2条历史保留；静音原地识别
+  active=true、camera1920x1080约4.95Hz、error=null。SDK运动worker数量0。
+  go2-voice/go2-platform保持停止。前端资源index-CZ1vLWET.js。
+- 证据：robot_readonly_turn_precheck_20261007-102035.json、
+  scan_deployment_validation_20261007.json。全部源文件/配置/dist修改前备份。
+
+巡航寻人软件准备（2026-10-07，当前状态）
+- 已上线默认折叠的“巡航找人”：保存区域和观察点、检查观察点、流程演练。
+  路线与演练报告持久化到runtime/patrol；不向真实发现历史写入模拟结果。
+- 复用本机Nav2 Foxy 0.4.7/NavfnPlanner，通过ComputePathToPose检查可达性。
+  Foxy无显式start字段，当前检查是当前位置到各点，不是整条串行路线验收。
+  原平台未启动，现场检查会明确报地图/定位未就绪，不自动启动平台。
+- 顺序任务状态机已完成到达→观察→发现早停/继续下一点、失败/取消清理，
+  并通过注入适配器测试。HTTP仅开放准备和模拟流程，真实导航/观察适配器
+  尚未接通为可运行实机任务；/patrol/run在Dashboard和底层均固定409。
+- 真实Nav2隔离测试通过：loopback+ROS_DOMAIN_ID77、合成4x4m地图，
+  Navfn绕墙路径44点/2.376m，障碍目标被拒绝。只运行map_server、planner、
+  虚拟TF，没有controller、Unitree桥；测试子进程已全部退出。
+  报告deployment/go2/patrol_planning_validation_20261007.json。
+- 42项回归通过：巡航17、语音状态11、规划工具7、语音暂停2、寻人生命周期5；
+  前端生产构建通过，真实代理200/未登录401/非法参数422/实机运行409验证通过。
+- 原生避障接口已查官方源码：ObstaclesAvoidClient + UseRemoteCommandFromApi +
+  专用Move；现SportClient.Move为不同服务，不能假定受原生避障保护。
+  未调用这些运动/避障接口；以后实机接入需单独验证，不恢复过期授权。
+- 语音暂停已持久化到config/media_policy.json。voice_hub启动/连接/命令均尊重
+  暂停，一键媒体脚本跳过voice；person服务及前端原地找人保持speak=false。
+  声音/运动暂停仍有效，意外失稳原因未定。只读温度上次75/68℃。
+- 原目标与2条发现记录保留；相机/静音识别运行中。全部写入前均备份。
+
+重启后的有限恢复（2026-10-07 10:03，当前状态）
+- 用户确认：重启并重新站稳；NX启动时间09:59:49。
+- 10:02:59纯订阅：机身高度31.7cm，近静止，SOC69%；左后髋75℃、右后髋68℃。
+  较事故后83/74℃下降，仍明显高于其他关节；不据此宣称保护解除或原因已查明。
+  证据：deployment/go2/robot_readonly_recovery_20261007-100259.json。
+- 仅恢复native-camera、native-camera-ros、person-search；识别mode=stationary、
+  speak=false，真相机1920x1080约4.94Hz，模型就绪、已处理新帧、无错误。
+  原目标照片与2条发现记录保留，不需要重拍。
+- go2-voice与go2-platform继续停止。未发运动、姿态、音频播放或清理RPC。
+  暂停语音/运动测试要求仍有效；“恢复了”不视为授权重放异常前操作。
+- 已建议现场用熟悉的手柄正常趴下休息散热，不持续站立测试。
+
+语音修复与异常失稳暂停（2026-10-07，当前优先状态）
+- 找人曾正确触发/say，但旧RTP发送无现场声音；delivered仅是本机发包统计。
+- 已复用legion1581/unitree_webrtc_connect的audiohub：本次自建WAV上传2001、
+  fresh音频列表、播放1002、仅清理本次音频1009，逐请求校验机器人code=0。
+  2026-10-07 09:51:37播放，09:51:41清理成功；现场用户明确确认听到了。
+  未改音量/语音开关：只读VUI enable=1、volume=10；play_mode=no_cycle。
+- 但用户随后报告突然腿软/摔倒，手柄未操作。现已停止原地找人和go2-voice，
+  未再播放、未发送运动/起立/姿态指令，未重放可疑RPC。
+  09:54只读低状态：SOC71%，两个关节电机83/74摄氏度，低姿态约7.7cm。
+  高温是需查证的线索，尚无事故前连续状态或官方阈值，不能定为摔倒原因。
+  error_code100/mode0在先前正常站立记录也有，不能当作新故障码断言。
+  原音频桥topic限定VUI/audiohub；缺逐包和机端分发证据，不排除设备端副作用。
+- 在原因查清及现场确认前，保持声音/运动测试暂停；不要自动恢复语音服务，
+  不要以试音为由重放请求，不要让机器狗远程起立。
+- 本次同时修复播报状态被新视觉帧覆盖、失败静默、启动沿用旧冷却的问题。
+  现在独立speech状态、失败5秒后可重试、同事件成功去重，前端显示失败。
+  原地找人服务已加载新版但任务active=false；目标/发现记录完整保留。
+  回归：speech10项+生命周期5项通过；前端生产构建通过。
+  声音结果持久在runtime/voice/last_speech.json，明确设备ACK不等于现场验收。
+  证据deployment/go2/voice_speech_diagnosis_20261007.json。
+- 全部修改前备份；未改固件、网络、ROS、原雷达配置，没有运动指令。
+
+发现记录与精简界面（2026-10-07，当前版本）
+- 发现疑似目标后保存现场图、当时参考图、时间、最大外观相似度。
+  同一次连续发现合并；超过5秒未记录匹配再发现时生成新记录。
+  历史保存在 deployment/go2/runtime/person_search/history/ 的SQLite与JPEG中。
+  停止查找、更换目标、刷新和服务重启不删除历史；点击照片可放大。
+- 桌面与手机默认首页：相机画面、拍照选目标、开始/停止、最近发现。
+  语音可展开；原有采集/监控/归档与高级控制保留在次级入口。
+- 用户原有目标 e50d42f92f4e48b4895b113fa090bf8d 已完整保留并恢复。
+  重启后默认未开始查找；点击“开始查找”即可继续，不必重新拍照。
+  更新前仅有滚动预览，未保存独立历史；不补造以前的发现记录。
+- 16项检查通过：4项实际TensorRT模型持久化、5项生命周期、7项拍照选择。
+  生产构建通过；真实认证接口status/history/target.jpg/camera.jpg均200，
+  未认证记录与照片接口401。真实摄像头1920x1080约4.97Hz，模型就绪。
+  报告：deployment/go2/person_search_history_test_20261007.json。
+- 全部变更前备份；仅重载视觉查找与Dashboard服务，无实际运动指令。
+
+Simplified target capture, 2026-10-07:
+Dashboard main action is now "拍当前画面作为目标". Stand the target in front of the
+Go2 native camera, capture once, then use "原地查找". One detected person is stored
+automatically; multiple people show a frozen image with clickable boxes/numbers.
+Selection binds to that exact photo and expires after120 seconds. Old-photo upload
+remains under "使用已有照片". Empty/stale camera frames are rejected without
+replacing the existing target. Capturing/choosing only records appearance; no motion.
+Files: person_search.py, server/app.py, web/src/components/Go2PersonPanel.tsx.
+All source/dist modifications backed up before changes. Frontend build and
+new endpoint auth/validation checks passed. Services reloaded on this NX.
+
+Final visual acceptance, 2026-10-07:
+- Official YOLOX-Tiny GPU engine cached (12MB); published three-person image
+  detects3 people (~42ms), actual native empty frame detects0 (~27ms).
+- Actual YOLOX + ByteTrack + OSNet chain on6 public-image translations passed:
+  stable target track, cosine0.933-0.977,57-78ms/frame including matching/preview.
+- Authenticated Dashboard reference upload, typed find-person/status/stop commands,
+  JPEG preview passed. Real camera processed19 frames in10s, no errors and0 people.
+  Search stop clears candidates; preview then503. Test task ended, no motion.
+- Five deterministic regressions passed: stop/restart drops in-flight old work,
+  target replacement clears preview, response bytes are paired with their frame,
+  stopped/expired images are refused. File test_person_search_lifecycle.py.
+- Human identity/retrieval accuracy and spoken command accuracy remain unmeasured
+  onsite. Test photos were public software samples, not an actual onsite target.
+- No navigation/active scan/autonomous exploration was attempted.
+Evidence: models/person_search/{detector_validation.json,
+ person_pipeline_validation.json,person_live_api_validation.json,osnet_test_20261007.json}.
+Re-run isolated actual-model visual checks:
+ /home/unitree/go2move/.venv/bin/python /home/unitree/go2move/deployment/go2/validate_person_search.py
+
+Camera/voice/person-search update 2026-10-07 (software only)
+
+Current running: go2-native-camera, go2-native-camera-ros, go2-voice,
+go2-person-search, nano-dashboard-server, nano-board-agent user services.
+SLAM/core platform and hardware motion bridge are not running or armed.
+No new actual motion authorization has been given; previous authorization remains closed.
+
+One-click camera/voice/photo search:
+/home/unitree/go2move/deployment/go2/start_go2_media.sh
+Existing authenticated Dashboard: http://100.105.98.99:8080
+- Native camera verified 1920x1080 JPEG, ~4.97Hz, errors0; live/photo/recording integrated.
+- ROS /camera/front/image_raw 640x360 BGR and /camera/front/image_raw/compressed
+  original JPEG, frame front_camera_optical_frame; receive-time stamp.
+  Native ROS bridge DDS loopback port17419, front_camera->optical standard TF.
+  No calibration/camera_info is invented. D435i hardware still absent.
+- Native mic 16kHz mono verified; local Vosk Chinese model installed in isolated
+  go2_voice_venv. Real mic -> local ASR endpoint passed, no clear command heard
+  in this capture; human command accuracy still needs onsite testing.
+- eSpeak NG -> native speaker verified by earlier microphone loopback; repeated
+  TTS now uses bounded child processes. Two Dashboard/say requests passed,
+  125 and180 outgoing packets respectively. No app/account binding required.
+- Voice: photo, recording, status, mapping/save and stop, plus stationary search.
+  Nonzero movement/posture/navigation commands cannot execute through voice hub.
+- H264 real5.2s recording:960x540,5Hz,26frames verified by ffprobe.
+- Person pipeline: YOLOX-Tiny official ONNX + OSNet x0.25 MSMT17 + ByteTrack,
+  TensorRT8.5/CUDA11.4, no torch installation, no dependency/system/ROS upgrade.
+  Single-person full/half-body reference, multi-frame suspect report, preview.
+  Real-scene identity accuracy still requires target/distractor trials.
+  Region patrol/active scanning/autonomous exploration are not executed or ready.
+
+Tests: /home/unitree/go2_ros2_ws/logs/native-audio-20261007/
+Models/vision evidence: /home/unitree/go2_ros2_ws/models/person_search/
+Workflow and limits: /home/unitree/go2move/deployment/go2/PERSON_SEARCH.txt
+Changes backed up under existing platform backup revisions; see changes.jsonl.
+Hardware model rechecked: NVIDIA Orin NX Developer Kit,tegra234,about16GB RAM.
+Preserved XT16 IP/topic/frame/extrinsics and all previous motion/navigation evidence.
+
+Previous platform/motion record (historical, not current active-process state):
+
+Go2 project handover, session closed 2026-10-06
+
+Stopped at user request. Three zero Move + StopMove calls returned code 0.
+All nine owned platform child processes and the launch exited. No motion bridge,
+SDK worker, recorder or navigation test is left active. NX/robot were not powered
+off by software. No firmware, network, ROS or system upgrade was performed.
+Today's whole-round motion authorization is closed, including its unused 0.30 m
+navigation scope. Do not resume actual motion without fresh onsite authorization.
+
+Today's results:
+- Official SDK2 backend physically walked at <=0.20 m/s. Cumulative forward
+  reach about 0.47 m from the same original start; this is odometry evidence.
+- Returned near original start, standing/centered joystick confirmed onsite.
+  At that return: SLAM map error 0.0426 m, native raw odom error 0.1321 m.
+  The raw native lateral guard stopped the last segment; original failed reports
+  remain intact. Separate onsite/map assessment confirms physical return.
+- Saved latest walking map (0.05 m, 120x64) and serialized graph using upstream
+  slam_toolbox + Nav2 tools. No Karto accepted-loop event was observed.
+- No NavigateToPose goal was sent. The fixed original forward 0.30 m goal is
+  (0.2607659392, 0.0120292620, yaw 0.0605483673) in map. Do not repeatedly
+  advance a fresh 0.30 m goal when retrying.
+- Navfn planning initially passed once, but later exceeded the confirmed corridor.
+  Dijkstra and fresh costmap clears still produced ~0.56 m paths with ~0.20 m
+  lateral deviation. No motion was armed for these rejected plans.
+- XT16 /lidar_points hesai_lidar 10 Hz, 64000 points; scan 10 Hz, robot state
+  20 Hz, TF chain map->odom->base_footprint->base_link->body/joints/imu/hesai_lidar.
+  Radar link 10.16.16.11 -> 10.16.16.99:2368 and external mount unchanged.
+- Zero-command phase handoff now streams zeros continuously; stale command gap
+  caused by previous 1 s handoff is fixed. Default Python full-joint TF reception
+  lag was isolated; standard TransformListener on dedicated node filtered to
+  route edges passed 15 s full-preview reception (max age 0.071 s, stale 0),
+  and actual final walking reception (max age 0.073 s).
+- Long route position/heading guards now use the original preserved map anchor;
+  fresh native odom remains required for health. This last position-guard edit
+  passed syntax review but was not physically retested before user stopped.
+- D435i ROS driver 3.2.3 built against existing standalone librealsense 2.50.0.
+  No ROS1 environment was sourced. Hardware is absent pending USB3 cable;
+  RGB/depth/IMU and actual mount TF remain unverified. Camera defaults off.
+
+Next investigation:
+- Compare left/rear occupied map cells (~0.32 m from current robot) against raw
+  XT16 cloud, body collision geometry and live scan. Live finite returns near
+  those directions can be ~0.45 m; do not assume all are cleared ghost obstacles.
+- Nav2 current motion profile has conservative upstream-width polygon +/-0.45 m
+  x, +/-0.35 m y, padding 0.01; Navfn use_astar=false; inflation radius 0.5 and
+  scaling 3.0. Clearing caches and Dijkstra did not fix corridor rejection.
+- Foxy 0.4.7 ObstacleLayer uses obstacle_range/raytrace_range, not newer
+  obstacle_max_range/raytrace_max_range names presently in the profile. Inflation
+  plugin lacks live parameter callbacks. RPP checks point/inscribed-cost collision,
+  not modern full polygon collision. Verify correct compatibility before further
+  changes; no such new costmap/obstacle/inflation change was made at closure.
+- This short 0.50 m route did not produce a canonical accepted loop. Karto excludes
+  graph-linked nearby scans within 3 m from loop candidates; returning alone is
+  not accepted-loop proof. Do not lower thresholds simply to manufacture success.
+
+Final evidence/map:
+/home/unitree/go2_ros2_ws/maps/end-of-day-20261006/
+  map.yaml, map.pgm, posegraph.data, posegraph.posegraph, snapshot.json,
+  final-stop.json, shutdown-result.json, session-close.json, platform.log
+/home/unitree/go2_ros2_ws/tests/continue-20261006-203753/
+  localized-return-assessment.json, closed-loop-return-filtered-tf/,
+  short-navigation-sdk2/, returned-costmap-clear-planning.json,
+  static-obstacle-live-scan-check.json, filtered-tf-reception-validation.json
+Backups: /home/unitree/go2_ros2_ws/backups/platform-20261005-194025/changes.jsonl
+
+Next session: start software only (no armed hardware bridge):
+/home/unitree/go2move/deployment/go2/start_go2_platform.sh rviz:=false nav2_preview:=true nav2_params_file:=/home/unitree/go2move/ros2/go2_bringup/config/nav2_motion_test.yaml
+source /home/unitree/go2move/deployment/go2/source_go2_platform.sh
+This creates a fresh SLAM session. Saved posegraph is available; review live pose
+before restoring, especially after carrying or powering off the robot.
+Optional camera after USB3 connection: deployment/go2/start_d435i.sh
+
+Main files changed/added today (each edit backed up):
+deployment/go2/{official_sdk_worker.py,source_official_go2_sdk.sh,
+ low_speed_bridge.py,route_tf.py,run_minimal_mapping.py,run_short_navigation.py,
+ check_short_goal.py,run_closed_loop_test.py,start_d435i.sh,motion_test_plan.json,
+ GO2_PLATFORM.txt,LAST_SESSION.txt}
+ros2/go2_bringup/{config/nav2_motion_test.yaml,config/d435i.yaml,
+ config/dds/camera.xml,launch/d435i.launch.py,launch/platform.launch.py}
+realsense-ros 3.2.3 in existing platform_src/build/install. Default launch remains
+ camera:=false. Other software preparation and earlier driver backups retained.
+
+Minimum onsite action now: handheld confirm stopped, then usual robot/NX shutdown.

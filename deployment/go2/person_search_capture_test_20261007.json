@@ -1,0 +1,61 @@
+{
+  "models": {
+    "detector_engine": "/home/unitree/go2_ros2_ws/models/person_search/yolox_tiny.trt8.5.2.2.fp16.engine",
+    "reid_engine": "/home/unitree/go2_ros2_ws/models/person_search/osnet_x0_25_msmt17_fp16.engine",
+    "source": "https://raw.githubusercontent.com/ultralytics/ultralytics/main/ultralytics/assets/bus.jpg",
+    "full_photo_people": 3,
+    "single_fixture_shape": [
+      418,
+      136,
+      3
+    ]
+  },
+  "expired_capture_rejected": true,
+  "expired_and_stopped_camera_rejected": true,
+  "no_person_rejected": true,
+  "invalid_index_rejected": true,
+  "replaced_capture_rejected": true,
+  "frozen_selection": {
+    "passed": true,
+    "choices": 3,
+    "chosen_index": 0,
+    "bbox": [
+      49,
+      391,
+      253,
+      906
+    ],
+    "same_frozen_crop_cosine": 1.0,
+    "saved_original_shape": [
+      1080,
+      810,
+      3
+    ],
+    "replacement_camera_shape": [
+      418,
+      136,
+      3
+    ]
+  },
+  "single_automatic_capture": {
+    "passed": true,
+    "source": "native_camera",
+    "box": [
+      6,
+      14,
+      135,
+      417
+    ],
+    "dimensions": [
+      136,
+      418
+    ]
+  },
+  "tested_at_unix": 1791336893.7862852,
+  "tests_run": 7,
+  "failures": 0,
+  "errors": 0,
+  "live_camera_files_changed": false,
+  "hardware_sdk_used": false,
+  "motion_commands": []
+}

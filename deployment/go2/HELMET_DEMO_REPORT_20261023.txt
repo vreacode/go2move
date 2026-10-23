@@ -1,0 +1,53 @@
+安全帽多人视觉整合（2026-10-23）
+
+已完成
+- 视觉工作台/手机端统一两个入口：安全帽多人识别、原照片/描述找人。
+- 复用已有 YOLOX 人体检测和 ByteTrack，增加 YOLO11n 安全帽/未戴安全帽头部检测。
+- 头部归属唯一关联，头部不可见/多人重叠/分数冲突均待确认；不以“没有帽子检测”直接判违规。
+- 同一画面编号连续三帧明确未戴，自动逐人保存原始人物裁剪、带框证据、发现时间与后续观测；每轮每个编号一条。
+- 实时绿色已戴、红色未戴目标、黄色待确认；显示人数统计、轨迹、编号，可导出JSON与证据图片。
+- 浏览器画面录像，最长120秒，结束自动下载WebM/可支持时MP4；画面中断停止录像。浏览器真实编码尚需现场试拍。
+- 找人与安全帽检测互斥；停止/换模式期间的旧在途结果被丢弃；模型加载被停止后不自动恢复。
+- 不启动语音、导航、姿态、扫描或任何实际运动。此前移动跟随保持预览，未继续推进。
+
+启动
+bash /home/unitree/go2move/deployment/go2/start_helmet_demo.sh
+默认使用稳定的机身RGB摄像头并直接启动识别；前端首页选择“安全帽多人识别”。
+可选 --rgbd 复用D435i启动入口；本轮D435i曾USB断开后重新枚举，重试驱动报set_xu资源不可用，未修复。
+该启动脚本只在主动执行时启动服务，没有修改自启动。
+
+Demo建议
+1. 机器狗保持静止，人物头部完整出现在画面中，相互留出间距。
+2. 两人入镜，一人戴帽、一人不戴，停留约5秒；查看两个编号和一条未戴记录。
+3. 三人入镜，一人戴帽、两人不戴，停留约5秒；查看分别编号与两条未戴记录。
+4. 未戴者缓慢左右移动，展示追踪；给其中一人戴上帽子，展示当前状态变化，历史证据继续保留。
+5. 点击“录制 Demo”，结束时点击“结束并下载录像”；下载JSON和证据画面留档。
+未做现场帽子道具验收；记录是模型候选，需复核。长遮挡/离开画面可能换编号，不宣称跨场景身份识别。
+
+模型来源
+本机 /home/unitree/go2move 与 /home/unitree/carmove 仅有helmet.pt代码引用，没有实际原始权重。
+本轮使用开源备用模型（AGPL-3.0），不是用户原训练模型：
+https://huggingface.co/yihong1120/Construction-Hazard-Detection
+固定revision 212ee245136b4e330f84b409f67f3d35eff59f42，models/yolo11/onnx/yolo11n.onnx。
+ONNX SHA256 1eb7911cbfcae972da752a7cd9d3939c8e060f0bf0f7e8b4d0ab6cd979703165。
+仓库最新class_names.txt有11类，但此历史ONNX实际有10类；已核验嵌入metadata并绑定权重哈希，未直接套错类别表。
+沿用已安装TensorRT 8.5.2.2/CUDA，无Torch安装、系统/ROS升级。
+首次本机引擎编译约786秒，后续复用缓存；预热后PPE单模型公开样例约39～43ms，不是相机全链路FPS。
+
+验证
+- 15项新增Python测试（规则11、API/真实程序假模型链路4）与27项原找人回归通过，共42项。
+- 真实TSX界面模拟点击/录像接口测试、TypeScript/Vite构建与语法检查通过。
+- 公开SHWD样例真实YOLOX+PPE+ByteTrack+证据链路：纯未戴场景记录4个；混合场景已戴3、未戴2、待确认4，独立记录2个；安全帽场景未产生未戴记录。
+- 公开样例仅在隔离临时目录处理，没有写入线上目标/发现记录，不是现场Demo成绩。
+- 实机原生RGB实时图像与安全帽API已跑通；详情见helmet_demo_validation_20261023.json。
+- 浏览器录像真实编码、现场人物与唯一帽子道具、交叉遮挡追踪效果仍待现场验收。
+
+文件
+新增deployment/go2/{helmet_detector.py,helmet_rules.py,helmet_monitor.py,start_helmet_demo.sh,
+ test_helmet_rules.py,test_helmet_api.py,test_helmet_ui.cjs,validate_helmet_demo.py}。
+修改deployment/go2/{person_search.py,person_follow.py}：视觉模式互斥、共享调度。
+前端新增Go2HelmetPanel.tsx、Go2VisionPanel.tsx；修改App.tsx、MobileCaptureConsole.tsx。
+后端server/app.py增加鉴权代理。模型在/home/unitree/go2_ros2_ws/models/helmet_demo/。
+安全帽运行记录deployment/go2/runtime/helmet_monitor/evidence/，原找人历史未改。
+验证目录/home/unitree/go2_ros2_ws/validation/helmet_demo_20261023/。
+修改前均通过go2_platform_write备份；备份索引/home/unitree/go2_ros2_ws/backups/platform-20261005-194025/changes.jsonl。

@@ -1,0 +1,65 @@
+巡航找人：自动选点与软件演练（2026-10-07T11:28:08+0800）
+
+使用现有页面：http://100.105.98.99:8080
+1. 打开找人页面，使用“地图自动选点”；默认选最新的已保存地图。
+2. 点击“一键生成观察点”，自动生成3个候选点；无需输入x/y/yaw。
+   当前已保存一条候选路线，刷新后直接显示地图中的1/2/3编号。
+3. “检查观察点”调用既有Nav2 ComputePathToPose，只查当前位姿到各点。
+   需要真实地图、定位和规划器；本轮平台停止时会显示尚未就绪。
+   它不等于按顺序走完路线的验证，也不会启动地图、定位、控制器或运动服务。
+4. “流程演练”可选择未找到、出现模拟候选、无法到达；显示流程并支持取消。
+   所有到达/观察/候选均为模拟，不会新增真实发现记录；用于软件流程测试。
+5. “实机巡航暂停”保持禁用；手动输入坐标功能仍在高级项中。
+
+选点方式
+- 复用保存的Nav2地图/SLAM快照与OpenCV距离变换，不另做建图或定位系统。
+- 仅使用已知空地，拒绝灰度205未知格；选择同一可通行净空连通域，净空>=0.4m。
+- 3点默认在静态参考点2m半径内，间距>=0.6m；参考点优先采用已保存位姿。
+- 保存位姿净空不够时使用可通行区域中心；该位置不代表狗的实时位置。
+- 地图哈希、像素坐标、来源、是否实时定位和未验证依次路径均随路线保存。
+- 图中编号只是候选位置，不画已验证路线或伪造当前机器狗位置。
+
+保存地图修复
+- 原4张map.yaml free_thresh=0.25使灰度205被Foxy map_server判为自由格。
+- 修改前备份，最小修为0.196；PGM和posegraph保持原样。
+- save_platform_map.py明确传入map_saver_cli --free 0.196，避免后续保存再次出现。
+- 真实安装的Foxy map_server(domain77)验证最新图：修复前free7071/occupied609/
+  unknown0；修复后free3832/occupied609/unknown3239，与原快照一致。
+
+导航与取消接口
+- patrol_execution.py复用既有PatrolRunner，默认仅模拟适配器。
+- foxy_patrol_action.py复用安装的nav2_msgs NavigateToPose接口、Nav2 waypoint逻辑；
+  只允许localhost/domain77、独立/go2_patrol_sim/navigate_to_pose，不连接实机域。
+- 取消必须等待适配器结束确认；失败保留阻断，重启中断不续跑；旧结果不复活任务。
+- GET /api/go2/person/patrol/maps；GET /maps/<id>/preview.png（同前缀）
+- POST /api/go2/person/patrol/suggest；GET /execution/status（同前缀）
+- POST /api/go2/person/patrol/execution/rehearse；POST /execution/cancel（同前缀）
+- 新Dashboard接口均有鉴权；/patrol/run保持409，scan策略双false。
+
+已部署和验证
+- 地图15、控制器/原流程32、认证API6、UI42、真实隔离ROS action8全部通过。
+- 实际HTTP演练found/not_found/navigation_failed/cancel四分支通过，原目标/2条历史不变。
+- 前端index-0nfWNv1D.js已构建部署并HTTP200；camera/person/health/dashboard在线。
+- voice/platform/board-agent停止，SDK运动worker0；没有发送运动/姿态/机身音频指令。
+- 新增/修改：saved_map_routes.py、patrol_execution.py、foxy_patrol_action.py、
+  person_patrol.py、person_search.py、server/app.py、AutoPatrolTools.tsx、Go2PatrolPanel.tsx、
+  save_platform_map.py、4张map.yaml及对应测试/证据/交接文档；修改前均备份。
+- 证据：patrol_auto_validation_20261007.json、patrol_action_validation_20261007.json、
+  saved_map_roundtrip_validation_20261007.json、map_metadata_fix_20261007.json。
+
+当前实机阻塞
+- 左后髋驱动过热0x04仍在，狗保持趴卧；不能因温度降低自动解锁。
+- 真实巡航、原生避障与运动接口联动、发现后实机停稳观察均待故障处理后现场验证。
+- SportClient.Move不代表已经接入ObstaclesAvoidClient，不能宣传原生避障已融合。
+- 未重新授权任何实际运动；D435i等待数据线；机身播报仍暂停。
+
+一键启动静止软件功能：
+ bash /home/unitree/go2move/deployment/go2/start_go2_media.sh
+
+开源复用依据
+https://github.com/Unitree-Go2-Robot/go2_robot
+https://github.com/h-naderi/unitree-go2-slam-nav2
+https://github.com/jizhang-cmu/autonomy_stack_go2
+https://github.com/ros-navigation/navigation2/blob/0.4.7/nav2_waypoint_follower/src/waypoint_follower.cpp
+https://github.com/ros-navigation/navigation2/blob/0.4.7/nav2_map_server/src/map_io.cpp
+https://github.com/unitreerobotics/unitree_sdk2_python/blob/master/example/obstacles_avoid/obstacles_avoid_move.py

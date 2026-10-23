@@ -1,0 +1,414 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8cfb2ca..fab007d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -31,6 +31,13 @@ set(dependencies
+ )
+ 
+ include_directories(include)
++find_path(NLOHMANN_JSON_INCLUDE_DIR nlohmann/json.hpp
++  HINTS /home/unitree/go2_ros2_ws/upstream_foxy_deps/nlohmann_json/single_include
++  )
++if(NOT NLOHMANN_JSON_INCLUDE_DIR)
++  message(FATAL_ERROR "nlohmann/json.hpp is required")
++endif()
++include_directories(${NLOHMANN_JSON_INCLUDE_DIR})
+ 
+ add_library(${PROJECT_NAME} SHARED
+   src/go2_driver/go2_driver.cpp
+@@ -39,6 +46,10 @@ add_library(${PROJECT_NAME} SHARED
+ ament_target_dependencies(${PROJECT_NAME} ${dependencies})
+ 
+ rclcpp_components_register_nodes(${PROJECT_NAME} "go2_driver::Go2Driver")
++add_executable(go2_driver_node src/go2_driver/main.cpp)
++ament_target_dependencies(go2_driver_node ${dependencies})
++target_link_libraries(go2_driver_node ${PROJECT_NAME})
++install(TARGETS go2_driver_node RUNTIME DESTINATION lib/${PROJECT_NAME})
+ 
+ install(TARGETS
+   ${PROJECT_NAME}
+@@ -57,7 +68,7 @@ install(DIRECTORY launch
+   DESTINATION share/${PROJECT_NAME}
+ )
+ 
+-ament_export_include_directories(include)
++ament_export_include_directories(include ${NLOHMANN_JSON_INCLUDE_DIR})
+ ament_export_libraries(${PROJECT_NAME})
+ ament_export_dependencies(${dependencies})
+ 
+diff --git a/include/go2_driver/go2_driver.hpp b/include/go2_driver/go2_driver.hpp
+index aad7ff6..1efbbc1 100644
+--- a/include/go2_driver/go2_driver.hpp
++++ b/include/go2_driver/go2_driver.hpp
+@@ -32,6 +32,8 @@
+ #define GO2_DRIVER__GO2_DRIVER_HPP_
+ 
+ #include <rclcpp/rclcpp.hpp>
++#include <chrono>
++#include <rcl_interfaces/msg/parameter_descriptor.hpp>
+ #include <sensor_msgs/msg/point_cloud2.hpp>
+ #include <sensor_msgs/msg/joint_state.hpp>
+ #include <geometry_msgs/msg/twist.hpp>
+@@ -64,6 +66,31 @@ public:
+   Go2Driver(const rclcpp::NodeOptions & options = rclcpp::NodeOptions());
+ 
+ private:
++  // Some upstream responses expose only success. Preserve those wire types.
++  template<typename ResponseT>
++  auto set_block_reason(ResponseT& response, int)
++    -> decltype(response.message = std::string(), void())
++  {
++    response.message = "motion_enabled=false: robot commands are blocked";
++  }
++  template<typename ResponseT>
++  void set_block_reason(ResponseT&, long) {}
++
++  template<typename ResponseT>
++  bool reject_disabled_motion(const std::shared_ptr<ResponseT>& response)
++  {
++    if (motion_enabled_) return false;
++    response->success = false;
++    set_block_reason(*response, 0);
++    return true;
++  }
++  void publish_request(unitree_api::msg::Request& request);
++  bool motion_enabled_{false};
++  bool publish_state_{true};
++  bool preserve_cloud_header_{false};
++  bool command_active_{false};
++  std::chrono::steady_clock::time_point last_command_;
++  rclcpp::TimerBase::SharedPtr command_watchdog_;
+   void publish_lidar(const sensor_msgs::msg::PointCloud2::SharedPtr msg);
+   void publish_pose_stamped(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
+   void joy_callback(const sensor_msgs::msg::Joy::SharedPtr msg);
+@@ -142,7 +169,6 @@ private:
+   tf2_ros::TransformBroadcaster tf_broadcaster_;
+   sensor_msgs::msg::Joy joy_state_;
+ 
+-  bool odom_published_{false};
+ };
+ 
+ }  // namespace go2_driver
+diff --git a/src/go2_driver/go2_driver.cpp b/src/go2_driver/go2_driver.cpp
+index beb5804..be19e81 100644
+--- a/src/go2_driver/go2_driver.cpp
++++ b/src/go2_driver/go2_driver.cpp
+@@ -29,6 +29,8 @@
+ // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ 
+ #include <go2_driver/go2_driver.hpp>
++#include <algorithm>
++#include <cmath>
+ 
+ namespace go2_driver
+ {
+@@ -41,11 +43,32 @@ Go2Driver::Go2Driver(
+   rclcpp::QoS qos_profile(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_default));
+   qos_profile.durability(RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL);
+ 
++  rcl_interfaces::msg::ParameterDescriptor fixed;
++  fixed.read_only = true;
++  motion_enabled_ = declare_parameter<bool>("motion_enabled", false, fixed);
++  publish_state_ = declare_parameter<bool>("publish_state", true, fixed);
++  preserve_cloud_header_ = declare_parameter<bool>("preserve_cloud_header", false, fixed);
++
+   pointcloud_pub_ = create_publisher<sensor_msgs::msg::PointCloud2>("pointcloud", 10);
+   joint_state_pub_ = create_publisher<sensor_msgs::msg::JointState>("joint_states", 10);
+   odom_pub_ = create_publisher<nav_msgs::msg::Odometry>("odom", qos_profile);
+   imu_pub_ = create_publisher<unitree_go::msg::IMUState>("imu", 10);
+-  request_pub_ = create_publisher<unitree_api::msg::Request>("api/sport/request", 10);
++  if (motion_enabled_) {
++    request_pub_ = create_publisher<unitree_api::msg::Request>("api/sport/request", 10);
++    command_watchdog_ = create_wall_timer(std::chrono::milliseconds(50), [this]() {
++      if (!command_active_ ||
++          std::chrono::steady_clock::now() - last_command_ < std::chrono::milliseconds(250)) return;
++      unitree_api::msg::Request zero;
++      zero.header.identity.api_id = static_cast<int>(go2_driver::Mode::Move);
++      zero.parameter = "{\"x\":0.0,\"y\":0.0,\"z\":0.0}";
++      publish_request(zero);
++      unitree_api::msg::Request stop;
++      stop.header.identity.api_id = static_cast<int>(go2_driver::Mode::StopMove);
++      stop.parameter = "{}";
++      publish_request(stop);
++      command_active_ = false;
++    });
++  }
+ 
+   pointcloud_sub_ = create_subscription<sensor_msgs::msg::PointCloud2>(
+     "/utlidar/cloud", 10,
+@@ -129,15 +152,25 @@ Go2Driver::Go2Driver(
+       std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+ }
+ 
++void Go2Driver::publish_request(unitree_api::msg::Request& request)
++{
++  if (!motion_enabled_ || !request_pub_) return;
++  request.header.identity.id = static_cast<uint64_t>(now().nanoseconds());
++  request_pub_->publish(request);
++}
++
+ void Go2Driver::publish_lidar(const sensor_msgs::msg::PointCloud2::SharedPtr msg)
+ {
+-  msg->header.stamp = now();
+-  msg->header.frame_id = "radar";
++  if (!preserve_cloud_header_) {
++    msg->header.stamp = now();
++    msg->header.frame_id = "radar";
++  }
+   pointcloud_pub_->publish(*msg);
+ }
+ 
+ void Go2Driver::publish_pose_stamped(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
+ {
++  if (!publish_state_) return;
+   geometry_msgs::msg::TransformStamped transform;
+   transform.header.stamp = now();
+   transform.header.frame_id = "odom";
+@@ -151,7 +184,7 @@ void Go2Driver::publish_pose_stamped(const geometry_msgs::msg::PoseStamped::Shar
+   transform.transform.rotation.w = msg->pose.orientation.w;
+   tf_broadcaster_.sendTransform(transform);
+ 
+-  if (!odom_published_) {
++  {  // Publish every pose sample; the upstream one-shot odom is insufficient for Nav2.
+     nav_msgs::msg::Odometry odom;
+     odom.header.stamp = now();
+     odom.header.frame_id = "odom";
+@@ -164,7 +197,6 @@ void Go2Driver::publish_pose_stamped(const geometry_msgs::msg::PoseStamped::Shar
+     odom.pose.pose.orientation.z = msg->pose.orientation.z;
+     odom.pose.pose.orientation.w = msg->pose.orientation.w;
+     odom_pub_->publish(odom);
+-    odom_published_ = true;
+   }
+ }
+ 
+@@ -175,6 +207,7 @@ void Go2Driver::joy_callback(const sensor_msgs::msg::Joy::SharedPtr msg)
+ 
+ void Go2Driver::publish_joint_states(const unitree_go::msg::LowState::SharedPtr msg)
+ {
++  if (!publish_state_) return;
+   sensor_msgs::msg::JointState joint_state;
+   joint_state.header.stamp = now();
+   joint_state.name = {"FL_hip_joint", "FL_thigh_joint", "FL_calf_joint",
+@@ -193,15 +226,22 @@ void Go2Driver::publish_joint_states(const unitree_go::msg::LowState::SharedPtr
+ void Go2Driver::cmd_vel_callback(const geometry_msgs::msg::Twist::SharedPtr msg)
+ {
+   nlohmann::json js;
+-  js["x"] = msg->linear.x;
+-  js["y"] = msg->linear.y;
+-  js["z"] = msg->angular.z;
++  if (!motion_enabled_) return;
++  if (!std::isfinite(msg->linear.x) || !std::isfinite(msg->linear.y) ||
++      !std::isfinite(msg->angular.z)) return;
++  const double norm = std::hypot(msg->linear.x, msg->linear.y);
++  const double scale = norm > 0.20 ? 0.20 / norm : 1.0;
++  js["x"] = msg->linear.x * scale;
++  js["y"] = msg->linear.y * scale;
++  js["z"] = std::max(-0.20, std::min(0.20, msg->angular.z));
++  last_command_ = std::chrono::steady_clock::now();
++  command_active_ = true;
+ 
+   unitree_api::msg::Request req;
+   req.parameter = js.dump();
+   req.header.identity.api_id = static_cast<int>(go2_driver::Mode::Move);
+ 
+-  request_pub_->publish(req);
++  publish_request(req);
+ }
+ 
+ void Go2Driver::handleBodyHeight(
+@@ -209,11 +249,12 @@ void Go2Driver::handleBodyHeight(
+   const std::shared_ptr<go2_interfaces::srv::BodyHeight::Request> request,
+   const std::shared_ptr<go2_interfaces::srv::BodyHeight::Response> response)
+ {
++  if (reject_disabled_motion(response)) return;
+   (void)request_header;
+ 
+-  if (request->height < -0.18 || request->height > 0.03) {
++  if (!std::isfinite(request->height) || request->height < -0.18 || request->height > 0.03) {
+     response->success = false;
+-    response->message = "Height value is out of range [0.3 ~ 0.5]";
++    response->message = "Relative height must be finite and in [-0.18, 0.03]";
+     return;
+   }
+ 
+@@ -224,7 +265,7 @@ void Go2Driver::handleBodyHeight(
+   req.parameter = js.dump();
+   req.header.identity.api_id = static_cast<int>(go2_driver::Mode::BodyHeight);
+ 
+-  request_pub_->publish(req);
++  publish_request(req);
+   response->success = true;
+ }
+ 
+@@ -233,6 +274,7 @@ void Go2Driver::handleContinuousGait(
+   const std::shared_ptr<go2_interfaces::srv::ContinuousGait::Request> request,
+   const std::shared_ptr<go2_interfaces::srv::ContinuousGait::Response> response)
+ {
++  if (reject_disabled_motion(response)) return;
+   (void)request_header;
+ 
+   nlohmann::json js;
+@@ -242,7 +284,7 @@ void Go2Driver::handleContinuousGait(
+   req.parameter = js.dump();
+   req.header.identity.api_id = static_cast<int>(go2_driver::Mode::ContinuousGait);
+ 
+-  request_pub_->publish(req);
++  publish_request(req);
+   response->success = true;
+ }
+ 
+@@ -251,20 +293,21 @@ void Go2Driver::handleEuler(
+   const std::shared_ptr<go2_interfaces::srv::Euler::Request> request,
+   const std::shared_ptr<go2_interfaces::srv::Euler::Response> response)
+ {
++  if (reject_disabled_motion(response)) return;
+   (void)request_header;
+ 
+   nlohmann::json js;
+-  if (request->roll < -0.75 || request->roll > 0.75) {
++  if (!std::isfinite(request->roll) || request->roll < -0.75 || request->roll > 0.75) {
+     response->success = false;
+     response->message = "Roll value is out of range [-0.75 ~ 0.75]";
+     return;
+-  } else if (request->pitch < -0.75 || request->pitch > 0.75) {
++  } else if (!std::isfinite(request->pitch) || request->pitch < -0.75 || request->pitch > 0.75) {
+     response->success = false;
+     response->message = "Pitch value is out of range [-0.75 ~ 0.75]";
+     return;
+-  } else if (request->yaw < -0.6 || request->yaw > 0.6) {
++  } else if (!std::isfinite(request->yaw) || request->yaw < -0.6 || request->yaw > 0.6) {
+     response->success = false;
+-    response->message = "Yaw value is out of range [-1.5 ~ 1.5]";
++    response->message = "Yaw must be finite and in [-0.6, 0.6]";
+     return;
+   }
+ 
+@@ -276,7 +319,7 @@ void Go2Driver::handleEuler(
+   req.parameter = js.dump();
+   req.header.identity.api_id = static_cast<int>(go2_driver::Mode::Euler);
+ 
+-  request_pub_->publish(req);
++  publish_request(req);
+   response->success = true;
+ }
+ 
+@@ -285,11 +328,12 @@ void Go2Driver::handleFootRaiseHeight(
+   const std::shared_ptr<go2_interfaces::srv::FootRaiseHeight::Request> request,
+   const std::shared_ptr<go2_interfaces::srv::FootRaiseHeight::Response> response)
+ {
++  if (reject_disabled_motion(response)) return;
+   (void)request_header;
+ 
+-  if (request->height < 0 || request->height > 0.1) {
++  if (!std::isfinite(request->height) || request->height < 0 || request->height > 0.1) {
+     response->success = false;
+-    response->message = "Height value is out of range [-0.06 ~ 0.03]";
++    response->message = "Foot height must be finite and in [0.0, 0.1]";
+     return;
+   }
+ 
+@@ -300,7 +344,7 @@ void Go2Driver::handleFootRaiseHeight(
+   req.parameter = js.dump();
+   req.header.identity.api_id = static_cast<int>(go2_driver::Mode::FootRaiseHeight);
+ 
+-  request_pub_->publish(req);
++  publish_request(req);
+   response->success = true;
+ }
+ 
+@@ -309,6 +353,7 @@ void Go2Driver::handleMode(
+   const std::shared_ptr<go2_interfaces::srv::Mode::Request> request,
+   const std::shared_ptr<go2_interfaces::srv::Mode::Response> response)
+ {
++  if (reject_disabled_motion(response)) return;
+   (void)request_header;
+   std::string mode = request->mode;
+ 
+@@ -349,7 +394,9 @@ void Go2Driver::handleMode(
+     req.header.identity.api_id = static_cast<int>(go2_driver::Mode::Scrape);
+   } else if (mode == "front_flip") {
+     response->message = "Front flip??? Really? You want to break your robot? Crazy!";
+-    // req.header.identity.api_id = static_cast<int>(go2_driver::Mode::FrontFlip);
++    response->success = false;
++    response->message = "front_flip is unsupported by this upstream driver";
++    return;
+   } else if (mode == "front_jump") {
+     response->message = "Change the mode to Front Jump";
+     req.header.identity.api_id = static_cast<int>(go2_driver::Mode::FrontJump);
+@@ -371,7 +418,7 @@ void Go2Driver::handleMode(
+     return;
+   }
+ 
+-  request_pub_->publish(req);
++  publish_request(req);
+   response->success = true;
+ }
+ 
+@@ -380,6 +427,7 @@ void Go2Driver::handlePose(
+   const std::shared_ptr<go2_interfaces::srv::Pose::Request> request,
+   const std::shared_ptr<go2_interfaces::srv::Pose::Response> response)
+ {
++  if (reject_disabled_motion(response)) return;
+   (void)request_header;
+ 
+   nlohmann::json js;
+@@ -389,7 +437,7 @@ void Go2Driver::handlePose(
+   req.parameter = js.dump();
+   req.header.identity.api_id = static_cast<int>(go2_driver::Mode::Pose);
+ 
+-  request_pub_->publish(req);
++  publish_request(req);
+   response->success = true;
+ }
+ 
+@@ -398,6 +446,7 @@ void Go2Driver::handleSpeedLevel(
+   const std::shared_ptr<go2_interfaces::srv::SpeedLevel::Request> request,
+   const std::shared_ptr<go2_interfaces::srv::SpeedLevel::Response> response)
+ {
++  if (reject_disabled_motion(response)) return;
+   (void)request_header;
+ 
+   if (request->level < -1 || request->level > 1) {
+@@ -413,7 +462,7 @@ void Go2Driver::handleSpeedLevel(
+   req.parameter = js.dump();
+   req.header.identity.api_id = static_cast<int>(go2_driver::Mode::SpeedLevel);
+ 
+-  request_pub_->publish(req);
++  publish_request(req);
+   response->success = true;
+ }
+ 
+@@ -422,6 +471,7 @@ void Go2Driver::handleSwitchGait(
+   const std::shared_ptr<go2_interfaces::srv::SwitchGait::Request> request,
+   const std::shared_ptr<go2_interfaces::srv::SwitchGait::Response> response)
+ {
++  if (reject_disabled_motion(response)) return;
+   (void)request_header;
+ 
+   if (request->d < 0 || request->d > 4) {
+@@ -437,7 +487,7 @@ void Go2Driver::handleSwitchGait(
+   req.parameter = js.dump();
+   req.header.identity.api_id = static_cast<int>(go2_driver::Mode::SwitchGait);
+ 
+-  request_pub_->publish(req);
++  publish_request(req);
+   response->success = true;
+ }
+ 
+@@ -446,6 +496,7 @@ void Go2Driver::handleSwitchJoystick(
+   const std::shared_ptr<go2_interfaces::srv::SwitchJoystick::Request> request,
+   const std::shared_ptr<go2_interfaces::srv::SwitchJoystick::Response> response)
+ {
++  if (reject_disabled_motion(response)) return;
+   (void)request_header;
+ 
+   nlohmann::json js;
+@@ -455,7 +506,7 @@ void Go2Driver::handleSwitchJoystick(
+   req.parameter = js.dump();
+   req.header.identity.api_id = static_cast<int>(go2_driver::Mode::SwitchJoystick);
+ 
+-  request_pub_->publish(req);
++  publish_request(req);
+   response->success = true;
+ }
+ 

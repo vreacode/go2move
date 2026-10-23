@@ -1,0 +1,13 @@
+diff --git a/launch/robot.launch.py b/launch/robot.launch.py
+index 8af327c..fd4e5f1 100644
+--- a/launch/robot.launch.py
++++ b/launch/robot.launch.py
+@@ -49,7 +49,7 @@ def generate_launch_description():
+     declared_arguments.append(
+         DeclareLaunchArgument(
+             'use_sim_time',
+-            default_value='True',
++            default_value='False',
+             description='Use simulation/Gazebo clock if true',
+         )
+     )

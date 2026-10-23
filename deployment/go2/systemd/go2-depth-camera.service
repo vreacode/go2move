@@ -1,0 +1,18 @@
+[Unit]
+Description=Go2 RealSense RGB + aligned depth (perception only)
+After=network-online.target
+
+[Service]
+Type=simple
+StandardOutput=append:/home/unitree/go2_ros2_ws/runtime/logs/depth-camera.log
+StandardError=inherit
+WorkingDirectory=/home/unitree/go2move
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/home/unitree/go2move/deployment/go2/start_depth_camera.sh --rgbd
+KillSignal=SIGINT
+TimeoutStopSec=12
+Restart=no
+
+[Install]
+WantedBy=default.target

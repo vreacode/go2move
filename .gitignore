@@ -65,3 +65,23 @@ logs/
 
 # Local source notes may contain credentials or private network details.
 /说明文档/
+
+# Seal source only: local environment backups and captured/binary assets
+/deployment/go2/go2.env*
+!/deployment/go2/go2.env.example
+*.bak
+*.bak.*
+*.backup
+*.rar
+*.webm
+*.sqlite
+*.sqlite3
+*.db
+*.db-wal
+*.db-shm
+*.npy
+*.npz
+*.pcd
+*.ply
+*.wav
+*.pcm

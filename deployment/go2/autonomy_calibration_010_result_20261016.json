@@ -1,0 +1,123 @@
+{
+  "recorded_at": "2026-10-16T11:38:19.781462+08:00",
+  "execution_report": "runtime/autonomy/calibration-20261016T033253627817Z/execution.json",
+  "post_stop_readonly_report": "runtime/autonomy/calibration-20261016T033253627817Z/stopped_readonly.json",
+  "user_authorized": true,
+  "operator_preparation_reply": "已节所站稳",
+  "interpreted_preparation": "已解锁站稳",
+  "requested_limits": {
+    "speed_command_ceiling_m_s": 0.1,
+    "total_session_including_preflight_s": 8,
+    "radius_m": 1,
+    "forward_only": true
+  },
+  "source_hashes_match_80_tested_revision": true,
+  "software_session_completed": true,
+  "nonzero_forward_requests_attempted": true,
+  "max_odometry_displacement_m": 0.08021025212870164,
+  "nonzero_command_elapsed_s": [
+    4.384762980000232,
+    7.953059331000077
+  ],
+  "command_at_limit_elapsed_s": [
+    5.312138492000486,
+    7.953059331000077
+  ],
+  "peak_horizontal_speed_feedback_m_s": 0.09518873569119762,
+  "foot_force_min_during_commands": [
+    36,
+    46,
+    30,
+    29
+  ],
+  "foot_force_max_during_commands": [
+    49,
+    58,
+    46,
+    46
+  ],
+  "operator_observation": "没有迈步",
+  "physical_stepping_validated": false,
+  "physical_obstacle_avoidance_validated": false,
+  "stop_acknowledged": true,
+  "stop_responses": [
+    {
+      "api": 1003,
+      "code": 0,
+      "zero_move_code": 0,
+      "errors": [],
+      "source": "official SDK StopMove"
+    },
+    {
+      "api": 1003,
+      "code": 0,
+      "zero_move_code": 0,
+      "errors": [],
+      "source": "official SDK StopMove"
+    },
+    {
+      "api": 1003,
+      "code": 0,
+      "zero_move_code": 0,
+      "errors": [],
+      "source": "official SDK StopMove"
+    }
+  ],
+  "shutdown_instantaneous_horizontal_speed_m_s": 0.06500597991670347,
+  "post_stop_readonly_state_available": true,
+  "post_stop_readonly_max_three_dimensional_speed_m_s": 8.459083325861239e-07,
+  "post_stop_readonly_posture": "prone after operator was asked to rest; not an autonomous braking-distance measurement",
+  "post_stop_readonly_height_range_m": [
+    0.06673948466777802,
+    0.06674974411725998
+  ],
+  "final_motor_faults": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "final_max_motor_temperature_c": 64,
+  "findings": [
+    "Unlocked-stance preparation completed without the prior startup transition failure.",
+    "The 0.10 m/s command was reached and held for about 2.64 seconds.",
+    "Operator confirmed no stepping; body/odometry shift must not be counted as walking.",
+    "No higher speed, gait change, mode switch or extra SDK motion trial was executed."
+  ],
+  "next_step": "Suspend SDK walking. Keep prone to cool; obtain exact manual-control symptoms and Unitree App alarm text/error code. Read-only evidence has not established a root cause.",
+  "authorized_010_single_forward_trial_executed": true,
+  "higher_speed_authorization_received": false,
+  "manual_remote_followup": {
+    "report": "runtime/autonomy/calibration-20261016T033253627817Z/manual_walk_readonly.json",
+    "duration_s": 90.00778579711914,
+    "motion_commands_sent": 0,
+    "remote_key_values": [
+      0,
+      32,
+      288
+    ],
+    "max_abs_remote_axis": 0.0,
+    "operator_manual_walking_confirmation_received": false,
+    "result": "Remote L2/A posture inputs were recorded; no forward joystick input was seen. Manual walking ability remains unconfirmed.",
+    "final_height_m": 0.0667242631316185,
+    "final_max_temp_c": 64,
+    "motor_faults_seen": false
+  },
+  "manual_remote_failure_followup": {
+    "recorded_at": "2026-10-16T11:54:56.354480+08:00",
+    "operator_reply": "无法正常行走",
+    "normal_manual_walking_confirmed": false,
+    "operator_report_received": true,
+    "diagnosis_report": "autonomy_manual_failure_diagnosis_20261016.json",
+    "motion_commands_sent_during_diagnosis": 0,
+    "root_cause_confirmed": false
+  }
+}

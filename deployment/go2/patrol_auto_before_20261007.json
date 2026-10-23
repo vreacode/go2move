@@ -1,0 +1,89 @@
+{
+  "person_active": false,
+  "target": {
+    "id": "e50d42f92f4e48b4895b113fa090bf8d",
+    "name": "目标人物",
+    "bbox": [
+      1060,
+      0,
+      1354,
+      851
+    ],
+    "source": "native_camera",
+    "uploaded_at": 1791336437.240538,
+    "width": 1920,
+    "height": 1080,
+    "captured_at": 1791336437.1270876,
+    "kind": "photo",
+    "score_kind": "appearance_similarity"
+  },
+  "target_jpg_sha256": "221cd8779b9b208a7606e68442fd0599f102932dcf42285b0942f36a5691a3ac",
+  "history": {
+    "items": [
+      {
+        "id": "6854cfd5efea4e42b0f961c449d275d2",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "found_at": 1791337703.0559387,
+        "last_seen_at": 1791337708.8829749,
+        "snapshot_at": 1791337703.6532598,
+        "similarity": 0.8145144581794739,
+        "observations": 4,
+        "track_id": 5,
+        "source": "live_camera",
+        "status": "suspected",
+        "reviewed_at": null,
+        "review_note": "",
+        "score_kind": "appearance_similarity",
+        "target_kind": "photo",
+        "description": null,
+        "color_label": null,
+        "review_status": "suspected",
+        "note": "",
+        "target_description": null,
+        "score": 0.8145144581794739,
+        "match_semantics": "appearance_candidate",
+        "automatic_identity_confirmation": false,
+        "snapshot_url": "/history/6854cfd5efea4e42b0f961c449d275d2/snapshot.jpg",
+        "target_url": "/history/6854cfd5efea4e42b0f961c449d275d2/target.jpg"
+      },
+      {
+        "id": "7c849e426b79481aaf40451db9977832",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "found_at": 1791337451.6215825,
+        "last_seen_at": 1791337455.644817,
+        "snapshot_at": 1791337455.0400505,
+        "similarity": 0.8262539505958557,
+        "observations": 5,
+        "track_id": 1,
+        "source": "live_camera",
+        "status": "suspected",
+        "reviewed_at": null,
+        "review_note": "",
+        "score_kind": "appearance_similarity",
+        "target_kind": "photo",
+        "description": null,
+        "color_label": null,
+        "review_status": "suspected",
+        "note": "",
+        "target_description": null,
+        "score": 0.8262539505958557,
+        "match_semantics": "appearance_candidate",
+        "automatic_identity_confirmation": false,
+        "snapshot_url": "/history/7c849e426b79481aaf40451db9977832/snapshot.jpg",
+        "target_url": "/history/7c849e426b79481aaf40451db9977832/target.jpg"
+      }
+    ],
+    "total": 2
+  },
+  "patrol": {
+    "routes": [],
+    "last_report": null,
+    "motion_enabled": false,
+    "live_ready": false,
+    "blocked_reason": "实机巡航暂停：失稳原因及导航、原生避障联动尚未完成验证。",
+    "planner": "Nav2 Foxy ComputePathToPose",
+    "frame_id": "map"
+  }
+}

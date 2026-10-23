@@ -1,0 +1,214 @@
+{
+  "mode": "preview",
+  "physical_execution": false,
+  "motion_commands_sent": 0,
+  "samples": [
+    {
+      "active": true,
+      "mode": "preview",
+      "state": "acquiring",
+      "reason": "画面延迟过大，建议速度保持为零。",
+      "target_id": "30fc06121e284612b30a9acbe7fd9496",
+      "track_id": null,
+      "distance_m": 1.8,
+      "depth_m": null,
+      "bearing_rad": null,
+      "observation_age_s": 0.909,
+      "suggested_velocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "motion_enabled": false,
+      "physical_execution": false,
+      "coordinate_frame": "camera_forward_left_yaw_preview",
+      "blocking_reason": "相机机身外参与停车距离、避障和健康门禁联动尚未完成实机验收。"
+    },
+    {
+      "active": true,
+      "mode": "preview",
+      "state": "acquiring",
+      "reason": "画面延迟过大，建议速度保持为零。",
+      "target_id": "30fc06121e284612b30a9acbe7fd9496",
+      "track_id": null,
+      "distance_m": 1.8,
+      "depth_m": null,
+      "bearing_rad": null,
+      "observation_age_s": 1.043,
+      "suggested_velocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "motion_enabled": false,
+      "physical_execution": false,
+      "coordinate_frame": "camera_forward_left_yaw_preview",
+      "blocking_reason": "相机机身外参与停车距离、避障和健康门禁联动尚未完成实机验收。"
+    },
+    {
+      "active": true,
+      "mode": "preview",
+      "state": "acquiring",
+      "reason": "画面延迟过大，建议速度保持为零。",
+      "target_id": "30fc06121e284612b30a9acbe7fd9496",
+      "track_id": null,
+      "distance_m": 1.8,
+      "depth_m": null,
+      "bearing_rad": null,
+      "observation_age_s": 1.041,
+      "suggested_velocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "motion_enabled": false,
+      "physical_execution": false,
+      "coordinate_frame": "camera_forward_left_yaw_preview",
+      "blocking_reason": "相机机身外参与停车距离、避障和健康门禁联动尚未完成实机验收。"
+    },
+    {
+      "active": true,
+      "mode": "preview",
+      "state": "acquiring",
+      "reason": "画面延迟过大，建议速度保持为零。",
+      "target_id": "30fc06121e284612b30a9acbe7fd9496",
+      "track_id": null,
+      "distance_m": 1.8,
+      "depth_m": null,
+      "bearing_rad": null,
+      "observation_age_s": 1.059,
+      "suggested_velocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "motion_enabled": false,
+      "physical_execution": false,
+      "coordinate_frame": "camera_forward_left_yaw_preview",
+      "blocking_reason": "相机机身外参与停车距离、避障和健康门禁联动尚未完成实机验收。"
+    },
+    {
+      "active": true,
+      "mode": "preview",
+      "state": "acquiring",
+      "reason": "画面延迟过大，建议速度保持为零。",
+      "target_id": "30fc06121e284612b30a9acbe7fd9496",
+      "track_id": null,
+      "distance_m": 1.8,
+      "depth_m": null,
+      "bearing_rad": null,
+      "observation_age_s": 0.892,
+      "suggested_velocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "motion_enabled": false,
+      "physical_execution": false,
+      "coordinate_frame": "camera_forward_left_yaw_preview",
+      "blocking_reason": "相机机身外参与停车距离、避障和健康门禁联动尚未完成实机验收。"
+    },
+    {
+      "active": true,
+      "mode": "preview",
+      "state": "acquiring",
+      "reason": "画面延迟过大，建议速度保持为零。",
+      "target_id": "30fc06121e284612b30a9acbe7fd9496",
+      "track_id": null,
+      "distance_m": 1.8,
+      "depth_m": null,
+      "bearing_rad": null,
+      "observation_age_s": 0.96,
+      "suggested_velocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "motion_enabled": false,
+      "physical_execution": false,
+      "coordinate_frame": "camera_forward_left_yaw_preview",
+      "blocking_reason": "相机机身外参与停车距离、避障和健康门禁联动尚未完成实机验收。"
+    },
+    {
+      "active": true,
+      "mode": "preview",
+      "state": "acquiring",
+      "reason": "画面延迟过大，建议速度保持为零。",
+      "target_id": "30fc06121e284612b30a9acbe7fd9496",
+      "track_id": null,
+      "distance_m": 1.8,
+      "depth_m": null,
+      "bearing_rad": null,
+      "observation_age_s": 0.948,
+      "suggested_velocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "motion_enabled": false,
+      "physical_execution": false,
+      "coordinate_frame": "camera_forward_left_yaw_preview",
+      "blocking_reason": "相机机身外参与停车距离、避障和健康门禁联动尚未完成实机验收。"
+    },
+    {
+      "active": true,
+      "mode": "preview",
+      "state": "acquiring",
+      "reason": "画面延迟过大，建议速度保持为零。",
+      "target_id": "30fc06121e284612b30a9acbe7fd9496",
+      "track_id": null,
+      "distance_m": 1.8,
+      "depth_m": null,
+      "bearing_rad": null,
+      "observation_age_s": 0.882,
+      "suggested_velocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "motion_enabled": false,
+      "physical_execution": false,
+      "coordinate_frame": "camera_forward_left_yaw_preview",
+      "blocking_reason": "相机机身外参与停车距离、避障和健康门禁联动尚未完成实机验收。"
+    }
+  ],
+  "history_before": 7,
+  "camera": {
+    "connected": true,
+    "width": 640,
+    "height": 480,
+    "fps": 2.88,
+    "source": "realsense_d435i",
+    "label": "D435i 彩色＋深度",
+    "depth_aligned": true,
+    "mount_extrinsics_verified": false
+  },
+  "unauthenticated_status": 401,
+  "preview_start_http": 200,
+  "stop": {
+    "active": false,
+    "mode": "preview",
+    "state": "stopped",
+    "reason": "用户停止跟随预览。",
+    "target_id": "30fc06121e284612b30a9acbe7fd9496",
+    "track_id": null,
+    "distance_m": 1.8,
+    "depth_m": null,
+    "bearing_rad": null,
+    "observation_age_s": 0.882,
+    "suggested_velocity": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "motion_enabled": false,
+    "physical_execution": false,
+    "coordinate_frame": "camera_forward_left_yaw_preview",
+    "blocking_reason": "相机机身外参与停车距离、避障和健康门禁联动尚未完成实机验收。"
+  },
+  "history_after": 7,
+  "search_active_after": false,
+  "execute_http": 409,
+  "jpeg_http": 200,
+  "frontend_contains_follow": true
+}

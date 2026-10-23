@@ -1,0 +1,16 @@
+[Unit]
+Description=Go2 native front camera (read-only SDK2)
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/unitree/go2move
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/bin/bash -c 'source /home/unitree/go2move/deployment/go2/source_official_go2_sdk.sh; exec /home/unitree/go2_sdk2_venv/bin/python /home/unitree/go2move/deployment/go2/native_camera.py --http-port 8766 --fps 5'
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=6
+
+[Install]
+WantedBy=default.target

@@ -109,3 +109,21 @@ The user units in `systemd/` are designed for:
 Both use absolute paths, `EnvironmentFile`, `Restart=on-failure`, and logs in
 `runtime/logs`. The Dashboard unit waits for the Agent and the system
 `tailscaled.service`.
+
+## Bounded autonomous walking
+
+The local XT16 controller supports forward walking, stationary obstacle-avoidance
+turns, and a radius around the starting odometry position. Defaults are a 1 m
+radius, 0.08 m/s, and 30 seconds. Preview only subscribes to sensors:
+
+```bash
+cd /home/unitree/go2move
+bash deployment/go2/start_local_autonomy.sh --radius 1 --duration 30
+```
+
+See [LOCAL_AUTONOMY.txt](LOCAL_AUTONOMY.txt) for the supervised execution command,
+stop behavior, evidence, and current acceptance limits. Actual walking remains
+unverified: the latest real preview rejected the prone robot and a scan return
+inside its conservative clearance. This controller requires a flat floor and
+does not detect drop-offs. Prior stance incidents require onsite inspection
+before the explicit `--execute --onsite-confirmed` mode is used.

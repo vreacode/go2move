@@ -1,0 +1,25 @@
+{
+  "model": "YOLOX-Tiny COCO person class",
+  "model_source": "https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_tiny.onnx",
+  "model_sha256": "427cc366d34e27ff7a03e2899b5e3671425c262ea2291f88bb942bc1cc70b0f7",
+  "preprocessing_source": "https://github.com/Megvii-BaseDetection/YOLOX/blob/main/yolox/data/data_augment.py",
+  "postprocessing_source": "https://github.com/Megvii-BaseDetection/YOLOX/blob/main/yolox/utils/demo_utils.py",
+  "license": "Apache-2.0",
+  "input_shape": [
+    1,
+    3,
+    416,
+    416
+  ],
+  "runtime": "TensorRT 8.5.2.2, CUDA 11.4, FP16 on NVIDIA Orin NX",
+  "dependency_installations": [],
+  "motion_enabled": false,
+  "identity_recognition": false,
+  "device_tree_model": "NVIDIA Orin NX Developer Kit",
+  "cuda_gpu_name": "Orin",
+  "engine_path": "/home/unitree/go2_ros2_ws/models/person_search/yolox_tiny.trt8.5.2.2.fp16.engine",
+  "gpu_validation": "passed: public image detected 3 people; camera background detected zero people; two caller threads matched",
+  "validation_report": "/home/unitree/go2_ros2_ws/models/person_search/detector_validation.json",
+  "recommended_interpreter": "/home/unitree/go2move/.venv/bin/python",
+  "unused_cpu_environment": "/home/unitree/go2_person_venv exists but was not enabled after the GPU engine finished"
+}

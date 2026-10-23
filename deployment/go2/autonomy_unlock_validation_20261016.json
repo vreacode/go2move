@@ -1,0 +1,26 @@
+{
+  "tested_at": "2026-10-16T11:29:33.981494+08:00",
+  "passed": true,
+  "tests_run": 80,
+  "failure_count": 0,
+  "error_count": 0,
+  "duration_s": 50.437,
+  "command": "python3 -B -m unittest test_local_autonomy test_autonomy_worker test_autonomy_session test_rotation_guard test_rotation_worker",
+  "synthetic_motion_only": true,
+  "physical_revision_validated": false,
+  "changes": [
+    "Reject observed MCF locked-standing codes 1001/1002 in health preflight before opening a writer.",
+    "Native guard also denies locked standing before even zero Move or StopMove preparation.",
+    "Remove the former 1001/1002 to 100 preparation transition exception.",
+    "Keep the existing speed, stance, telemetry, command, temperature, remote and distance protections."
+  ],
+  "sha256": {
+    "local_autonomy.py": "f287873bc655c0bd013687b381c60bb5013d8cb0d51270c013abac2408c1f4e0",
+    "autonomy_guard.py": "c7fbfa7e965ce1fe0ddc9eb095585cf78db4b5087fe8a000c659064a47caa479",
+    "official_sdk_worker.py": "6c3c2e432d9b90ee70f042080a5061029a5f07f7dc80aa9e3862a09d2bdb4fc0",
+    "run_local_autonomy.py": "2110e151c010e4a4c3127114ca60944703c0799be02d3f60feab199018847904",
+    "test_local_autonomy.py": "ab9c76a368bac8b7dee3676779b508f84b8d4b803b6a47dba9d52003e462e5f8",
+    "test_autonomy_worker.py": "5032a0521eeaadce895dae0484056e24325b693f9c4d5a93306bc33e63070111",
+    "test_autonomy_session.py": "70f8d04339e98068776fc6843e36e9d0469bcbbcd7a74abb4ef521e29d83e564"
+  }
+}

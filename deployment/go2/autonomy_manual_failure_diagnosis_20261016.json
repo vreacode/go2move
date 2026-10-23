@@ -1,0 +1,143 @@
+{
+  "recorded_at": "2026-10-16T11:54:56.354480+08:00",
+  "user_report": "无法正常行走",
+  "context": "Operator response to whether manual remote-control walking works after SDK trials did not produce stepping.",
+  "readonly_diagnosis": true,
+  "motion_commands_sent_during_diagnosis": 0,
+  "root_cause_confirmed": false,
+  "physical_stepping_validated": false,
+  "physical_obstacle_avoidance_validated": false,
+  "next_motion_trial_started": false,
+  "evidence_directory": "runtime/autonomy/diagnosis-20261016T034359338596Z",
+  "host_control_snapshot": {
+    "writer_lock_available": true,
+    "known_motion_processes": [],
+    "ros_request_publishers": {
+      "/api/obstacles_avoid/request": [],
+      "/api/sport/request": [],
+      "/cmd_vel": [],
+      "/lowcmd": [],
+      "/rt/lowcmd": []
+    },
+    "scope_limit": "Snapshot of known processes and local ROS domain only; does not exclude other devices or onboard controllers."
+  },
+  "robot_readonly_queries": {
+    "motion_mode": {
+      "form": "0",
+      "name": "mcf"
+    },
+    "sport_version": "1.0.0.1",
+    "speed_level_raw": {
+      "data": -1
+    },
+    "native_obstacle_avoidance": {
+      "enable": true
+    },
+    "settings_changed": false,
+    "get_state_data": "",
+    "interpretation_limit": "Empty GetState data and service status integers are not proof that walking is ready. Native obstacle avoidance being enabled is not a confirmed cause."
+  },
+  "native_telemetry": {
+    "sample_counts": {
+      "low": 59,
+      "sport": 59
+    },
+    "tick_delta": 2901,
+    "motor_faults": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "max_temperature_c_at_initial_sample": 61
+  },
+  "native_lidar": {
+    "direct_robot_dds_report": "native_lidar_direct.json",
+    "duration_s": 8.008113007999782,
+    "counts": {
+      "lidar_state": 40,
+      "cloud": 123,
+      "sport_obstacle": 160
+    },
+    "error_states": [
+      0
+    ],
+    "cloud_loss_rate_max": 0.0,
+    "cloud_frequency_hz_last": 15.393587112426758,
+    "interpretation_limit": "Data reception does not validate obstacle classification or free space. Native sport range_obstacle zeros and raw lidar IMU/rotation fields have unverified semantics in this mode. The earlier native_lidar.json used local-platform DDS and cannot diagnose robot lidar availability."
+  },
+  "remote_input_observation": {
+    "report": "joystick_input_readonly.json",
+    "duration_s": 90.02916216850281,
+    "counts": {
+      "low": 1798,
+      "sport": 1799,
+      "wireless": 0,
+      "wireless_unprocessed": 0
+    },
+    "remote_key_values": [
+      0
+    ],
+    "max_abs_lowstate_remote_axis": 0.0,
+    "max_horizontal_displacement_m": 0.00038988333563105604,
+    "state_codes": [
+      100
+    ],
+    "operator_confirmed_pushing_during_window": false,
+    "interpretation_limit": "No joystick input was recorded, but no operator push was confirmed during the window. This does not prove a defective joystick. Further input check was suspended for cooling."
+  },
+  "latest_health_snapshot": {
+    "report": "latest_health_readonly.json",
+    "sampled_at": 1792122896.2119153,
+    "sample_age_s_at_read": 0.14287781715393066,
+    "height_m": 0.0664600357413292,
+    "posture": "prone",
+    "max_motor_temperature_c": 68,
+    "motor_faults": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "motion_allowed": false,
+    "interpretation_limit": "Temperature is above the autonomous startup limit; this does not establish temperature as the original cause of no stepping."
+  },
+  "software_validation": {
+    "report": "autonomy_unlock_validation_20261016.json",
+    "tests_previously_passed": 80,
+    "source_hash_matches": {
+      "local_autonomy.py": true,
+      "autonomy_guard.py": true,
+      "official_sdk_worker.py": true,
+      "run_local_autonomy.py": true,
+      "test_local_autonomy.py": true,
+      "test_autonomy_worker.py": true,
+      "test_autonomy_session.py": true
+    },
+    "all_hashes_match": true,
+    "control_source_modified_this_diagnosis": false,
+    "tests_rerun": false,
+    "reason": "No control-code change; physical walking failure is unresolved."
+  },
+  "next_required_information": [
+    "Unitree App alarm text or error code, including explicit no-alarm status.",
+    "Whether manual control causes body tilt without stepping, unstable foot lifting, or no response."
+  ],
+  "handover": "Keep prone to cool. Suspend SDK walking trials. Do not increase speed, switch gait/mode, disable native avoidance, reboot or calibrate joints based on unconfirmed hypotheses. Obtain the operator symptom and App alarm details before deciding the next recovery action."
+}

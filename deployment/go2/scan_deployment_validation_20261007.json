@@ -1,0 +1,32 @@
+{
+  "checked_at": "2026-10-07 10:28:32 +0800",
+  "physical_motion_tested": false,
+  "voice_tested": false,
+  "scan": {
+    "state": "blocked",
+    "reason": "试转暂停：10:20只读预检左后髋83–84°C、右后髋74°C；此前突然失稳原因未定。请用手柄正常趴下休息，冷却后不会自动开始。",
+    "angle_deg": 0.0,
+    "max_angle_deg": 90,
+    "motion_output_enabled": false,
+    "available": false,
+    "physical_validated": false,
+    "automatic_resume": false,
+    "speak": false
+  },
+  "held_start_http": 409,
+  "unauthenticated_routes_http": 401,
+  "target_preserved": true,
+  "history_count": 2,
+  "camera": {
+    "connected": true,
+    "width": 1920,
+    "height": 1080,
+    "fps": 4.95
+  },
+  "recognition_active": true,
+  "recognition_frames": 3,
+  "speak": false,
+  "error": null,
+  "frontend_asset": "/assets/index-CZ1vLWET.js",
+  "running_official_motion_workers": []
+}

@@ -1,0 +1,82 @@
+{
+  "mode": "preview",
+  "motion_started": false,
+  "radius_m": 1.0,
+  "max_speed_m_s": 0.08,
+  "max_yaw_rad_s": 0.15,
+  "clearance_m": 0.6347815070493501,
+  "duration_s": 10.0,
+  "started_at": 1792117303.5080538,
+  "samples": [
+    {
+      "state": "waiting",
+      "reason": "Waiting for odom",
+      "velocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "elapsed_s": 0.012294417999783036,
+      "displacement_m": 0.0,
+      "motion_output_enabled": false,
+      "execute_hold": "Robot must be standing stably at 25..40 cm before execution"
+    },
+    {
+      "state": "waiting",
+      "reason": "Waiting for cloud",
+      "velocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "elapsed_s": 0.06580496500009758,
+      "displacement_m": 0.0,
+      "motion_output_enabled": false,
+      "execute_hold": "Robot must be standing stably at 25..40 cm before execution"
+    },
+    {
+      "state": "fault",
+      "reason": "Obstacle inside body clearance; no safe stationary turn",
+      "velocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "elapsed_s": 0.12047742899994773,
+      "motion_output_enabled": false
+    }
+  ],
+  "completed": false,
+  "nearest_obstacle": {
+    "distance_m": 0.46036005020141607,
+    "x_base_m": -0.20899912860424297,
+    "y_base_m": -0.4101837881536975
+  },
+  "error": "Obstacle inside body clearance; no safe stationary turn",
+  "max_displacement_m": 0.0,
+  "ended_at": 1792117303.8641684,
+  "source_errors": {},
+  "execute_hold": "Robot must be standing stably at 25..40 cm before execution",
+  "input_status": {
+    "scan": {
+      "source_stamp_s": 1792117303.643239,
+      "receive_age_s": 0.10365560299987919,
+      "source_age_s": 0.22152042388916016
+    },
+    "odom": {
+      "source_stamp_s": 1792117303.8365605,
+      "receive_age_s": 0.023350500000105967,
+      "source_age_s": 0.02824544906616211
+    },
+    "cloud": {
+      "source_stamp_s": 1792117303.743382,
+      "receive_age_s": 0.0037532450000981044,
+      "source_age_s": 0.12143945693969727
+    }
+  },
+  "robot_command_publishers": {
+    "/api/sport/request": [],
+    "/cmd_vel": [],
+    "/lowcmd": []
+  }
+}

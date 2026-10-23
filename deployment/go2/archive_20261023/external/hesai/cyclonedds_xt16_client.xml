@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CycloneDDS xmlns="https://cdds.io/config">
+  <Domain Id="any">
+    <General>
+      <Transport>tcp</Transport>
+      <Interfaces><NetworkInterface name="lo" multicast="false"/></Interfaces>
+      <AllowMulticast>false</AllowMulticast>
+      <MaxMessageSize>65500 B</MaxMessageSize>
+      <FragmentSize>64000 B</FragmentSize>
+    </General>
+    <Discovery><Peers><Peer Address="127.0.0.1:17402"/></Peers></Discovery>
+    <TCP><Port>0</Port><NoDelay>true</NoDelay></TCP>
+  </Domain>
+</CycloneDDS>

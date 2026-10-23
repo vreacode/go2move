@@ -1,0 +1,70 @@
+{
+  "completed_at": "2026-10-18T21:47:26.078914+08:00",
+  "upstream": "https://github.com/Unitree-Go2-Robot/go2_robot",
+  "result": "D435i RGB plus aligned depth deployed for stationary person search",
+  "camera": {
+    "connected": true,
+    "width": 640,
+    "height": 480,
+    "fps": 2.73,
+    "source": "realsense_d435i",
+    "label": "D435i 彩色＋深度",
+    "depth_aligned": true,
+    "mount_extrinsics_verified": false
+  },
+  "tests": {
+    "python_passed": 73,
+    "ui_passed": 12,
+    "frontend_tsc_vite_build": "passed",
+    "python_ast_shell_syntax_systemd_units_diff_check": "passed"
+  },
+  "real_streams": {
+    "/camera/color/image_raw": {
+      "hz": 13.628235051764886,
+      "max_gap_s": 0.23594843099999707,
+      "stamp_backwards": 0
+    },
+    "/camera/aligned_depth_to_color/image_raw": {
+      "hz": 13.057658094859939,
+      "max_gap_s": 0.2616843229998267,
+      "stamp_backwards": 0
+    }
+  },
+  "live_matching_pairs": 20,
+  "max_pair_skew_s": 0.0004990100860595703,
+  "real_model_live_frames": 8,
+  "real_model_live_candidate_counts": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "original_target_and_four_history_records_preserved": true,
+  "measurement": "Optical-axis Z depth relative to D435i; no map or base_link coordinates",
+  "real_person_distance_validated": false,
+  "mount_extrinsics_verified": false,
+  "cold_start_reliability_validated": false,
+  "motion_commands_sent": 0,
+  "speech_commands_sent": 0,
+  "autostart_settings_changed": false,
+  "services": {
+    "go2-depth-camera": "active",
+    "go2-rgbd-camera": "active",
+    "go2-person-search": "active",
+    "go2-platform": "inactive",
+    "go2-health-monitor": "inactive",
+    "go2-voice": "inactive"
+  },
+  "evidence_directory": "/home/unitree/go2move/runtime/validation/rgbd_integration_20261018",
+  "limitations": [
+    "Initial cold-start stream check did not pass; warm 30-second stream check passed.",
+    "Concurrent cache update may temporarily omit depth; mismatched frames never supply a distance.",
+    "No person appeared in live camera validation; human ranging accuracy and moving search remain pending."
+  ],
+  "start_command": "bash deployment/go2/start_person_rgbd.sh",
+  "native_fallback_command": "bash deployment/go2/start_person_rgbd.sh --native"
+}

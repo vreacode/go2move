@@ -1,0 +1,127 @@
+{
+  "observed_at": 1791337777.8178442,
+  "onsite_feedback": "User heard no sound from direct /say test.",
+  "finding": "Discovery called /say (HTTP200); prior delivered=true meant sender RTP counts only, no device playback acknowledgement.",
+  "regression_tests": {
+    "speech": 10,
+    "search_lifecycle": 5,
+    "failures": 0
+  },
+  "rtp_probe": {
+    "delivered": true,
+    "path": "/tmp/go2-speech-51ftqw7e/speech.wav",
+    "sample_rate": 22050,
+    "duration": 4.164807256235828,
+    "delivery": {
+      "path": "/tmp/go2-speech-51ftqw7e/speech.wav",
+      "duration": 4.1648125,
+      "packets_sent": 223,
+      "bytes_sent": 45974
+    },
+    "text": "发现疑似目标，请现场确认。",
+    "started_at": 1791337703.2680216,
+    "completed_at": 1791337709.6923125,
+    "verification": "sender_rtp_only",
+    "audibility_verified": false,
+    "microphone_levels": {
+      "sample_rate": 16000,
+      "pcm_bits": 16,
+      "audio_saved": false,
+      "audibility_verified": false,
+      "error": null,
+      "baseline": {
+        "samples": 28464,
+        "frames": 89,
+        "peak": 5600,
+        "rms": 1233.96,
+        "duration": 1.779
+      },
+      "playback": {
+        "samples": 70720,
+        "frames": 221,
+        "peak": 6573,
+        "rms": 1245.3,
+        "duration": 4.42
+      }
+    }
+  },
+  "actual_motion_commands_sent": 0,
+  "physical_audio_output_verified": true,
+  "audiohub_probe": {
+    "delivered": true,
+    "path": "/tmp/go2-speech-ur_r9kbd/speech.wav",
+    "sample_rate": 22050,
+    "duration": 4.164807256235828,
+    "delivery": {
+      "path": "/tmp/go2-speech-ur_r9kbd/speech.wav",
+      "duration": 4.164807256235828,
+      "transport": "audiohub",
+      "acknowledged": true,
+      "unique_id": "03347780-f32e-4ecf-b36c-72f67c593e22",
+      "upload_ack": {
+        "api_id": 2001,
+        "request_id": 336534095,
+        "code": 0,
+        "received_at": 1791337896.6700702
+      },
+      "play_ack": {
+        "api_id": 1002,
+        "request_id": 336534505,
+        "code": 0,
+        "received_at": 1791337897.073996
+      },
+      "audibility_verified": false,
+      "cleanup": {
+        "unique_id": "03347780-f32e-4ecf-b36c-72f67c593e22",
+        "removed": true,
+        "ack": {
+          "api_id": 1009,
+          "request_id": 336539275,
+          "code": 0,
+          "received_at": 1791337901.810666
+        }
+      }
+    },
+    "text": "发现疑似目标，请现场确认。",
+    "started_at": 1791337881.498057,
+    "completed_at": 1791337901.8122034,
+    "verification": "robot_audiohub_ack",
+    "audibility_verified": false,
+    "microphone_levels": {
+      "sample_rate": 16000,
+      "pcm_bits": 16,
+      "audio_saved": false,
+      "audibility_verified": false,
+      "error": null,
+      "baseline": {
+        "samples": 248304,
+        "frames": 776,
+        "peak": 32768,
+        "rms": 1887.01,
+        "duration": 15.519
+      },
+      "playback": {
+        "samples": 73280,
+        "frames": 229,
+        "peak": 32767,
+        "rms": 4779.01,
+        "duration": 4.58
+      }
+    }
+  },
+  "onsite_audiohub_feedback": "User confirms audible, but reports sudden leg weakness/fall, without handheld input.",
+  "unexpected_posture_event": {
+    "received_at": 1791338076.5170069,
+    "person_search": "stopped",
+    "voice_service": "stopped",
+    "motion_replay_authorized": false,
+    "cause": "Unresolved. High rear hip temperatures observed after fall; no pre-fall trace or manufacturer protection threshold verified. No posture request found in NX source/service records; robot-side side effects not excluded.",
+    "readonly_state_report": "deployment/go2/robot_readonly_state_20261007.json",
+    "onsite_description": "sudden leg weakness/fall; no handheld operation",
+    "battery_soc": 71,
+    "rear_hip_temperature_c": {
+      "left": 83,
+      "right": 74
+    }
+  }
+}

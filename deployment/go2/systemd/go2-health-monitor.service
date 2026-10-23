@@ -1,0 +1,17 @@
+[Unit]
+Description=Go2 receive-only health telemetry (no motion or audio)
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/unitree/go2move
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/bin/bash -c 'source /home/unitree/go2move/deployment/go2/source_official_go2_sdk.sh; exec /home/unitree/go2_sdk2_venv/bin/python -u /home/unitree/go2move/deployment/go2/go2_health_monitor.py'
+KillSignal=SIGINT
+TimeoutStopSec=5
+Restart=on-failure
+RestartSec=4
+
+[Install]
+WantedBy=default.target

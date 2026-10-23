@@ -1,0 +1,61 @@
+{
+  "status": "Session closed at user request; all owned platform/motion processes stopped",
+  "upstream": [
+    "unitree_ros2 official ros2_sport_client.cpp Move/StopMove contracts",
+    "h-naderi/unitree-go2-slam-nav2 sport_ctrl.py integration pattern",
+    "Existing Foxy slam_toolbox and Nav2"
+  ],
+  "limits": {
+    "linear_m_s": 0.2,
+    "yaw_rad_s": 0.2,
+    "command_timeout_s": 0.25,
+    "sensor_timeout_s": 0.3,
+    "standing_height_min_m": 0.2,
+    "tilt_max_rad": 0.35,
+    "forward_obstacle_margin_m": 0.6
+  },
+  "sequence": [
+    "Confirm supervised level unobstructed route and dog standing",
+    "Record /lidar_points /scan /odom /imu/data /joint_states /tf /tf_static /map and motion preview",
+    "Go out on confirmed route and return to same place with low-speed feedback control",
+    "Confirm SLAM graph growth and accepted loop event; returning to start alone is insufficient evidence",
+    "Save PGM/YAML and serialized posegraph to new timestamped folder",
+    "ComputePathToPose to confirmed short goal; verify endpoint close to goal",
+    "Arm nav2-only motion adapter and send one bounded NavigateToPose goal; cancel and stop on timeout/stale state",
+    "Report actual travel, endpoint error, posegraph/loop evidence, map files, Nav2 result"
+  ],
+  "not_done": [
+    "Accepted SLAM loop event",
+    "Physical NavigateToPose single-goal success",
+    "D435i hardware RGB/Depth/IMU verification"
+  ],
+  "route": {
+    "from_current_pose_forward_m": 0.5,
+    "return_backward_m": 0.5,
+    "navigation_forward_m": 0.3
+  },
+  "preflight_report": "/home/unitree/go2_ros2_ws/tests/continue-20261006-203753/preflight/report.json",
+  "pulse_evidence": "/home/unitree/go2_ros2_ws/tests/motion-20261005-203543/pulse-speed-020.json",
+  "completed": [
+    "Low-speed SDK2 stepping and walking mapping at <=0.20 m/s",
+    "Cumulative outward reach about 0.47 m; physically returned near original start (onsite confirmed)",
+    "Map TF return error about 4.3 cm; raw odom about 13.2 cm",
+    "Fresh route TF under preview load; max age 0.071 s passive / 0.073 s walking",
+    "Map PGM/YAML and serialized SLAM posegraph saved",
+    "D435i Foxy ROS driver built against existing librealsense; no-device behavior verified",
+    "Three final zero/StopMove requests succeeded; all owned platform processes stopped"
+  ],
+  "authorized_route": false,
+  "current_run_directory": "/home/unitree/go2_ros2_ws/tests/continue-20261006-203753/closed-loop-return-filtered-tf",
+  "original_origin_report": "/home/unitree/go2_ros2_ws/tests/continue-20261006-203753/straight-pulse.json",
+  "runtime_rviz_paused": true,
+  "recording": "scan/state/TF/map and cloud metadata; bulk cloud omitted during motion",
+  "authorization_note": "Today whole-round authorization was used for supervised walking mapping/return. User closed the session; unused 0.30 m navigation authorization is canceled. Fresh onsite authorization is required next time.",
+  "final_map": "/home/unitree/go2_ros2_ws/maps/end-of-day-20261006",
+  "last_run": "/home/unitree/go2_ros2_ws/tests/continue-20261006-203753/short-navigation-sdk2",
+  "next": "Inspect left/rear map obstacles vs raw cloud and Nav2 Foxy inflation before planning same short corridor. Verify accepted loop on a suitable newly authorized route. Connect D435i when cable arrives.",
+  "mapping_yaw_gain": 1.5,
+  "working_backend": "official_sdk2 physically verified",
+  "rear_clearance_report": "/home/unitree/go2_ros2_ws/tests/continue-20261006-203753/rear-static-observer.json",
+  "session_close_report": "/home/unitree/go2_ros2_ws/maps/end-of-day-20261006/session-close.json"
+}

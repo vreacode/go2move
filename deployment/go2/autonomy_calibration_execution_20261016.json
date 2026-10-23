@@ -1,0 +1,82 @@
+{
+  "recorded_at": "2026-10-16T11:30:00.514109+08:00",
+  "execution_report": "runtime/autonomy/calibration-20261016T032213923949Z/execution.json",
+  "post_stop_readonly_report": "runtime/autonomy/calibration-20261016T032213923949Z/stopped_readonly.json",
+  "user_authorized": true,
+  "authorized_user_reply": "同意",
+  "limits": {
+    "speed_command_ceiling_m_s": 0.1,
+    "session_duration_including_preflight_s": 8,
+    "radius_m": 1,
+    "forward_only": true
+  },
+  "execution_attempted": true,
+  "nonzero_motion_attempted": false,
+  "calibration_completed": false,
+  "session_elapsed_including_shutdown_s": 4.115321636199951,
+  "stop_reason": "Measured speed exceeds the autonomous limit",
+  "reported_odometry_max_displacement_m": 0.0022683694955367376,
+  "initial_mcf_state": 1002,
+  "stop_responses": [
+    {
+      "api": 1003,
+      "code": 0,
+      "zero_move_code": 0,
+      "errors": [],
+      "source": "official SDK StopMove"
+    },
+    {
+      "api": 1003,
+      "code": 0,
+      "zero_move_code": 0,
+      "errors": [],
+      "source": "official SDK StopMove"
+    },
+    {
+      "api": 1003,
+      "code": 0,
+      "zero_move_code": 0,
+      "errors": [],
+      "source": "official SDK StopMove"
+    }
+  ],
+  "stop_acknowledged": true,
+  "post_stop_state_available": true,
+  "post_stop_max_three_dimensional_speed_m_s": 0.020588582344668545,
+  "post_stop_latest_horizontal_speed_m_s": 0.0003969979569474818,
+  "post_stop_max_abs_yaw_speed_rad_s": 0.01810949295759201,
+  "post_stop_max_motor_temperature_c": 64,
+  "fault_reserve_first_word": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "findings": [
+    "No nonzero forward Move was issued; this does not test whether 0.10 m/s triggers stepping.",
+    "Stop preparation from observed MCF 1002 changed stance and tripped the existing measured-speed gate.",
+    "Do not relax the measured-speed gate or automatically retry a tripped preparation.",
+    "Official remote manual distinguishes locked standing from START unlock/default gait.",
+    "Revised software refuses locked-standing preparation rather than using StopMove to transition out of it."
+  ],
+  "official_remote_manual": {
+    "url": "https://marketing.unitree.com/article/zh/Go2/Handheld_Remote_Control.html",
+    "printed_page": 8,
+    "page_image_url": "https://doc-cdn.unitree.com/static/2025/12/22/7b370601b51d4db097b4dc646b153e2d_2481x3509.png",
+    "verified_controls": {
+      "L2+A": "standing lock / lie down",
+      "START": "unlock / default gait"
+    }
+  },
+  "next_step": "Rest prone to cool, then operator manually unlocks with START and confirms stable walking-ready stance; recheck before completing authorized calibration.",
+  "physical_stepping_validated": false,
+  "physical_obstacle_avoidance_validated": false
+}

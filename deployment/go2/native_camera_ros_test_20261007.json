@@ -1,0 +1,79 @@
+{
+  "tested_at_unix": 1791333444.7895076,
+  "duration_seconds": 10.087,
+  "ros_validation": {
+    "compressed": [
+      {
+        "frame_id": "front_camera_optical_frame",
+        "format": "jpeg",
+        "bytes": 144532,
+        "shape": [
+          1080,
+          1920,
+          3
+        ]
+      }
+    ],
+    "raw": [
+      {
+        "frame_id": "front_camera_optical_frame",
+        "width": 640,
+        "height": 360,
+        "encoding": "bgr8",
+        "step": 1920,
+        "bytes": 691200
+      }
+    ],
+    "optical_tf": {
+      "parent": "front_camera",
+      "child": "front_camera_optical_frame",
+      "xyzw": [
+        -0.5,
+        0.5,
+        -0.5,
+        0.5
+      ]
+    },
+    "compressed_samples": 48,
+    "compressed_fps": 4.743,
+    "raw_samples": 48,
+    "raw_fps": 4.742
+  },
+  "hardware_motion_commands": [],
+  "http_stale_tests": {
+    "stale/snapshot.jpg": 503,
+    "stale/stream.mjpg": 503,
+    "stopped/snapshot.jpg": 503,
+    "stopped/stream.mjpg": 503
+  },
+  "bridge_exit_code": 0,
+  "worker_exit_code": 0,
+  "test_processes_left_running": false,
+  "dds": {
+    "transport": "loopback TCP",
+    "bridge_port": 17419,
+    "peers": [
+      17402,
+      17403,
+      17404,
+      17405,
+      17406,
+      17407,
+      17408,
+      17409,
+      17410,
+      17411,
+      17412,
+      17413,
+      17414,
+      17415,
+      17416,
+      17417,
+      17418
+    ],
+    "validation_client_port": 0,
+    "validation_client_peer": 17419
+  },
+  "calibrated_camera_info_published": false,
+  "raw_conversion": "array(B) avoids per-byte Python assertions in Foxy message setters"
+}

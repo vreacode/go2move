@@ -1,0 +1,552 @@
+{
+  "time": "2026-10-07T10:52:53+0800",
+  "checks": {
+    "health_fresh": true,
+    "vision_active": true,
+    "new_frames": true,
+    "auth_required": true,
+    "held_start": true,
+    "image_ok": true,
+    "no_worker": true,
+    "unneeded_services_off": true
+  },
+  "health_without_auth": 401,
+  "scan_held_start": 409,
+  "worker_pids": [],
+  "services": {
+    "go2-health-monitor": "active",
+    "go2-native-camera": "active",
+    "go2-native-camera-ros": "active",
+    "go2-person-search": "active",
+    "nano-dashboard-server": "active",
+    "go2-voice": "inactive",
+    "go2-platform": "inactive",
+    "nano-board-agent": "inactive"
+  },
+  "samples": [
+    {
+      "at": 1791341566.8798509,
+      "health": {
+        "connected": true,
+        "sampled_at": 1791341566.505817,
+        "age_s": 0.36171841621398926,
+        "max_temperature_c": 61,
+        "motor_temperatures_c": [
+          36,
+          35,
+          37,
+          36,
+          37,
+          38,
+          58,
+          40,
+          40,
+          61,
+          40,
+          42
+        ],
+        "rear_left_hip_temperature_c": 61,
+        "rear_right_hip_temperature_c": 58,
+        "body_height_m": 0.0638222023844719,
+        "soc": 53,
+        "power_v": 29.650209426879883,
+        "rpy": [
+          0.010205565951764584,
+          -0.09266795963048935,
+          -0.5861870646476746
+        ],
+        "remote": {
+          "keys": 0,
+          "axes": {
+            "lx": -0.0,
+            "rx": -0.0,
+            "ry": -0.0,
+            "ly": 0.0
+          }
+        },
+        "faults": [
+          {
+            "index": 9,
+            "joint": "RL_0",
+            "code_hex": "0x04",
+            "messages": [
+              "驱动过热"
+            ]
+          }
+        ],
+        "system_faults": [],
+        "low_state_bit_flag": 4,
+        "motion_allowed": false,
+        "reason": "过热报警（RL_0），保持停止。",
+        "fault_source_url": "https://support.unitree.com/home/en/developer/Fault_service"
+      },
+      "person": {
+        "active": true,
+        "frames": 354,
+        "camera": {
+          "connected": true,
+          "width": 1920,
+          "height": 1080,
+          "fps": 4.97
+        },
+        "history_count": 2,
+        "error": null,
+        "speak": false,
+        "motion_enabled": false
+      },
+      "last_captured_at": 1791341566.237806
+    },
+    {
+      "at": 1791341567.9259574,
+      "health": {
+        "connected": true,
+        "sampled_at": 1791341567.5092943,
+        "age_s": 0.3939230442047119,
+        "max_temperature_c": 61,
+        "motor_temperatures_c": [
+          36,
+          35,
+          37,
+          36,
+          37,
+          38,
+          58,
+          40,
+          40,
+          61,
+          40,
+          41
+        ],
+        "rear_left_hip_temperature_c": 61,
+        "rear_right_hip_temperature_c": 58,
+        "body_height_m": 0.06382269412279129,
+        "soc": 53,
+        "power_v": 29.650209426879883,
+        "rpy": [
+          0.010327220894396305,
+          -0.0924612432718277,
+          -0.5866599678993225
+        ],
+        "remote": {
+          "keys": 0,
+          "axes": {
+            "lx": -0.0,
+            "rx": -0.0,
+            "ry": -0.0,
+            "ly": 0.0
+          }
+        },
+        "faults": [
+          {
+            "index": 9,
+            "joint": "RL_0",
+            "code_hex": "0x04",
+            "messages": [
+              "驱动过热"
+            ]
+          }
+        ],
+        "system_faults": [],
+        "low_state_bit_flag": 4,
+        "motion_allowed": false,
+        "reason": "过热报警（RL_0），保持停止。",
+        "fault_source_url": "https://support.unitree.com/home/en/developer/Fault_service"
+      },
+      "person": {
+        "active": true,
+        "frames": 356,
+        "camera": {
+          "connected": true,
+          "width": 1920,
+          "height": 1080,
+          "fps": 4.97
+        },
+        "history_count": 2,
+        "error": null,
+        "speak": false,
+        "motion_enabled": false
+      },
+      "last_captured_at": 1791341567.4540608
+    },
+    {
+      "at": 1791341568.971733,
+      "health": {
+        "connected": true,
+        "sampled_at": 1791341568.514237,
+        "age_s": 0.4499659538269043,
+        "max_temperature_c": 61,
+        "motor_temperatures_c": [
+          36,
+          35,
+          37,
+          36,
+          37,
+          38,
+          58,
+          40,
+          40,
+          61,
+          40,
+          42
+        ],
+        "rear_left_hip_temperature_c": 61,
+        "rear_right_hip_temperature_c": 58,
+        "body_height_m": 0.06382172554731369,
+        "soc": 53,
+        "power_v": 29.650209426879883,
+        "rpy": [
+          0.009792331606149673,
+          -0.09254886209964752,
+          -0.5865970849990845
+        ],
+        "remote": {
+          "keys": 0,
+          "axes": {
+            "lx": -0.0,
+            "rx": -0.0,
+            "ry": -0.0,
+            "ly": 0.0
+          }
+        },
+        "faults": [
+          {
+            "index": 9,
+            "joint": "RL_0",
+            "code_hex": "0x04",
+            "messages": [
+              "驱动过热"
+            ]
+          }
+        ],
+        "system_faults": [],
+        "low_state_bit_flag": 4,
+        "motion_allowed": false,
+        "reason": "过热报警（RL_0），保持停止。",
+        "fault_source_url": "https://support.unitree.com/home/en/developer/Fault_service"
+      },
+      "person": {
+        "active": true,
+        "frames": 358,
+        "camera": {
+          "connected": true,
+          "width": 1920,
+          "height": 1080,
+          "fps": 4.97
+        },
+        "history_count": 2,
+        "error": null,
+        "speak": false,
+        "motion_enabled": false
+      },
+      "last_captured_at": 1791341568.461556
+    },
+    {
+      "at": 1791341570.011571,
+      "health": {
+        "connected": true,
+        "sampled_at": 1791341569.519043,
+        "age_s": 0.48384928703308105,
+        "max_temperature_c": 61,
+        "motor_temperatures_c": [
+          36,
+          35,
+          37,
+          36,
+          37,
+          38,
+          58,
+          40,
+          40,
+          61,
+          40,
+          41
+        ],
+        "rear_left_hip_temperature_c": 61,
+        "rear_right_hip_temperature_c": 58,
+        "body_height_m": 0.06381884962320328,
+        "soc": 53,
+        "power_v": 29.650209426879883,
+        "rpy": [
+          0.009610146284103394,
+          -0.09295205771923065,
+          -0.5856921076774597
+        ],
+        "remote": {
+          "keys": 0,
+          "axes": {
+            "lx": -0.0,
+            "rx": -0.0,
+            "ry": -0.0,
+            "ly": 0.0
+          }
+        },
+        "faults": [
+          {
+            "index": 9,
+            "joint": "RL_0",
+            "code_hex": "0x04",
+            "messages": [
+              "驱动过热"
+            ]
+          }
+        ],
+        "system_faults": [],
+        "low_state_bit_flag": 4,
+        "motion_allowed": false,
+        "reason": "过热报警（RL_0），保持停止。",
+        "fault_source_url": "https://support.unitree.com/home/en/developer/Fault_service"
+      },
+      "person": {
+        "active": true,
+        "frames": 359,
+        "camera": {
+          "connected": true,
+          "width": 1920,
+          "height": 1080,
+          "fps": 4.97
+        },
+        "history_count": 2,
+        "error": null,
+        "speak": false,
+        "motion_enabled": false
+      },
+      "last_captured_at": 1791341569.056331
+    },
+    {
+      "at": 1791341571.0614574,
+      "health": {
+        "connected": true,
+        "sampled_at": 1791341570.523433,
+        "age_s": 0.5233361721038818,
+        "max_temperature_c": 61,
+        "motor_temperatures_c": [
+          36,
+          35,
+          37,
+          36,
+          37,
+          38,
+          58,
+          40,
+          40,
+          61,
+          40,
+          42
+        ],
+        "rear_left_hip_temperature_c": 61,
+        "rear_right_hip_temperature_c": 58,
+        "body_height_m": 0.06382483243942261,
+        "soc": 53,
+        "power_v": 29.650209426879883,
+        "rpy": [
+          0.009898745454847813,
+          -0.093015655875206,
+          -0.5860604047775269
+        ],
+        "remote": {
+          "keys": 0,
+          "axes": {
+            "lx": -0.0,
+            "rx": -0.0,
+            "ry": -0.0,
+            "ly": 0.0
+          }
+        },
+        "faults": [
+          {
+            "index": 9,
+            "joint": "RL_0",
+            "code_hex": "0x04",
+            "messages": [
+              "驱动过热"
+            ]
+          }
+        ],
+        "system_faults": [],
+        "low_state_bit_flag": 4,
+        "motion_allowed": false,
+        "reason": "过热报警（RL_0），保持停止。",
+        "fault_source_url": "https://support.unitree.com/home/en/developer/Fault_service"
+      },
+      "person": {
+        "active": true,
+        "frames": 361,
+        "camera": {
+          "connected": true,
+          "width": 1920,
+          "height": 1080,
+          "fps": 4.97
+        },
+        "history_count": 2,
+        "error": null,
+        "speak": false,
+        "motion_enabled": false
+      },
+      "last_captured_at": 1791341570.8768106
+    },
+    {
+      "at": 1791341572.0964231,
+      "health": {
+        "connected": true,
+        "sampled_at": 1791341571.528425,
+        "age_s": 0.5739288330078125,
+        "max_temperature_c": 61,
+        "motor_temperatures_c": [
+          36,
+          35,
+          37,
+          36,
+          37,
+          38,
+          58,
+          40,
+          40,
+          61,
+          40,
+          41
+        ],
+        "rear_left_hip_temperature_c": 61,
+        "rear_right_hip_temperature_c": 58,
+        "body_height_m": 0.06382147967815399,
+        "soc": 53,
+        "power_v": 29.650209426879883,
+        "rpy": [
+          0.010095499455928802,
+          -0.09299802780151367,
+          -0.5866004228591919
+        ],
+        "remote": {
+          "keys": 0,
+          "axes": {
+            "lx": -0.0,
+            "rx": -0.0,
+            "ry": -0.0,
+            "ly": 0.0
+          }
+        },
+        "faults": [
+          {
+            "index": 9,
+            "joint": "RL_0",
+            "code_hex": "0x04",
+            "messages": [
+              "驱动过热"
+            ]
+          }
+        ],
+        "system_faults": [],
+        "low_state_bit_flag": 4,
+        "motion_allowed": false,
+        "reason": "过热报警（RL_0），保持停止。",
+        "fault_source_url": "https://support.unitree.com/home/en/developer/Fault_service"
+      },
+      "person": {
+        "active": true,
+        "frames": 362,
+        "camera": {
+          "connected": true,
+          "width": 1920,
+          "height": 1080,
+          "fps": 4.97
+        },
+        "history_count": 2,
+        "error": null,
+        "speak": false,
+        "motion_enabled": false
+      },
+      "last_captured_at": 1791341571.4721956
+    }
+  ],
+  "camera_image_bytes": 124324,
+  "native_audio_invoked": false,
+  "motion_invoked": false,
+  "browser_audio": "offline logic tested; onsite playback unverified",
+  "services_before_dependency_fix": {
+    "go2-health-monitor": "active",
+    "go2-native-camera": "active",
+    "go2-native-camera-ros": "active",
+    "go2-person-search": "active",
+    "nano-dashboard-server": "active",
+    "go2-voice": "inactive",
+    "go2-platform": "inactive",
+    "nano-board-agent": "deactivating"
+  },
+  "completed_at": "2026-10-07T10:53:57+0800",
+  "final_health": {
+    "connected": true,
+    "sampled_at": 1791341636.8995354,
+    "age_s": 0.5346348285675049,
+    "max_temperature_c": 61,
+    "motor_temperatures_c": [
+      36,
+      35,
+      37,
+      36,
+      37,
+      38,
+      58,
+      40,
+      40,
+      61,
+      40,
+      41
+    ],
+    "rear_left_hip_temperature_c": 61,
+    "rear_right_hip_temperature_c": 58,
+    "body_height_m": 0.0638222023844719,
+    "soc": 53,
+    "power_v": 29.641353607177734,
+    "rpy": [
+      0.008580180816352367,
+      -0.09284787625074387,
+      -0.5812822580337524
+    ],
+    "remote": {
+      "keys": 0,
+      "axes": {
+        "lx": -0.0,
+        "rx": -0.0,
+        "ry": -0.0,
+        "ly": 0.0
+      }
+    },
+    "faults": [
+      {
+        "index": 9,
+        "joint": "RL_0",
+        "code_hex": "0x04",
+        "messages": [
+          "驱动过热"
+        ]
+      }
+    ],
+    "system_faults": [],
+    "low_state_bit_flag": 4,
+    "motion_allowed": false,
+    "reason": "过热报警（RL_0），保持停止。",
+    "fault_source_url": "https://support.unitree.com/home/en/developer/Fault_service"
+  },
+  "final_person": {
+    "active": true,
+    "frames": 474,
+    "camera": {
+      "connected": true,
+      "width": 1920,
+      "height": 1080,
+      "fps": 4.97
+    },
+    "history_count": 2,
+    "error": null,
+    "speak": false,
+    "motion_enabled": false
+  },
+  "dashboard_dependency_fix": "Removed Requires=nano-board-agent from both backed-up unit files; dashboard independently active, data-only agent stopped after dashboard stream connections closed.",
+  "offline_tests": {
+    "health": 24,
+    "rotation_guard": 26,
+    "fake_worker": 9,
+    "frontend_feedback": 9,
+    "health_http_cases": 5,
+    "typescript_build": "passed"
+  }
+}

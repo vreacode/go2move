@@ -1,0 +1,74 @@
+{
+  "model_source": "original_trained_helmet",
+  "source_archive": "/home/unitree/go2move/models.rar",
+  "source_member": "models/helmet.pt",
+  "checkpoint_sha256": "aa1563af00d971e4e6d8087b0d36750d2fb4c9f04e7cb1f3129fad0e3c91d806",
+  "labels": [
+    "helmet",
+    "head"
+  ],
+  "canonical_labels": [
+    "Hardhat",
+    "NO-Hardhat"
+  ],
+  "selected_manifest": "/home/unitree/go2_ros2_ws/models/helmet_custom/helmet.labels.json",
+  "engine_build": {
+    "tensorrt": "8.5.2.2",
+    "fp16": true,
+    "jit_convolutions": false,
+    "tactic_source_mask": 15,
+    "duration_s": 962.5766190200002,
+    "engine": "/home/unitree/go2_ros2_ws/models/helmet_custom/helmet.trt8.5.2.2.fp16.engine",
+    "engine_sha256": "f37742f2b26a0a81d054484b9e59b57fca93d6b7f9e0367fb49b76811e074d75",
+    "onnx_sha256": "fd6194634d1f92fbb3e6c83493bd7c1734edacadba05919af9fe87026bf4e9e0"
+  },
+  "numeric_check": {
+    "detections_pytorch": 14,
+    "detections_tensorrt": 14,
+    "minimum_box_iou": 0.9887347559120124,
+    "maximum_confidence_delta": 0.0061193108558654785
+  },
+  "live_check": {
+    "mode": "isolated_live_incoming_camera",
+    "duration_s": 60.101832121999905,
+    "frames": 298,
+    "processed_hz": 4.9557451877974215,
+    "max_capture_gap_s": 0.4243628978729248,
+    "max_capture_age_s": 0.4714341163635254,
+    "inference_median_ms": 92.85,
+    "errors": [],
+    "production_history_modified": false,
+    "movement_commands": 0
+  },
+  "deployment_check": {
+    "model_source": "original_trained_helmet",
+    "model_backend": "TensorRT FP16 / original YOLOv5 helmet",
+    "model_sha256": "fd6194634d1f92fbb3e6c83493bd7c1734edacadba05919af9fe87026bf4e9e0",
+    "active": false,
+    "photo_active": false,
+    "record_count": 11,
+    "old_record_ids_preserved": true,
+    "target_id_preserved": true,
+    "motion_commands": 0,
+    "dashboard_authenticated_http": 200
+  },
+  "python_tests_passed": 24,
+  "new_decoder_tests": 6,
+  "ui_smoke_passed": true,
+  "frontend_production_build_passed": true,
+  "limitations": [
+    "Public images and historical suspected crops are not an annotated accuracy benchmark.",
+    "Live soak was an empty scene; actual helmet props, overlapping people, head cropping and manual robot motion require onsite accuracy validation.",
+    "Current detection start/stop state was restored to stopped; original model remains loaded and ready."
+  ],
+  "modified_files": [
+    "deployment/go2/helmet_detector.py",
+    "deployment/go2/person_detector.py",
+    "deployment/go2/helmet_monitor.py",
+    "deployment/go2/test_helmet_detector.py",
+    "deployment/go2/config/helmet_model.json",
+    "apps/nano-deploy/dashboard_platform/web/src/components/Go2HelmetPanel.tsx"
+  ],
+  "motion_commands": 0,
+  "speech_commands": 0
+}

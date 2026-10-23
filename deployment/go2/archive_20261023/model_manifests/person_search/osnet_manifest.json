@@ -1,0 +1,38 @@
+{
+  "file": "/home/unitree/go2_ros2_ws/models/person_search/osnet_x0_25_msmt17.onnx",
+  "source_url": "https://huggingface.co/kornia/osnet/resolve/1099f9829e412afc53ba4fbfe242e41b5b95da0e/osnet_x0_25_msmt17.onnx?download=true",
+  "publisher": "Kornia AI",
+  "repository_revision": "1099f9829e412afc53ba4fbfe242e41b5b95da0e",
+  "sha256": "e78604f4ccda49b8f41cd0f8f7303800ce75d2361895ebb0729513c1bf53d277",
+  "bytes": 907169,
+  "architecture": "OSNet x0.25",
+  "claimed_training_dataset": "MSMT17",
+  "original_project": "https://github.com/KaiyangZhou/deep-person-reid",
+  "license_original": "MIT",
+  "downloaded_at": 1791334260.0050714,
+  "engine_file": "/home/unitree/go2_ros2_ws/models/person_search/osnet_x0_25_msmt17_fp16.engine",
+  "engine_sha256": "47d2dab2e26b85176beb4c80555bcdcc60bfde58634020641c4fbd48fe96260f",
+  "tensorrt_version": "TensorRT 8.5.2.2",
+  "build_seconds": 369.611,
+  "preprocessing": {
+    "color": "BGR->RGB",
+    "height": 256,
+    "width": 128,
+    "scale": 0.00392156862745098,
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ]
+  },
+  "output": {
+    "dimensions": 512,
+    "l2_normalized": true
+  },
+  "fixed_batch_size": 16
+}

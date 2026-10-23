@@ -1,0 +1,189 @@
+{
+  "readonly": true,
+  "motion_output_enabled": false,
+  "state_available": true,
+  "started_at": 1791340241.1548104,
+  "sampled_at": 1791340243.2831745,
+  "requested_duration_seconds": 2,
+  "latest": {
+    "low": {
+      "received_at": 1791340243.2812085,
+      "tick": 1876675,
+      "soc": 58,
+      "bms_status": 8,
+      "bms_current_raw": -1894,
+      "bms_bq_ntc": [
+        32,
+        34
+      ],
+      "bms_mcu_ntc": [
+        36,
+        34
+      ],
+      "power_v": 29.915813446044922,
+      "power_a": 0.2392723262310028,
+      "temperature_ntc1": 49,
+      "temperature_ntc2": 45,
+      "motor_temperatures": [
+        37,
+        38,
+        43,
+        37,
+        40,
+        43,
+        74,
+        46,
+        46,
+        84,
+        46,
+        49
+      ],
+      "motor_modes": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "motor_lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "bit_flag": 4,
+      "foot_force": [
+        7,
+        4,
+        7,
+        11
+      ],
+      "remote": {
+        "keys": 0,
+        "axes": {
+          "lx": 0,
+          "rx": 0,
+          "ry": 0,
+          "ly": 0
+        }
+      }
+    },
+    "sport": {
+      "received_at": 1791340243.237728,
+      "source_stamp": [
+        1791338457,
+        385159000
+      ],
+      "mode": 0,
+      "error_code": 100,
+      "gait_type": 0,
+      "body_height": 0.0787869319319725,
+      "position": [
+        -0.3624451756477356,
+        0.12562912702560425,
+        0.054638173431158066
+      ],
+      "velocity": [
+        -3.218120880887909e-08,
+        1.2717314312737926e-08,
+        -1.1324286788294557e-06
+      ],
+      "yaw_speed": -0.004261057358235121,
+      "rpy": [
+        -0.009756206534802914,
+        -0.028712531551718712,
+        -0.6206504702568054
+      ]
+    }
+  },
+  "counts": {
+    "low": 39,
+    "sport": 40
+  },
+  "windows": {
+    "low": {
+      "age_seconds": 0,
+      "max_receive_gap_seconds": 0.05659920199991575,
+      "received_span_seconds": 1.9003087290000167,
+      "tick_first": 1874775,
+      "tick_last": 1876675,
+      "tick_delta": 1900,
+      "tick_nondecreasing": true,
+      "motor_temperature_max": [
+        38,
+        38,
+        43,
+        37,
+        40,
+        43,
+        74,
+        47,
+        46,
+        84,
+        46,
+        49
+      ],
+      "soc_min": 58,
+      "remote_keys_observed": [
+        0
+      ],
+      "remote_max_abs_axis": 0
+    },
+    "sport": {
+      "age_seconds": 0.04294395100009751,
+      "max_receive_gap_seconds": 0.05923719400016125,
+      "received_span_seconds": 1.9493276959999548,
+      "body_height_min": 0.07878019660711288,
+      "body_height_max": 0.07879751920700073,
+      "max_abs_roll": 0.009756206534802914,
+      "max_abs_pitch": 0.029632460325956345,
+      "max_linear_speed": 1.1325079377381781e-05,
+      "max_abs_yaw_speed": 0.013848436065018177,
+      "modes": [
+        0
+      ],
+      "error_codes": [
+        100
+      ]
+    }
+  },
+  "temp_max": 84,
+  "error": null,
+  "incident": "User reported a second sudden fall at approximately 2026-10-07 10:30 +0800",
+  "software_actions": {
+    "trial_executed": false,
+    "voice_played": false,
+    "scan_policy_enabled": false,
+    "all_project_robot_services_stopped": true,
+    "commands_sent_for_this_capture": 0,
+    "nano_board_agent_autostart_disabled": true,
+    "network_or_ssh_changed": false
+  },
+  "limits_of_evidence": "Post-event telemetry only; no continuous motor/fault log spans the instant of collapse. High temperature is a clue, not established cause.",
+  "onsite_report": {
+    "handheld_operated": false,
+    "description": "没有手柄操作，突然的",
+    "power_off_confirmed": false,
+    "power_off_status": "awaiting confirmation"
+  },
+  "official_guidance": {
+    "manual": "https://marketing.unitree.com/article/en/Go2/User_Manual.html",
+    "support": "https://www.unitree.com/cn/contact/",
+    "finding": "Repeated unstable stance after restart warrants official support before considering calibration. No verified official motor-overtemperature shutdown threshold found."
+  }
+}

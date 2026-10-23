@@ -18,6 +18,8 @@ import {
   SwatchIcon,
 } from "@heroicons/react/24/outline";
 import { Panel } from "./components/Panel";
+import { Go2VoicePanel } from "./components/Go2VoicePanel";
+import { Go2VisionPanel } from "./components/Go2VisionPanel";
 import { SidebarMenu, type SidebarTab } from "./components/SidebarMenu";
 import { VideoStream } from "./components/VideoStream";
 import { API_BASE, apiFetch, classNames, clearToken, formatNumber, loadToken, saveToken, wsUrl } from "./lib";
@@ -26,7 +28,7 @@ import type { ConnectionState, LogItem, MapEntry, MapMetadata, MapPoint, MediaIt
 type LoginResponse = { token: string; username: string };
 
 const workspaceMeta: Record<SidebarTab, { eyebrow: string; title: string; description: string }> = {
-  live: { eyebrow: "LIVE OPERATIONS", title: "实时监控", description: "查看可见光视频、模型状态与数据采集任务。" },
+  live: { eyebrow: "GO2 WORKSPACE", title: "视觉工作台", description: "安全帽多人识别、人物查找与目标记录。" },
   navigation: { eyebrow: "MAP & NAVIGATION", title: "建图导航", description: "管理地图、建图流程与自主导航任务。" },
   perception: { eyebrow: "MEDIA & INTELLIGENCE", title: "媒体与感知", description: "管理录像、拍照、检测事件与系统日志。" },
   diagnostics: { eyebrow: "SYSTEM HEALTH", title: "系统诊断", description: "核对底盘链路、设备资源和控制模式。" },
@@ -79,6 +81,8 @@ function describeError(error: unknown) {
 function App() {
   const [token, setToken] = useState(loadToken());
   const [activeTab, setActiveTab] = useState<SidebarTab>(() => tabFromHash(window.location.hash));
+  const [voiceExpanded, setVoiceExpanded] = useState(false);
+  const [advancedExpanded, setAdvancedExpanded] = useState(false);
   const [status, setStatus] = useState<SystemStatus | null>(null);
   const [cameraStatus, setCameraStatus] = useState<SiyiCameraStatus | null>(null);
   const [gimbalPending, setGimbalPending] = useState(false);
@@ -873,26 +877,26 @@ function App() {
   }
 
   return (
-    <div className="flex min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(125,211,252,.24),transparent_30%),linear-gradient(135deg,#edf5ff_0%,#f8fbff_48%,#e9f2fb_100%)] text-primary">
-      <SidebarMenu activeTab={activeTab} onChange={selectTab} status={status} />
-      <main className="min-w-0 flex-1 px-5 py-5 lg:px-8">
-      <header className="mb-6 flex flex-col gap-4 rounded-lg border border-base/70 bg-panel p-6 lg:flex-row lg:items-center lg:justify-between">
+    <div className="go2-console flex min-h-screen text-primary">
+      <div className="go2-sidebar"><SidebarMenu activeTab={activeTab} onChange={selectTab} status={status} /></div>
+      <main className="go2-main min-w-0 flex-1">
+      <header className="go2-header flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <div className="flex items-center gap-3">
             <span className="text-[10px] font-semibold uppercase tracking-[0.24em] text-accent-600">{activeWorkspace.eyebrow}</span>
-            <span className="rounded bg-page px-1.5 py-0.5 text-[10px] font-semibold tracking-wider text-muted">NANO</span>
+            <span className="rounded bg-page px-1.5 py-0.5 text-[10px] font-semibold tracking-wider text-muted">GO2</span>
           </div>
           <div className="mt-2 flex items-end gap-3">
             <h1 className="text-2xl font-bold tracking-tight text-primary">{activeWorkspace.title}</h1>
-            <span className="hidden pb-0.5 text-xs text-muted lg:inline">Vehicle Intelligence Console</span>
           </div>
           <p className="mt-1 text-[13px] text-muted">{activeWorkspace.description}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <StatusPill tone={status?.agent_online ? "good" : "danger"}>设备 {status?.agent_online ? "在线" : "离线"}</StatusPill>
-          <StatusPill tone={videoState === "connected" ? "good" : videoState === "failed" ? "danger" : "warn"}>视频 {videoState === "connected" ? (cameraLiveConfirmed ? "实时" : "离线测试") : videoState === "failed" ? "已断开" : "重连中"}</StatusPill>
-          <StatusPill tone={status?.mapping_running ? "good" : "neutral"}>建图 {status?.mapping_running ? "运行中" : "空闲"}</StatusPill>
-          <StatusPill tone={status?.navigation_running ? "good" : "neutral"}>导航 {status?.navigation_running ? "运行中" : "空闲"}</StatusPill>
+          {activeTab === "live" && advancedExpanded ? <StatusPill tone={videoState === "connected" ? "good" : videoState === "failed" ? "danger" : "warn"}>视频 {videoState === "connected" ? (cameraLiveConfirmed ? "实时" : "离线测试") : videoState === "failed" ? "已断开" : "重连中"}</StatusPill> : null}
+          {activeTab !== "live" || status?.mapping_running ? <StatusPill tone={status?.mapping_running ? "good" : "neutral"}>建图 {status?.mapping_running ? "运行中" : "空闲"}</StatusPill> : null}
+          {activeTab !== "live" || status?.navigation_running ? <StatusPill tone={status?.navigation_running ? "good" : "neutral"}>导航 {status?.navigation_running ? "运行中" : "空闲"}</StatusPill> : null}
+          {activeTab === "live" ? <button onClick={() => void emergencyStop()} disabled={controlPending} className="go2-header-stop"><StopIcon className="h-4 w-4" aria-hidden="true" />急停</button> : null}
           <div className="ml-2 h-4 w-px bg-divider"></div>
           <ThemeToggle />
           <button onClick={logout} className="rounded-md border border-base bg-panel px-3 py-1.5 text-[13px] font-medium text-tertiary hover:bg-card hover:text-primary transition-colors">
@@ -902,12 +906,26 @@ function App() {
       </header>
 
       <div className="space-y-5">
-        {activeTab === "live" ? <div id="section-live" className="grid gap-5 xl:grid-cols-12">
+        {activeTab === "live" ? <Go2VisionPanel token={token} /> : null}
+        {activeTab === "live" && error ? <p className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-danger" role="alert">{error}</p> : null}
+        {activeTab === "live" ? <section className="go2-fold">
+          <button type="button" className="go2-fold-toggle" aria-expanded={voiceExpanded} aria-controls="go2-voice-content" onClick={() => setVoiceExpanded((value) => !value)}>
+            <span><strong>语音助手</strong><small>收听指令与语音反馈</small></span>
+            <ChevronDownIcon className={classNames("h-5 w-5", voiceExpanded && "go2-fold-open")} aria-hidden="true" />
+          </button>
+          {voiceExpanded ? <div id="go2-voice-content" className="go2-fold-content"><Go2VoicePanel token={token} /></div> : null}
+        </section> : null}
+        {activeTab === "live" ? <section className="go2-fold">
+          <button type="button" className="go2-fold-toggle" aria-expanded={advancedExpanded} aria-controls="section-live" onClick={() => setAdvancedExpanded((value) => !value)}>
+            <span><strong>高级工具</strong><small>视频源、手动操控与模型参数</small></span>
+            <ChevronDownIcon className={classNames("h-5 w-5", advancedExpanded && "go2-fold-open")} aria-hidden="true" />
+          </button>
+          {advancedExpanded ? <div id="section-live" className="go2-fold-content grid gap-5 xl:grid-cols-12">
           <div className="h-full xl:col-span-8">
             <Panel
               title={irCameraEnabled ? "实时视频 (双光融合)" : "实时视频 (可见光)"}
               subtitle={irCameraEnabled ? "左侧为可见光/检测结果，右侧为红外流。" : cameraLiveConfirmed ? "当前为已确认的 Go2 可见光视频。" : "当前为离线 MP4 测试源，尚未接通 Go2 实时摄像头。"}
-              className="h-full min-h-[780px] flex flex-col"
+              className="h-full flex flex-col"
               right={
                 <div className="flex items-center gap-2">
                   <div className="flex overflow-hidden rounded-md border border-base bg-card text-[13px] text-tertiary font-medium shadow-sm">
@@ -1037,7 +1055,7 @@ function App() {
             <Panel
               title="即时操控"
               subtitle="执行车辆即时动作与安全控制。"
-              className="h-full min-h-[780px]"
+              className="h-full"
             >
               <div className="mb-4 grid grid-cols-2 gap-3">
                 <StatCard label="控制模式" value={status?.motion_state?.mode === "real" ? "real" : "dry-run"} />
@@ -1146,6 +1164,7 @@ function App() {
             </Panel>
           </div>
         </div> : null}
+        </section> : null}
 
         {activeTab === "navigation" ? <div id="section-navigation" className="grid gap-5 xl:grid-cols-12">
           <div className="h-full xl:col-span-4">

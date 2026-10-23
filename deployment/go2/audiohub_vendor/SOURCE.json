@@ -1,0 +1,18 @@
+{
+  "repository": "https://github.com/legion1581/unitree_webrtc_connect",
+  "commit": "e0abc5780761539eff89a382a79319e5cf6ad1f4",
+  "files": {
+    "unitree_webrtc_connect/webrtc_audiohub.py": "eacbf706e649780ca2eaf2e9db4d892a15debddb779c734e65ed27dfee0a8ffc",
+    "unitree_webrtc_connect/msgs/pub_sub.py": "aa77d22fbcdd76b10f36b1e033d1a659b2c9d76a5ba0e569ae4b89c13e2d3646",
+    "unitree_webrtc_connect/msgs/future_resolver.py": "2c53ae513fb938067c39d2c6db49eb93ca540dcfb0aa863f25e587c36d1146d8",
+    "unitree_webrtc_connect/constants.py": "3d96415fee97dab4f76a8ec0373d2114c98c23671ad21ab2a18138eed7494934",
+    "unitree_webrtc_connect/util.py": "950e6c5950c4b3a7aa47f20243eccf9ea0a19fb38a10a3329ca26c0543e72f18"
+  },
+  "adaptations": [
+    "relative imports",
+    "media constants and get_nested_field extracted verbatim",
+    "type-only driver import removed",
+    "pydub lazy import only for optional MP3",
+    "base64 chunk prints removed; microphone and uploaded PCM are not logged"
+  ]
+}

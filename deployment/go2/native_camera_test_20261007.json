@@ -1,0 +1,59 @@
+{
+  "tested_at_unix": 1791333190.8914638,
+  "worker": "/home/unitree/go2move/deployment/go2/native_camera.py",
+  "official_source": "/home/unitree/go2_sdk2_python/unitree_sdk2py/go2/video/video_client.py",
+  "sdk_api": "VideoClient.GetImageSample (1001)",
+  "runtime": "/home/unitree/go2_sdk2_venv/bin/python",
+  "dds_config": "/home/unitree/go2move/deployment/go2/cyclonedds_go2.xml",
+  "source_library_env": "/home/unitree/go2move/deployment/go2/source_official_go2_sdk.sh",
+  "continuous_10_hz": {
+    "seconds": 8,
+    "frames": 80,
+    "distinct_jpegs": 80,
+    "observed_fps": 9.84,
+    "width": 1920,
+    "height": 1080,
+    "errors": 0
+  },
+  "continuous_default_5_hz": {
+    "seconds": 12,
+    "frames": 60,
+    "distinct_jpegs": 60,
+    "observed_running_fps": 4.98,
+    "width": 1920,
+    "height": 1080,
+    "errors": 0
+  },
+  "final_metrics_check": {
+    "source": "unitree_sdk2_video",
+    "running": false,
+    "image_path": "/home/unitree/go2move/deployment/go2/runtime/native_camera_verify/latest.jpg",
+    "frames": 5,
+    "distinct_frames": 5,
+    "errors": 0,
+    "target_fps": 5.0,
+    "width": 1920,
+    "height": 1080,
+    "elapsed_seconds": 0.847,
+    "fps": 4.99,
+    "distinct_fps": 4.99,
+    "last_code": 0,
+    "bytes": 145271,
+    "captured_at": 1791333180.577319,
+    "sha256": "c50a830247e853c3d9d23e4633675ae79b695b53536e739aa8531495a2307aa1"
+  },
+  "http": {
+    "bind": "127.0.0.1:8766",
+    "snapshot_pass": true,
+    "status_pass": true,
+    "opencv_mjpeg_frames": 3,
+    "all_shapes": [
+      1080,
+      1920,
+      3
+    ]
+  },
+  "observation": "FFmpeg emitted vendor JPEG APP field warnings; all tested MJPEG frames and snapshots decoded successfully.",
+  "motion_apis_called": [],
+  "processes_left_running": false
+}

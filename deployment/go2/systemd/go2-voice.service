@@ -1,0 +1,18 @@
+[Unit]
+Description=Go2 offline voice assistant and native audio
+After=network-online.target go2-native-camera.service nano-board-agent.service
+Wants=go2-native-camera.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/unitree/go2move
+EnvironmentFile=/home/unitree/go2move/deployment/go2/go2.env
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/home/unitree/go2move/.venv/bin/uvicorn voice_hub:app --app-dir /home/unitree/go2move/deployment/go2 --host 127.0.0.1 --port 8767
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=8
+
+[Install]
+WantedBy=default.target

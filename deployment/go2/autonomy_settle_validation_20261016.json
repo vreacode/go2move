@@ -1,0 +1,25 @@
+{
+  "tested_at": "2026-10-16T10:59:46+0800",
+  "passed": true,
+  "tests_run": 72,
+  "failure_count": 0,
+  "error_count": 0,
+  "duration_s": 46.701,
+  "command": "python3 -B -m unittest test_local_autonomy test_autonomy_worker test_autonomy_session test_rotation_guard test_rotation_worker",
+  "synthetic_motion_only": true,
+  "physical_walking_validated": false,
+  "stop_preparation": {
+    "timeout_s": 3.0,
+    "max_displacement_m": 0.08,
+    "required_stationary_s": 0.5,
+    "minimum_settling_s": 0.75,
+    "final_stationary_speed_limit_m_s": 0.025,
+    "yaw_limit_rad_s": 0.04
+  },
+  "sha256": {
+    "local_autonomy.py": "3fce43c55ee43b85a1226aaee64e63ade4675f95449ef9ff3f1aa2c1ab383bb1",
+    "autonomy_guard.py": "a59ad0bd53b8cc91ca684aa93479b96e8bae09a134fb7e605523ba3896364d4a",
+    "official_sdk_worker.py": "f358fff1441eca7246288e2cb0b51f46f9d917aa8ebd01663e43c4cb61266d90",
+    "run_local_autonomy.py": "b30d2891142552ce3edc45e72d8cc260154b911a37bc8c44e4d2f28d8f833026"
+  }
+}

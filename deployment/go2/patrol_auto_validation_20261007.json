@@ -1,0 +1,515 @@
+{
+  "all_checks_passed": true,
+  "physical_execution": false,
+  "cases": {
+    "found": {
+      "response": {
+        "id": "e8ffb95e371e4495b08b9c41e121632f",
+        "state": "found",
+        "mode": "simulation",
+        "route_id": "3175e1a9b77b4f23b1bde2673a0e1525",
+        "target_id": "simulation-only",
+        "index": 1,
+        "total": 3,
+        "point": "观察点1",
+        "steps": [
+          {
+            "point": "观察点1",
+            "state": "navigating"
+          },
+          {
+            "point": "观察点1",
+            "state": "arrived"
+          },
+          {
+            "point": "观察点1",
+            "state": "settling"
+          },
+          {
+            "point": "观察点1",
+            "state": "observing"
+          },
+          {
+            "point": "观察点1",
+            "state": "found"
+          }
+        ],
+        "error": null,
+        "found": true,
+        "started_at": 1791343606.9749541,
+        "completed_at": 1791343607.122306,
+        "scenario": "found",
+        "evidence": {
+          "target_id": "simulation-only",
+          "captured_at": 1791343607.121983,
+          "track_id": "synthetic-track",
+          "suspected_target": true,
+          "synthetic": true,
+          "source": "simulation",
+          "identity_confirmed": false,
+          "confirmation_frames": 3
+        },
+        "active": false,
+        "simulation": true,
+        "physical_execution": false,
+        "motion_enabled": false,
+        "automatic_resume": false,
+        "reason": "模拟候选已连续确认，演练结束。"
+      },
+      "observed_states": [
+        "navigating",
+        "found"
+      ]
+    },
+    "not_found": {
+      "response": {
+        "id": "072f986b0eb64f5c9750fa3b60df2c08",
+        "state": "not_found",
+        "mode": "simulation",
+        "route_id": "3175e1a9b77b4f23b1bde2673a0e1525",
+        "target_id": "simulation-only",
+        "index": 3,
+        "total": 3,
+        "point": "观察点3",
+        "steps": [
+          {
+            "point": "观察点1",
+            "state": "navigating"
+          },
+          {
+            "point": "观察点1",
+            "state": "arrived"
+          },
+          {
+            "point": "观察点1",
+            "state": "settling"
+          },
+          {
+            "point": "观察点1",
+            "state": "observing"
+          },
+          {
+            "point": "观察点1",
+            "state": "not_found_at_point"
+          },
+          {
+            "point": "观察点2",
+            "state": "navigating"
+          },
+          {
+            "point": "观察点2",
+            "state": "arrived"
+          },
+          {
+            "point": "观察点2",
+            "state": "settling"
+          },
+          {
+            "point": "观察点2",
+            "state": "observing"
+          },
+          {
+            "point": "观察点2",
+            "state": "not_found_at_point"
+          },
+          {
+            "point": "观察点3",
+            "state": "navigating"
+          },
+          {
+            "point": "观察点3",
+            "state": "arrived"
+          },
+          {
+            "point": "观察点3",
+            "state": "settling"
+          },
+          {
+            "point": "观察点3",
+            "state": "observing"
+          },
+          {
+            "point": "观察点3",
+            "state": "not_found_at_point"
+          },
+          {
+            "point": "观察点3",
+            "state": "not_found"
+          }
+        ],
+        "error": null,
+        "found": false,
+        "started_at": 1791343607.162627,
+        "completed_at": 1791343607.8809302,
+        "scenario": "not_found",
+        "active": false,
+        "simulation": true,
+        "physical_execution": false,
+        "motion_enabled": false,
+        "automatic_resume": false,
+        "reason": "所有观察点演练完成，未发现模拟候选。"
+      },
+      "observed_states": [
+        "navigating",
+        "observing",
+        "observing",
+        "navigating",
+        "observing",
+        "observing",
+        "settling",
+        "observing",
+        "observing",
+        "not_found"
+      ]
+    },
+    "navigation_failed": {
+      "response": {
+        "id": "d1aef1aebc8543728c0bbd4f53a50325",
+        "state": "failed",
+        "mode": "simulation",
+        "route_id": "3175e1a9b77b4f23b1bde2673a0e1525",
+        "target_id": "simulation-only",
+        "index": 1,
+        "total": 3,
+        "point": "观察点1",
+        "steps": [
+          {
+            "point": "观察点1",
+            "state": "navigating"
+          },
+          {
+            "point": "观察点1",
+            "state": "failed"
+          }
+        ],
+        "error": "未到达观察点：观察点1",
+        "found": false,
+        "started_at": 1791343607.9692132,
+        "completed_at": 1791343608.0063431,
+        "scenario": "navigation_failed",
+        "active": false,
+        "simulation": true,
+        "physical_execution": false,
+        "motion_enabled": false,
+        "automatic_resume": false,
+        "reason": "未到达观察点：观察点1"
+      },
+      "observed_states": [
+        "navigating",
+        "failed"
+      ]
+    },
+    "cancel": {
+      "id": "d1f02d701f4b4cba908f2a11663e3ba7",
+      "state": "cancelled",
+      "mode": "simulation",
+      "route_id": "3175e1a9b77b4f23b1bde2673a0e1525",
+      "target_id": "simulation-only",
+      "index": 1,
+      "total": 3,
+      "point": "观察点1",
+      "steps": [
+        {
+          "point": "观察点1",
+          "state": "navigating"
+        },
+        {
+          "point": "观察点1",
+          "state": "arrived"
+        },
+        {
+          "point": "观察点1",
+          "state": "settling"
+        },
+        {
+          "point": "观察点1",
+          "state": "cancelled"
+        }
+      ],
+      "error": "任务已取消。",
+      "found": false,
+      "started_at": 1791343608.146991,
+      "completed_at": 1791343608.2216527,
+      "scenario": "not_found",
+      "active": false,
+      "simulation": true,
+      "physical_execution": false,
+      "motion_enabled": false,
+      "automatic_resume": false,
+      "reason": "任务已取消。"
+    }
+  },
+  "route": {
+    "name": "end-of-day-20261006观察路线",
+    "frame_id": "map",
+    "points": [
+      {
+        "name": "观察点1",
+        "x": -1.2750000000000001,
+        "y": -0.04499999999999993,
+        "yaw": 0.0
+      },
+      {
+        "name": "观察点2",
+        "x": 2.325,
+        "y": 0.7550000000000003,
+        "yaw": -2.677945044588987
+      },
+      {
+        "name": "观察点3",
+        "x": 0.6749999999999998,
+        "y": -0.24499999999999988,
+        "yaw": 1.3258176636680312
+      }
+    ],
+    "id": "3175e1a9b77b4f23b1bde2673a0e1525",
+    "saved_at": 1791343547.5232017,
+    "generation": {
+      "map_id": "end-of-day-20261006",
+      "map_sha256": "169be05037b40029d81926bb1ef5aafa0f0d30d88717994b067c88d8bc1f1f4e",
+      "origin": [
+        -3.2,
+        -1.77,
+        0.0
+      ],
+      "resolution": 0.05,
+      "reference_pose_source": "largest_clearance_component_center",
+      "reference_pose": [
+        0.7250000000000001,
+        -0.04499999999999993,
+        0.0
+      ],
+      "reference_rejected_reason": "保存pose净空0.285m不足0.4m。",
+      "live_localization": false,
+      "method": "opencv_distance_transform_4_connected_farthest_sampling",
+      "clearance_m": 0.4,
+      "minimum_separation_m": 0.6,
+      "radius_m": 2.0,
+      "unknown_value_guard": 205,
+      "threshold_mismatch": false,
+      "ordered_route_validated": false,
+      "width": 120,
+      "height": 64,
+      "point_pixels": [
+        {
+          "x": 38.0,
+          "y": 29.0,
+          "name": "观察点1"
+        },
+        {
+          "x": 110.0,
+          "y": 12.999999999999993,
+          "name": "观察点2"
+        },
+        {
+          "x": 77.0,
+          "y": 33.0,
+          "name": "观察点3"
+        }
+      ],
+      "reference_pixel": {
+        "x": 78.0,
+        "y": 29.0
+      },
+      "preview": {
+        "width": 120,
+        "height": 64,
+        "scale": 1.0
+      }
+    },
+    "warning": "静态地图候选；参考点不是实时机器人位置，未验证依次通行路径或动态避障。保存参考位置不适用，已使用有净空区域中心。",
+    "motion_enabled": false
+  },
+  "map_preview_bytes": 1471,
+  "maps": {
+    "items": [
+      {
+        "id": "end-of-day-20261006",
+        "name": "end-of-day-20261006",
+        "width": 120,
+        "height": 64,
+        "resolution": 0.05,
+        "origin": [
+          -3.2,
+          -1.77,
+          0.0
+        ],
+        "modified_at": 1791343254.29443,
+        "map_sha256": "169be05037b40029d81926bb1ef5aafa0f0d30d88717994b067c88d8bc1f1f4e",
+        "available": true,
+        "known_free_cells": 3832,
+        "unknown_value_guard": 205,
+        "threshold_mismatch": false,
+        "suggestible": true,
+        "saved_date": "2026-10-06"
+      },
+      {
+        "id": "initial-20261005",
+        "name": "initial-20261005",
+        "width": 117,
+        "height": 53,
+        "resolution": 0.05,
+        "origin": [
+          -4.21,
+          -0.649,
+          0.0
+        ],
+        "modified_at": 1791343254.2984302,
+        "map_sha256": "3dae647f1105250dc7a75816c1a7288cd36d34f5cb18e69c3c9f2bff58f5cfbc",
+        "available": true,
+        "known_free_cells": 1552,
+        "unknown_value_guard": 205,
+        "threshold_mismatch": false,
+        "suggestible": false,
+        "saved_date": "2026-10-05"
+      },
+      {
+        "id": "end-of-day-20261005",
+        "name": "end-of-day-20261005",
+        "width": 120,
+        "height": 89,
+        "resolution": 0.05,
+        "origin": [
+          -3.72,
+          -2.59,
+          0.0
+        ],
+        "modified_at": 1791343254.29443,
+        "map_sha256": "3c0c6c72e5c44b65ed1a624a0f7cff8131c8a19f5751870bfa3027d70e833cb6",
+        "available": true,
+        "known_free_cells": 4154,
+        "unknown_value_guard": 205,
+        "threshold_mismatch": false,
+        "suggestible": true,
+        "saved_date": "2026-10-05"
+      },
+      {
+        "id": "checkpoint-before-closed-loop-20261005",
+        "name": "checkpoint-before-closed-loop-20261005",
+        "width": 120,
+        "height": 89,
+        "resolution": 0.05,
+        "origin": [
+          -3.72,
+          -2.59,
+          0.0
+        ],
+        "modified_at": 1791343254.29443,
+        "map_sha256": "82720c01f3bcf4dc644ba0d7ca3528e9e7aab4c00d3e304384d7975ee853c423",
+        "available": true,
+        "known_free_cells": 4138,
+        "unknown_value_guard": 205,
+        "threshold_mismatch": false,
+        "suggestible": true,
+        "saved_date": "2026-10-05"
+      }
+    ],
+    "default_id": "end-of-day-20261006",
+    "live_localization": false,
+    "motion_enabled": false
+  },
+  "motion_gate": {
+    "patrol_run_status": 409,
+    "scan": {
+      "state": "blocked",
+      "reason": "左后髋驱动过热报警已确认（电机9，0x04），且已两次突然失稳。请正常关机冷却，保持试转暂停，后续需复查散热、负载和关节状态。",
+      "angle_deg": 0.0,
+      "max_angle_deg": 90,
+      "motion_output_enabled": false,
+      "available": false,
+      "physical_validated": false,
+      "automatic_resume": false,
+      "speak": false
+    },
+    "invalid_scan_start_status": 422
+  },
+  "target_and_history_unchanged": true,
+  "health": {
+    "connected": true,
+    "sampled_at": 1791343608.1902864,
+    "age_s": 0.2689328193664551,
+    "max_temperature_c": 48,
+    "motor_temperatures_c": [
+      37,
+      35,
+      36,
+      37,
+      35,
+      36,
+      48,
+      37,
+      38,
+      47,
+      37,
+      38
+    ],
+    "rear_left_hip_temperature_c": 47,
+    "rear_right_hip_temperature_c": 48,
+    "body_height_m": 0.06382869184017181,
+    "soc": 46,
+    "power_v": 29.1544132232666,
+    "rpy": [
+      0.009463255293667316,
+      -0.09239219129085541,
+      -0.579378068447113
+    ],
+    "remote": {
+      "keys": 0,
+      "axes": {
+        "lx": -0.0,
+        "rx": -0.0,
+        "ry": -0.0,
+        "ly": 0.0
+      }
+    },
+    "faults": [
+      {
+        "index": 9,
+        "joint": "RL_0",
+        "code_hex": "0x04",
+        "messages": [
+          "驱动过热"
+        ]
+      }
+    ],
+    "system_faults": [],
+    "low_state_bit_flag": 4,
+    "motion_allowed": false,
+    "reason": "过热报警（RL_0），保持停止。",
+    "fault_source_url": "https://support.unitree.com/home/en/developer/Fault_service"
+  },
+  "frontend": {
+    "asset": "/assets/index-0nfWNv1D.js",
+    "bytes": 322404
+  },
+  "new_endpoints_authenticated": true,
+  "services": {
+    "go2-person-search": "active",
+    "nano-dashboard-server": "active",
+    "go2-health-monitor": "active",
+    "go2-native-camera": "active",
+    "go2-voice": "inactive",
+    "go2-platform": "inactive",
+    "nano-board-agent": "inactive"
+  },
+  "sdk_motion_workers": [],
+  "completed_at": "2026-10-07T11:27:34+0800",
+  "live_planning_preview": {
+    "passed": false,
+    "planning_only": true,
+    "motion_sent": false,
+    "scope": "current_pose_to_each_point",
+    "ordered_route_validated": false,
+    "frame_id": "map",
+    "segments": [],
+    "warning": "Foxy plans each waypoint from the current TF pose; connecting these paths is not a validated patrol route.",
+    "error": "地图尚未就绪，请先完成地图与定位准备。",
+    "elapsed_seconds": 5.001,
+    "ok": false,
+    "error_code": "map_unavailable",
+    "mode": "planning",
+    "route_id": "3175e1a9b77b4f23b1bde2673a0e1525",
+    "motion_enabled": false,
+    "completed_at": 1791343654.9676216
+  }
+}

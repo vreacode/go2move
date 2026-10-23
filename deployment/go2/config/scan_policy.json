@@ -1,0 +1,8 @@
+{
+  "enabled": false,
+  "physical_validated": false,
+  "reason": "左后髋驱动过热报警已确认（电机9，0x04），且已两次突然失稳。请正常关机冷却，保持试转暂停，后续需复查散热、负载和关节状态。",
+  "health_report": "robot_motor_raw_fault_20261007-1038.json",
+  "automatic_resume": false,
+  "max_angle_deg": 90
+}

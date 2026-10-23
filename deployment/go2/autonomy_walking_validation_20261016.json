@@ -1,0 +1,28 @@
+{
+  "tested_at": "2026-10-16T11:07:18.432361+08:00",
+  "passed": true,
+  "tests_run": 75,
+  "failure_count": 0,
+  "error_count": 0,
+  "duration_s": 46.986,
+  "command": "python3 -B -m unittest test_local_autonomy test_autonomy_worker test_autonomy_session test_rotation_guard test_rotation_worker",
+  "synthetic_motion_only": true,
+  "physical_revision_validated": false,
+  "changes": [
+    "Apply stationarity check at startup and after commanded turns, not on every forward tick.",
+    "Require 0.25 s continuous stationary feedback after a completed turn before forwarding.",
+    "Preserve obstacle braking, native speed/yaw guards, footprint and session limits."
+  ],
+  "new_regressions": [
+    "Representative onsite yaw feedback during sustained forward motion.",
+    "Post-turn stationarity dwell resets when yaw motion resumes.",
+    "Obstacle braking and excessive yaw fault still take precedence."
+  ],
+  "sha256": {
+    "local_autonomy.py": "f287873bc655c0bd013687b381c60bb5013d8cb0d51270c013abac2408c1f4e0",
+    "autonomy_guard.py": "a59ad0bd53b8cc91ca684aa93479b96e8bae09a134fb7e605523ba3896364d4a",
+    "official_sdk_worker.py": "f358fff1441eca7246288e2cb0b51f46f9d917aa8ebd01663e43c4cb61266d90",
+    "run_local_autonomy.py": "b30d2891142552ce3edc45e72d8cc260154b911a37bc8c44e4d2f28d8f833026",
+    "test_local_autonomy.py": "1940352c7e18c565dc548adc7c87d135e2e5489ee6c2ddb54897f924da6a6d09"
+  }
+}

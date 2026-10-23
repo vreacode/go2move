@@ -1,0 +1,589 @@
+{
+  "completed_at": "2026-10-07T11:07:24+0800",
+  "all_checks_passed": true,
+  "live_task_id": "6518da65309f43f3af5115a883b6b00f",
+  "live_timeout_seconds": 30,
+  "samples": [
+    {
+      "at": 1791342409.0824904,
+      "frames": 0,
+      "active": true,
+      "last_captured_at": null,
+      "error": null,
+      "task": {
+        "id": "6518da65309f43f3af5115a883b6b00f",
+        "state": "running",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "target_kind": "photo",
+        "description": null,
+        "started_at": 1791342408.8966198,
+        "updated_at": 1791342408.8966198,
+        "deadline_at": 1791342438.8966198,
+        "timeout_seconds": 30,
+        "finished_at": null,
+        "found_event_id": null,
+        "reason": "正在观察实时画面。",
+        "motion_enabled": false,
+        "events": [
+          {
+            "state": "running",
+            "at": 1791342408.8966198
+          }
+        ]
+      }
+    },
+    {
+      "at": 1791342411.1112826,
+      "frames": 4,
+      "active": true,
+      "last_captured_at": 1791342410.6857128,
+      "error": null,
+      "task": {
+        "id": "6518da65309f43f3af5115a883b6b00f",
+        "state": "running",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "target_kind": "photo",
+        "description": null,
+        "started_at": 1791342408.8966198,
+        "updated_at": 1791342408.8966198,
+        "deadline_at": 1791342438.8966198,
+        "timeout_seconds": 30,
+        "finished_at": null,
+        "found_event_id": null,
+        "reason": "正在观察实时画面。",
+        "motion_enabled": false,
+        "events": [
+          {
+            "state": "running",
+            "at": 1791342408.8966198
+          }
+        ]
+      }
+    },
+    {
+      "at": 1791342413.1675317,
+      "frames": 8,
+      "active": true,
+      "last_captured_at": 1791342412.9064193,
+      "error": null,
+      "task": {
+        "id": "6518da65309f43f3af5115a883b6b00f",
+        "state": "running",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "target_kind": "photo",
+        "description": null,
+        "started_at": 1791342408.8966198,
+        "updated_at": 1791342408.8966198,
+        "deadline_at": 1791342438.8966198,
+        "timeout_seconds": 30,
+        "finished_at": null,
+        "found_event_id": null,
+        "reason": "正在观察实时画面。",
+        "motion_enabled": false,
+        "events": [
+          {
+            "state": "running",
+            "at": 1791342408.8966198
+          }
+        ]
+      }
+    },
+    {
+      "at": 1791342415.3326058,
+      "frames": 11,
+      "active": true,
+      "last_captured_at": 1791342414.7394867,
+      "error": null,
+      "task": {
+        "id": "6518da65309f43f3af5115a883b6b00f",
+        "state": "running",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "target_kind": "photo",
+        "description": null,
+        "started_at": 1791342408.8966198,
+        "updated_at": 1791342408.8966198,
+        "deadline_at": 1791342438.8966198,
+        "timeout_seconds": 30,
+        "finished_at": null,
+        "found_event_id": null,
+        "reason": "正在观察实时画面。",
+        "motion_enabled": false,
+        "events": [
+          {
+            "state": "running",
+            "at": 1791342408.8966198
+          }
+        ]
+      }
+    },
+    {
+      "at": 1791342417.4048014,
+      "frames": 15,
+      "active": true,
+      "last_captured_at": 1791342417.1398394,
+      "error": null,
+      "task": {
+        "id": "6518da65309f43f3af5115a883b6b00f",
+        "state": "running",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "target_kind": "photo",
+        "description": null,
+        "started_at": 1791342408.8966198,
+        "updated_at": 1791342408.8966198,
+        "deadline_at": 1791342438.8966198,
+        "timeout_seconds": 30,
+        "finished_at": null,
+        "found_event_id": null,
+        "reason": "正在观察实时画面。",
+        "motion_enabled": false,
+        "events": [
+          {
+            "state": "running",
+            "at": 1791342408.8966198
+          }
+        ]
+      }
+    },
+    {
+      "at": 1791342419.444631,
+      "frames": 18,
+      "active": true,
+      "last_captured_at": 1791342418.9910717,
+      "error": null,
+      "task": {
+        "id": "6518da65309f43f3af5115a883b6b00f",
+        "state": "running",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "target_kind": "photo",
+        "description": null,
+        "started_at": 1791342408.8966198,
+        "updated_at": 1791342408.8966198,
+        "deadline_at": 1791342438.8966198,
+        "timeout_seconds": 30,
+        "finished_at": null,
+        "found_event_id": null,
+        "reason": "正在观察实时画面。",
+        "motion_enabled": false,
+        "events": [
+          {
+            "state": "running",
+            "at": 1791342408.8966198
+          }
+        ]
+      }
+    },
+    {
+      "at": 1791342421.504197,
+      "frames": 21,
+      "active": true,
+      "last_captured_at": 1791342420.7868083,
+      "error": null,
+      "task": {
+        "id": "6518da65309f43f3af5115a883b6b00f",
+        "state": "running",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "target_kind": "photo",
+        "description": null,
+        "started_at": 1791342408.8966198,
+        "updated_at": 1791342408.8966198,
+        "deadline_at": 1791342438.8966198,
+        "timeout_seconds": 30,
+        "finished_at": null,
+        "found_event_id": null,
+        "reason": "正在观察实时画面。",
+        "motion_enabled": false,
+        "events": [
+          {
+            "state": "running",
+            "at": 1791342408.8966198
+          }
+        ]
+      }
+    },
+    {
+      "at": 1791342423.6164384,
+      "frames": 25,
+      "active": true,
+      "last_captured_at": 1791342423.2390213,
+      "error": null,
+      "task": {
+        "id": "6518da65309f43f3af5115a883b6b00f",
+        "state": "running",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "target_kind": "photo",
+        "description": null,
+        "started_at": 1791342408.8966198,
+        "updated_at": 1791342408.8966198,
+        "deadline_at": 1791342438.8966198,
+        "timeout_seconds": 30,
+        "finished_at": null,
+        "found_event_id": null,
+        "reason": "正在观察实时画面。",
+        "motion_enabled": false,
+        "events": [
+          {
+            "state": "running",
+            "at": 1791342408.8966198
+          }
+        ]
+      }
+    },
+    {
+      "at": 1791342425.6762555,
+      "frames": 28,
+      "active": true,
+      "last_captured_at": 1791342425.2194726,
+      "error": null,
+      "task": {
+        "id": "6518da65309f43f3af5115a883b6b00f",
+        "state": "running",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "target_kind": "photo",
+        "description": null,
+        "started_at": 1791342408.8966198,
+        "updated_at": 1791342408.8966198,
+        "deadline_at": 1791342438.8966198,
+        "timeout_seconds": 30,
+        "finished_at": null,
+        "found_event_id": null,
+        "reason": "正在观察实时画面。",
+        "motion_enabled": false,
+        "events": [
+          {
+            "state": "running",
+            "at": 1791342408.8966198
+          }
+        ]
+      }
+    },
+    {
+      "at": 1791342427.733086,
+      "frames": 31,
+      "active": true,
+      "last_captured_at": 1791342427.0272539,
+      "error": null,
+      "task": {
+        "id": "6518da65309f43f3af5115a883b6b00f",
+        "state": "running",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "target_kind": "photo",
+        "description": null,
+        "started_at": 1791342408.8966198,
+        "updated_at": 1791342408.8966198,
+        "deadline_at": 1791342438.8966198,
+        "timeout_seconds": 30,
+        "finished_at": null,
+        "found_event_id": null,
+        "reason": "正在观察实时画面。",
+        "motion_enabled": false,
+        "events": [
+          {
+            "state": "running",
+            "at": 1791342408.8966198
+          }
+        ]
+      }
+    },
+    {
+      "at": 1791342429.9965749,
+      "frames": 35,
+      "active": true,
+      "last_captured_at": 1791342429.6462479,
+      "error": null,
+      "task": {
+        "id": "6518da65309f43f3af5115a883b6b00f",
+        "state": "running",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "target_kind": "photo",
+        "description": null,
+        "started_at": 1791342408.8966198,
+        "updated_at": 1791342408.8966198,
+        "deadline_at": 1791342438.8966198,
+        "timeout_seconds": 30,
+        "finished_at": null,
+        "found_event_id": null,
+        "reason": "正在观察实时画面。",
+        "motion_enabled": false,
+        "events": [
+          {
+            "state": "running",
+            "at": 1791342408.8966198
+          }
+        ]
+      }
+    },
+    {
+      "at": 1791342432.0315874,
+      "frames": 38,
+      "active": true,
+      "last_captured_at": 1791342431.6669135,
+      "error": null,
+      "task": {
+        "id": "6518da65309f43f3af5115a883b6b00f",
+        "state": "running",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "target_kind": "photo",
+        "description": null,
+        "started_at": 1791342408.8966198,
+        "updated_at": 1791342408.8966198,
+        "deadline_at": 1791342438.8966198,
+        "timeout_seconds": 30,
+        "finished_at": null,
+        "found_event_id": null,
+        "reason": "正在观察实时画面。",
+        "motion_enabled": false,
+        "events": [
+          {
+            "state": "running",
+            "at": 1791342408.8966198
+          }
+        ]
+      }
+    },
+    {
+      "at": 1791342434.0876849,
+      "frames": 40,
+      "active": true,
+      "last_captured_at": 1791342433.3036609,
+      "error": null,
+      "task": {
+        "id": "6518da65309f43f3af5115a883b6b00f",
+        "state": "running",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "target_kind": "photo",
+        "description": null,
+        "started_at": 1791342408.8966198,
+        "updated_at": 1791342408.8966198,
+        "deadline_at": 1791342438.8966198,
+        "timeout_seconds": 30,
+        "finished_at": null,
+        "found_event_id": null,
+        "reason": "正在观察实时画面。",
+        "motion_enabled": false,
+        "events": [
+          {
+            "state": "running",
+            "at": 1791342408.8966198
+          }
+        ]
+      }
+    },
+    {
+      "at": 1791342436.1173775,
+      "frames": 44,
+      "active": true,
+      "last_captured_at": 1791342435.8900423,
+      "error": null,
+      "task": {
+        "id": "6518da65309f43f3af5115a883b6b00f",
+        "state": "running",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "target_kind": "photo",
+        "description": null,
+        "started_at": 1791342408.8966198,
+        "updated_at": 1791342408.8966198,
+        "deadline_at": 1791342438.8966198,
+        "timeout_seconds": 30,
+        "finished_at": null,
+        "found_event_id": null,
+        "reason": "正在观察实时画面。",
+        "motion_enabled": false,
+        "events": [
+          {
+            "state": "running",
+            "at": 1791342408.8966198
+          }
+        ]
+      }
+    },
+    {
+      "at": 1791342438.164283,
+      "frames": 46,
+      "active": true,
+      "last_captured_at": 1791342437.5112326,
+      "error": null,
+      "task": {
+        "id": "6518da65309f43f3af5115a883b6b00f",
+        "state": "running",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "target_kind": "photo",
+        "description": null,
+        "started_at": 1791342408.8966198,
+        "updated_at": 1791342408.8966198,
+        "deadline_at": 1791342438.8966198,
+        "timeout_seconds": 30,
+        "finished_at": null,
+        "found_event_id": null,
+        "reason": "正在观察实时画面。",
+        "motion_enabled": false,
+        "events": [
+          {
+            "state": "running",
+            "at": 1791342408.8966198
+          }
+        ]
+      }
+    },
+    {
+      "at": 1791342440.2024233,
+      "frames": 47,
+      "active": false,
+      "last_captured_at": null,
+      "error": null,
+      "task": {
+        "id": "6518da65309f43f3af5115a883b6b00f",
+        "state": "timed_out",
+        "target_id": "e50d42f92f4e48b4895b113fa090bf8d",
+        "target_name": "目标人物",
+        "target_kind": "photo",
+        "description": null,
+        "started_at": 1791342408.8966198,
+        "updated_at": 1791342438.9857938,
+        "deadline_at": 1791342438.8966198,
+        "timeout_seconds": 30,
+        "finished_at": 1791342438.9857938,
+        "found_event_id": null,
+        "reason": "查找时限已结束。",
+        "motion_enabled": false,
+        "events": [
+          {
+            "state": "running",
+            "at": 1791342408.8966198
+          },
+          {
+            "state": "timed_out",
+            "at": 1791342438.9857938,
+            "reason": "查找时限已结束。"
+          }
+        ]
+      }
+    }
+  ],
+  "target_photo_unchanged": true,
+  "original_history_preserved": true,
+  "history_count": 2,
+  "json_export": "HTTP200 attachment, appearance candidate + human review fields",
+  "invalid_description_http": 400,
+  "missing_review_http": 404,
+  "asr_silence": {
+    "text": "",
+    "confidence": 0.0,
+    "engine": "vosk",
+    "offline": true,
+    "executed": false,
+    "reply": "未识别到清晰语音，请重试或输入文字。"
+  },
+  "scan_held_http": 409,
+  "worker_pids": [],
+  "health": {
+    "connected": true,
+    "sampled_at": 1791342444.2344134,
+    "age_s": 0.1076669692993164,
+    "max_temperature_c": 53,
+    "motor_temperatures_c": [
+      36,
+      35,
+      37,
+      36,
+      36,
+      37,
+      53,
+      38,
+      38,
+      53,
+      38,
+      39
+    ],
+    "rear_left_hip_temperature_c": 53,
+    "rear_right_hip_temperature_c": 53,
+    "body_height_m": 0.06382483243942261,
+    "soc": 50,
+    "power_v": 29.446578979492188,
+    "rpy": [
+      0.009186805225908756,
+      -0.09217318147420883,
+      -0.5842927694320679
+    ],
+    "remote": {
+      "keys": 0,
+      "axes": {
+        "lx": -0.0,
+        "rx": -0.0,
+        "ry": -0.0,
+        "ly": 0.0
+      }
+    },
+    "faults": [
+      {
+        "index": 9,
+        "joint": "RL_0",
+        "code_hex": "0x04",
+        "messages": [
+          "驱动过热"
+        ]
+      }
+    ],
+    "system_faults": [],
+    "low_state_bit_flag": 4,
+    "motion_allowed": false,
+    "reason": "过热报警（RL_0），保持停止。",
+    "fault_source_url": "https://support.unitree.com/home/en/developer/Fault_service"
+  },
+  "services": {
+    "go2-person-search": "active",
+    "go2-native-camera": "active",
+    "go2-health-monitor": "active",
+    "nano-dashboard-server": "active",
+    "go2-voice": "inactive",
+    "go2-platform": "inactive",
+    "nano-board-agent": "inactive"
+  },
+  "motion_or_native_audio_commands_sent": false,
+  "software_tests": {
+    "description_task_and_existing_lifecycle_speech": 34,
+    "history_actions": 8,
+    "task_command_api": 11,
+    "person_workbench_ui": 10,
+    "person_feedback_ui": 9,
+    "task_command_browser_races": 9
+  },
+  "features": [
+    "existing_photo_capture_and_match",
+    "nine_upper_clothing_colors",
+    "bounded_stationary_tasks",
+    "persisted_task_history",
+    "manual_candidate_review",
+    "authenticated_metadata_export",
+    "text_commands",
+    "local_vosk_transcription",
+    "existing_browser_feedback"
+  ],
+  "pending": [
+    "real_motion_navigation_obstacle_avoidance_held",
+    "native_robot_audio_held",
+    "browser_getUserMedia_requires_secure_context_current_http_uses_keyboard_dictation",
+    "D435i_unconnected",
+    "field_clothing_accuracy_not_yet_measured"
+  ],
+  "frontend_build": {
+    "typescript": "passed",
+    "vite": "passed",
+    "served_asset": "index-B1q9E4mA.js",
+    "http": 200
+  }
+}

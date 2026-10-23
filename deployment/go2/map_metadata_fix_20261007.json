@@ -1,0 +1,34 @@
+{
+  "maps": [
+    {
+      "path": "/home/unitree/go2_ros2_ws/maps/checkpoint-before-closed-loop-20261005/map.yaml",
+      "free_thresh_before": 0.25,
+      "free_thresh_after": 0.196,
+      "pgm_unchanged": true,
+      "pgm_sha256": "4be149e633b6a742154de0e78e4879196cd7ee6b8a01a04ef1f3aa661b796b44"
+    },
+    {
+      "path": "/home/unitree/go2_ros2_ws/maps/end-of-day-20261005/map.yaml",
+      "free_thresh_before": 0.25,
+      "free_thresh_after": 0.196,
+      "pgm_unchanged": true,
+      "pgm_sha256": "55874391b701c86304b2fe6849ca1bd063b1a27d1a2e5bda52e6b18b97fd5caf"
+    },
+    {
+      "path": "/home/unitree/go2_ros2_ws/maps/end-of-day-20261006/map.yaml",
+      "free_thresh_before": 0.25,
+      "free_thresh_after": 0.196,
+      "pgm_unchanged": true,
+      "pgm_sha256": "9ae83a01fe8e89bbc3a4550e63ac48b017c6d3189235cfb7cd429de1b777070b"
+    },
+    {
+      "path": "/home/unitree/go2_ros2_ws/maps/initial-20261005/map.yaml",
+      "free_thresh_before": 0.25,
+      "free_thresh_after": 0.196,
+      "pgm_unchanged": true,
+      "pgm_sha256": "879711eac59570aa18ad224c1d8d80b1abed7e880125300dbeaec44f9517e688"
+    }
+  ],
+  "future_saves": "explicit --free 0.196",
+  "evidence": "saved_map_roundtrip_validation_20261007.json"
+}

@@ -1,0 +1,84 @@
+{
+  "completed_at": "2026-10-23T10:31:53.854053+08:00",
+  "status": "stationary visual pipeline software validation passed; onsite PPE demo still pending",
+  "initial_continuous": {
+    "duration_s": 179.03562549900016,
+    "processed_hz": 4.07985334883305,
+    "capture_age_max_s": 0.5497522354125977,
+    "api_errors": 0,
+    "samples": 180,
+    "scene": "native RGB; no person appeared in samples"
+  },
+  "post_fix_continuous": {
+    "duration_s": 59.063320683999336,
+    "processed_hz": 4.1902047602083226,
+    "capture_age_max_s": 0.5276093482971191,
+    "api_errors": 0,
+    "samples": 60,
+    "scene": "native RGB; no person appeared in samples"
+  },
+  "python_tests_passed": 58,
+  "ui_fixture_passed": true,
+  "real_browser": "Firefox 110.0 isolated headless profile; desktop and mobile width tested",
+  "browser_video": {
+    "probe_exit": 0,
+    "probe": {
+      "programs": [],
+      "streams": [
+        {
+          "codec_name": "vp8",
+          "width": 960,
+          "height": 720,
+          "nb_read_frames": "8"
+        }
+      ],
+      "format": {}
+    },
+    "decode_exit": 0,
+    "decode_errors": ""
+  },
+  "browser_export_json_passed": true,
+  "mobile_no_horizontal_overflow": true,
+  "restart_cycles": [
+    {
+      "stop_http": 200,
+      "start_http": 200,
+      "frames": 0,
+      "error": null
+    },
+    {
+      "stop_http": 200,
+      "start_http": 200,
+      "frames": 2,
+      "error": null
+    },
+    {
+      "stop_http": 200,
+      "start_http": 200,
+      "frames": 2,
+      "error": null
+    }
+  ],
+  "saved_reference_restored": true,
+  "original_history_count": 7,
+  "current_camera": "native_camera",
+  "current_helmet_active": true,
+  "fixed": [
+    "Persist evidence state only after atomic disk commit; failed writes no longer appear saved",
+    "Distinct fresh captures with identical pixels count toward confirmation; cached same capture does not",
+    "Saved reference restores after helmet startup changes inference generation, without resuming search",
+    "Helmet transient errors no longer overwrite photo-search status"
+  ],
+  "motion_commands_sent": 0,
+  "speech_commands_sent": 0,
+  "autostart_changed": false,
+  "temporary_browser_profile_removed": true,
+  "limitations": [
+    "Short empty-scene soak is not an endurance or onsite accuracy benchmark",
+    "One real helmet with two/three onsite participants still needs validation",
+    "Long occlusion/crowd identity tracking not guaranteed; IDs are camera tracks",
+    "D435i USB issue remains unresolved and was not changed in this task",
+    "Firefox recording verified; other browsers/editors not validated"
+  ],
+  "evidence_directory": "/home/unitree/go2_ros2_ws/validation/helmet_stability_20261023"
+}

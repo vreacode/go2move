@@ -1,0 +1,11 @@
+state_bridge:
+  ros__parameters:
+    lowstate_topic: /lf/lowstate
+    sportstate_topic: /lf/sportmodestate
+    state_timeout: 0.5
+    go2_dds_uri: /home/unitree/go2move/deployment/go2/cyclonedds_go2.xml
+    # Source: go2_description humble-devel 6d8b497 robots/go2_description.urdf.xacro.
+    # robot_state_publisher owns the fixed lidar TF.
+    lidar_xyz: [0.15, 0.0, 0.12]
+    lidar_rpy: [0.0, 0.0, 1.5707963267948966]
+    lidar_extrinsics_confirmed: true

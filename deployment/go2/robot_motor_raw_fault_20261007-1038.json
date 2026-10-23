@@ -1,0 +1,303 @@
+{
+  "readonly": true,
+  "motion_output_enabled": false,
+  "state_available": true,
+  "started_at": 1791340694.2172682,
+  "sampled_at": 1791340696.3353546,
+  "requested_duration_seconds": 2,
+  "latest": {
+    "low": {
+      "received_at": 1791340696.28576,
+      "tick": 2329675,
+      "soc": 56,
+      "bms_status": 8,
+      "bms_current_raw": -1892,
+      "bms_bq_ntc": [
+        33,
+        34
+      ],
+      "bms_mcu_ntc": [
+        36,
+        34
+      ],
+      "power_v": 29.836132049560547,
+      "power_a": 0.3076358437538147,
+      "temperature_ntc1": 49,
+      "temperature_ntc2": 45,
+      "motor_temperatures": [
+        37,
+        37,
+        40,
+        37,
+        38,
+        41,
+        68,
+        44,
+        44,
+        75,
+        45,
+        46
+      ],
+      "motor_modes": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "motor_lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "motor_reserve_raw": [
+        [
+          0,
+          525
+        ],
+        [
+          0,
+          525
+        ],
+        [
+          0,
+          525
+        ],
+        [
+          0,
+          525
+        ],
+        [
+          0,
+          525
+        ],
+        [
+          0,
+          525
+        ],
+        [
+          0,
+          525
+        ],
+        [
+          0,
+          525
+        ],
+        [
+          0,
+          525
+        ],
+        [
+          4,
+          525
+        ],
+        [
+          0,
+          525
+        ],
+        [
+          0,
+          525
+        ]
+      ],
+      "motor_q_rad": [
+        -0.7911289930343628,
+        0.01653003692626953,
+        -1.6610602140426636,
+        0.8017564415931702,
+        0.25685858726501465,
+        -1.895850658416748,
+        -0.848721981048584,
+        -0.13642168045043945,
+        -1.8359957933425903,
+        0.8472080826759338,
+        0.3865015208721161,
+        -1.944189429283142
+      ],
+      "motor_dq_rad_s": [
+        0.054257333278656006,
+        0.034879714250564575,
+        -0.02022012509405613,
+        0,
+        -0.03875523805618286,
+        0.008088049478828907,
+        0.054257333278656006,
+        -0.011626571416854858,
+        -0.024264149367809296,
+        0.03875523805618286,
+        -0.007751047611236572,
+        0.02022012509405613
+      ],
+      "motor_tau_est_nm": [
+        0.12369140982627869,
+        -0.17316797375679016,
+        0.1422451138496399,
+        0.024738281965255737,
+        0.07421484589576721,
+        -0.23707520961761475,
+        -0.024738281965255737,
+        0,
+        0.04741504043340683,
+        0,
+        0,
+        -0.04741504043340683
+      ],
+      "fan_frequency_raw": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "low_reserve_raw": 0,
+      "version_raw": [
+        0,
+        0
+      ],
+      "bit_flag": 4,
+      "foot_force": [
+        5,
+        4,
+        6,
+        11
+      ],
+      "remote": {
+        "keys": 0,
+        "axes": {
+          "lx": 0,
+          "rx": 0,
+          "ry": 0,
+          "ly": 0
+        }
+      }
+    },
+    "sport": {
+      "received_at": 1791340696.2946417,
+      "source_stamp": [
+        1791338910,
+        435187562
+      ],
+      "mode": 0,
+      "error_code": 100,
+      "gait_type": 0,
+      "body_height": 0.07610295712947845,
+      "position": [
+        -0.36313384771347046,
+        0.1280134916305542,
+        0.052515678107738495
+      ],
+      "velocity": [
+        1.347493849834791e-08,
+        -6.13229245161051e-09,
+        4.6555547328352986e-07
+      ],
+      "yaw_speed": 0.0021305286791175604,
+      "rpy": [
+        -0.008769501931965351,
+        -0.02983880415558815,
+        -0.6380873918533325
+      ]
+    }
+  },
+  "counts": {
+    "low": 40,
+    "sport": 40
+  },
+  "windows": {
+    "low": {
+      "age_seconds": 0.04675701299993307,
+      "max_receive_gap_seconds": 0.05293999500008795,
+      "received_span_seconds": 1.9498563340002875,
+      "tick_first": 2327725,
+      "tick_last": 2329675,
+      "tick_delta": 1950,
+      "tick_nondecreasing": true,
+      "motor_temperature_max": [
+        37,
+        37,
+        40,
+        37,
+        38,
+        41,
+        68,
+        44,
+        44,
+        75,
+        45,
+        46
+      ],
+      "soc_min": 56,
+      "remote_keys_observed": [
+        0
+      ],
+      "remote_max_abs_axis": 0
+    },
+    "sport": {
+      "age_seconds": 0.037875474999964354,
+      "max_receive_gap_seconds": 0.053907429999981105,
+      "received_span_seconds": 1.9507015260001026,
+      "body_height_min": 0.07609681785106659,
+      "body_height_max": 0.07612881064414978,
+      "max_abs_roll": 0.00934538897126913,
+      "max_abs_pitch": 0.02992170676589012,
+      "max_linear_speed": 7.42946257144652e-06,
+      "max_abs_yaw_speed": 0.012783171609044075,
+      "modes": [
+        0
+      ],
+      "error_codes": [
+        100
+      ]
+    }
+  },
+  "temp_max": 75,
+  "error": null,
+  "motor_order": [
+    "FR_0",
+    "FR_1",
+    "FR_2",
+    "FL_0",
+    "FL_1",
+    "FL_2",
+    "RR_0",
+    "RR_1",
+    "RR_2",
+    "RL_0",
+    "RL_1",
+    "RL_2"
+  ],
+  "interpretation": {
+    "motor_9_reserve0": 4,
+    "nonzero_motor_indices": [
+      9
+    ],
+    "fault_meaning": "Confirmed RL_0 motor driver overheating: reserve[0]=0x04, bit2, official Go2 Read_motor_errors and Fault_service.",
+    "historical_peak_temperature_c": 84,
+    "current_temperature_c": 75,
+    "fault_source": 309,
+    "reserve1_meaning": "Current motor communication frequency; value525 is not an error code",
+    "root_cause_limit": "Overheat alarm confirmed; precise reason for repeated heating and complete fall-time sequence remain unverified.",
+    "official_recovery": "Power off and rest before restart; persistent or repeated faults require technical support."
+  },
+  "official_sources": [
+    "https://support.unitree.com/home/en/developer/Read_motor_errors",
+    "https://doc-cdn.unitree.com/6/198/en/6_198_en",
+    "https://doc-cdn.unitree.com/6/56/en/6_56_en",
+    "https://doc-cdn.unitree.com/6/41/en/6_41_en"
+  ]
+}

@@ -1,0 +1,250 @@
+{
+  "recorded_at": "2026-10-18T21:13:44.499011+08:00",
+  "scope": "可用的静止寻人核心流程收尾",
+  "source_changes": [
+    "deployment/go2/person_search.py",
+    "deployment/go2/test_person_attributes_tasks.py"
+  ],
+  "source_sha256": {
+    "person_search.py": "f5c88b640873844f6226d2d0a40e85d5c191c8041163a550cc718ffad9062255",
+    "test_person_attributes_tasks.py": "213bd31700372d2bfd2937f28bab5d64182c7b4cd209ca5853c042ac8d2adc90"
+  },
+  "delivered": [
+    "恢复现有相机与找人服务，1920x1080约5fps，登录后网页真实相机/状态/任务/历史接口HTTP200",
+    "人工否认后忽略该任务内被否认的跟踪目标，继续检查其他候选",
+    "不同跟踪目标分别保存发现照片，保留旧人工决定",
+    "否认时丢弃尚在处理的旧候选结果，新任务清除旧排除列表"
+  ],
+  "validation": {
+    "pre_fix_reproduced_failures": 4,
+    "core_unique_test_methods_passed": 80,
+    "new_feedback_regression_tests": 6,
+    "real_model_history_tests_passed": 4,
+    "unique_test_methods_passed": 84,
+    "core_run": {
+      "command": [
+        "/home/unitree/go2move/.venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_person_attributes_tasks",
+        "test_person_search_lifecycle",
+        "test_person_history_actions",
+        "test_person_search_speech",
+        "test_go2_commands",
+        "test_patrol_execution",
+        "test_patrol_preparation_api"
+      ],
+      "exit_code": 0,
+      "seconds": 9.523
+    },
+    "feedback_final_run": {
+      "command": [
+        "/home/unitree/go2move/.venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_person_attributes_tasks"
+      ],
+      "exit_code": 0,
+      "seconds": 5.131
+    },
+    "real_model_history_run": {
+      "command": [
+        "/home/unitree/go2move/.venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_person_search_history"
+      ],
+      "exit_code": 0,
+      "seconds": 14.289,
+      "models": "cached YOLOX/OSNet/ByteTrack",
+      "production_data_changed": false
+    },
+    "real_model_end_to_end": {
+      "mode": "isolated_public_image_replay",
+      "real_models": true,
+      "real_camera_input": false,
+      "robot_motion_commands": 0,
+      "production_target_changed": false,
+      "steps": [
+        "target_uploaded",
+        "stationary_search_started",
+        "real_models_confirmed_candidate_across_frames",
+        "manual_review_completed_task_and_stopped_search",
+        "photo_and_reviewed_history_exported",
+        "restart_preserves_completed_task_photo_and_history_without_resuming"
+      ],
+      "frames": [
+        {
+          "streak": 1,
+          "matched": false,
+          "inference_ms": 91.0,
+          "score": 0.9769834280014038
+        },
+        {
+          "streak": 2,
+          "matched": false,
+          "inference_ms": 83.9,
+          "score": 0.975072979927063
+        },
+        {
+          "streak": 3,
+          "matched": true,
+          "inference_ms": 82.0,
+          "score": 0.9703890085220337
+        },
+        {
+          "streak": 4,
+          "matched": true,
+          "inference_ms": 84.4,
+          "score": 0.967023491859436
+        },
+        {
+          "streak": 5,
+          "matched": true,
+          "inference_ms": 105.0,
+          "score": 0.9328532218933105
+        },
+        {
+          "streak": 6,
+          "matched": true,
+          "inference_ms": 87.1,
+          "score": 0.9382952451705933
+        }
+      ],
+      "passed": true,
+      "models": {
+        "detector": "tensorrt-fp16",
+        "tracker": "ByteTrack",
+        "reid": "OSNet"
+      },
+      "final_state": "completed",
+      "history_count": 1
+    },
+    "live_dashboard_before_reload": {
+      "checked_at": 1792329111.4771183,
+      "dashboard_login_succeeded": true,
+      "checks": {
+        "/api/go2/person/status": {
+          "status": 200,
+          "bytes": 2124,
+          "content_type": "application/json",
+          "camera": {
+            "connected": true,
+            "width": 1920,
+            "height": 1080,
+            "fps": 4.95
+          },
+          "models_ready": true,
+          "active": false,
+          "history_count": 4,
+          "target_present": true,
+          "error": null,
+          "unauthenticated_status": 401
+        },
+        "/api/go2/person/camera.jpg": {
+          "status": 200,
+          "bytes": 138664,
+          "content_type": "image/jpeg",
+          "jpeg_valid_header": true,
+          "unauthenticated_status": 401
+        },
+        "/api/go2/person/tasks": {
+          "status": 200,
+          "bytes": 2465,
+          "content_type": "application/json"
+        },
+        "/api/go2/person/history": {
+          "status": 200,
+          "bytes": 3099,
+          "content_type": "application/json"
+        }
+      },
+      "read_only_after_login": true
+    },
+    "camera_after_reload": {
+      "width": 1920,
+      "height": 1080,
+      "fps": 4.95,
+      "frames": 1835,
+      "errors": 0
+    },
+    "person_after_reload": {
+      "models_ready": true,
+      "active": false,
+      "history_count": 4,
+      "camera": {
+        "connected": true,
+        "width": 1920,
+        "height": 1080,
+        "fps": 4.95
+      },
+      "error": null
+    }
+  },
+  "data_preservation": {
+    "history_count_before": 4,
+    "history_count_after": 4,
+    "files": {
+      "/home/unitree/go2move/deployment/go2/runtime/person_search/target.jpg": {
+        "exists": true,
+        "unchanged": true
+      },
+      "/home/unitree/go2move/deployment/go2/runtime/person_search/tasks.json": {
+        "exists": true,
+        "unchanged": true
+      },
+      "/home/unitree/go2move/deployment/go2/runtime/person_search/target.json": {
+        "exists": true,
+        "unchanged": true
+      },
+      "/home/unitree/go2move/deployment/go2/runtime/person_search/history/7c849e426b79481aaf40451db9977832/target.jpg": {
+        "exists": true,
+        "unchanged": true
+      },
+      "/home/unitree/go2move/deployment/go2/runtime/person_search/history/6854cfd5efea4e42b0f961c449d275d2/target.jpg": {
+        "exists": true,
+        "unchanged": true
+      },
+      "/home/unitree/go2move/deployment/go2/runtime/person_search/history/63430be65c45436b988d4543675eeb01/target.jpg": {
+        "exists": true,
+        "unchanged": true
+      },
+      "/home/unitree/go2move/deployment/go2/runtime/person_search/history/b0ed3092767e46fea55ba06629db8e20/target.jpg": {
+        "exists": true,
+        "unchanged": true
+      }
+    },
+    "replay_data_in_production": false
+  },
+  "deployment": {
+    "started": [
+      "go2-native-camera.service",
+      "go2-person-search.service"
+    ],
+    "restarted_to_load_fix": [
+      "go2-person-search.service"
+    ],
+    "autostart_configuration_changed": false,
+    "robot_motion_commands_sent": 0,
+    "voice_commands_sent": 0,
+    "existing_motion_hold_released": false
+  },
+  "remaining": [
+    "现场真人寻人正例及误认/否认效果尚待验证",
+    "移动到观察点并自动寻人的实机闭环尚待验收",
+    "语言入口当前支持固定口令与单色上衣描述，自由语言规划尚待接入"
+  ],
+  "user_scope": "遥控器问题由宇树官方处理，不纳入本项目排查；辅助停止原因显示不列为当前优先事项",
+  "usage": "打开现有网页，上传/拍摄目标或输入单色上衣描述，开始找人；发现候选后确认/否认，结果保存在记录中。",
+  "evidence_directory": "/home/unitree/go2move/runtime/validation/core_closeout_20261018",
+  "reproduce": [
+    "cd /home/unitree/go2move/deployment/go2",
+    "/home/unitree/go2move/.venv/bin/python -B -m unittest -v test_person_attributes_tasks test_person_search_lifecycle test_person_history_actions test_person_search_speech test_go2_commands test_patrol_execution test_patrol_preparation_api test_person_search_history"
+  ]
+}

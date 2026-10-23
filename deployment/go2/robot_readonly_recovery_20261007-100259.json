@@ -1,0 +1,335 @@
+{
+  "sampled_at": "2026-10-07 10:02:59 +0800",
+  "readonly": true,
+  "duration_seconds": 5,
+  "topics": [
+    "rt/lf/lowstate",
+    "rt/lf/sportmodestate"
+  ],
+  "counts": {
+    "low": 100,
+    "sport": 100
+  },
+  "observed": {
+    "soc": [
+      69
+    ],
+    "bms_status": [
+      8
+    ],
+    "mode": [
+      0
+    ],
+    "error_code": [
+      100
+    ]
+  },
+  "latest": {
+    "low": {
+      "received_at": 1791338579.2795606,
+      "tick": 212673,
+      "soc": 69,
+      "bms_status": 8,
+      "bms_current_raw": -2991,
+      "bms_bq_ntc": [
+        31,
+        32
+      ],
+      "bms_mcu_ntc": [
+        34,
+        33
+      ],
+      "bms_cell_vol_raw": [
+        3870,
+        3876,
+        3878,
+        3877,
+        3877,
+        3876,
+        3878,
+        3870,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "power_v": 30.47357940673828,
+      "power_a": 1.4014521837234497,
+      "temperature_ntc1": 49,
+      "temperature_ntc2": 45,
+      "motor_temperatures": [
+        37,
+        37,
+        41,
+        36,
+        37,
+        39,
+        68,
+        42,
+        43,
+        75,
+        41,
+        42
+      ],
+      "motor_modes": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "motor_lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "bit_flag": 36,
+      "foot_force": [
+        37,
+        40,
+        36,
+        41
+      ]
+    },
+    "sport": {
+      "received_at": 1791338579.2848177,
+      "source_stamp": [
+        1791336793,
+        435184770
+      ],
+      "mode": 0,
+      "error_code": 100,
+      "gait_type": 0,
+      "progress": 0.0,
+      "body_height": 0.31705474853515625,
+      "position": [
+        0.005931123159825802,
+        0.006484208162873983,
+        0.30901405215263367
+      ],
+      "velocity": [
+        -1.4595138431161558e-09,
+        -5.704660743788281e-09,
+        2.514162531497277e-07
+      ],
+      "rpy": [
+        -0.026547640562057495,
+        0.009525497443974018,
+        0.011594193987548351
+      ]
+    }
+  },
+  "robot_commands_sent": 0,
+  "services_started": false,
+  "audio_played": false,
+  "comparison_with": "/home/unitree/go2move/deployment/go2/robot_readonly_state_20261007.json",
+  "comparison": {
+    "low": {
+      "soc": {
+        "before": 71,
+        "after": 69
+      },
+      "power_v": {
+        "before": 30.66835594177246,
+        "after": 30.47357940673828
+      },
+      "power_a": {
+        "before": 0.20509055256843567,
+        "after": 1.4014521837234497
+      },
+      "bms_status": {
+        "before": 8,
+        "after": 8
+      },
+      "bms_current_raw": {
+        "before": -1824,
+        "after": -2991
+      },
+      "bms_bq_ntc": {
+        "before": [
+          30,
+          31
+        ],
+        "after": [
+          31,
+          32
+        ]
+      },
+      "bms_mcu_ntc": {
+        "before": [
+          34,
+          32
+        ],
+        "after": [
+          34,
+          33
+        ]
+      },
+      "temperature_ntc1": {
+        "before": 49,
+        "after": 49
+      },
+      "temperature_ntc2": {
+        "before": 44,
+        "after": 45
+      },
+      "motor_temperatures": {
+        "before": [
+          37,
+          37,
+          42,
+          36,
+          37,
+          40,
+          74,
+          43,
+          44,
+          83,
+          42,
+          42
+        ],
+        "after": [
+          37,
+          37,
+          41,
+          36,
+          37,
+          39,
+          68,
+          42,
+          43,
+          75,
+          41,
+          42
+        ]
+      },
+      "motor_modes": {
+        "before": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "after": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "motor_lost": {
+        "before": [
+          5,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5,
+          0,
+          0,
+          5,
+          15,
+          5
+        ],
+        "after": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "tick": {
+        "before": 5515565,
+        "after": 212673
+      },
+      "bit_flag": {
+        "before": 36,
+        "after": 36
+      }
+    },
+    "sport": {
+      "mode": {
+        "before": 0,
+        "after": 0
+      },
+      "error_code": {
+        "before": 100,
+        "after": 100
+      },
+      "body_height": {
+        "before": 0.07715848833322525,
+        "after": 0.31705474853515625
+      },
+      "gait_type": {
+        "before": 0,
+        "after": 0
+      },
+      "velocity": {
+        "before": [
+          -1.7447052869101753e-07,
+          -5.692120197409167e-08,
+          -5.35135404788889e-06
+        ],
+        "after": [
+          -1.4595138431161558e-09,
+          -5.704660743788281e-09,
+          2.514162531497277e-07
+        ]
+      },
+      "source_stamp": {
+        "before": [
+          1791336255,
+          326588171
+        ],
+        "after": [
+          1791336793,
+          435184770
+        ]
+      }
+    }
+  }
+}

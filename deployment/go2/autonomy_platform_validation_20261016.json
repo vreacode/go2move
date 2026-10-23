@@ -1,0 +1,249 @@
+{
+  "duration_seconds": 60.01209942500009,
+  "topics": {
+    "/joint_states": {
+      "count": 1201,
+      "hz": 19.999888189291706,
+      "max_gap_ms": 68.0048659996828,
+      "gaps_over_200ms": 0,
+      "stamp_backwards": 0,
+      "age_mean_ms": 5.385438568089825,
+      "age_max_ms": 19.098281860351562
+    },
+    "/imu/data": {
+      "count": 1200,
+      "hz": 19.999857563316414,
+      "max_gap_ms": 67.23038600011932,
+      "gaps_over_200ms": 0,
+      "stamp_backwards": 0,
+      "age_mean_ms": 6.557453274726868,
+      "age_max_ms": 19.259214401245117
+    },
+    "/odom": {
+      "count": 1200,
+      "hz": 20.0002221359117,
+      "max_gap_ms": 84.29101199999423,
+      "gaps_over_200ms": 0,
+      "stamp_backwards": 0,
+      "age_mean_ms": 8.751355210940044,
+      "age_max_ms": 36.1018180847168
+    },
+    "/lidar_packets_loss": {
+      "count": 600,
+      "hz": 10.001036834035578,
+      "max_gap_ms": 154.09665800007133,
+      "gaps_over_200ms": 0,
+      "stamp_backwards": 0,
+      "age_mean_ms": null,
+      "age_max_ms": null
+    },
+    "/lidar_points": {
+      "count": 600,
+      "hz": 10.001573712225728,
+      "max_gap_ms": 154.98834299978625,
+      "gaps_over_200ms": 0,
+      "stamp_backwards": 0,
+      "age_mean_ms": 117.15097864468893,
+      "age_max_ms": 162.5821590423584
+    },
+    "/scan": {
+      "count": 600,
+      "hz": 10.00107602344966,
+      "max_gap_ms": 155.06628200000705,
+      "gaps_over_200ms": 0,
+      "stamp_backwards": 0,
+      "age_mean_ms": 121.09624187151591,
+      "age_max_ms": 167.92917251586914
+    },
+    "/map": {
+      "count": 60,
+      "hz": 0.9999653773004652,
+      "max_gap_ms": 1005.823128999964,
+      "gaps_over_200ms": 59,
+      "stamp_backwards": 0,
+      "age_mean_ms": 189.284880956014,
+      "age_max_ms": 194.4746971130371
+    },
+    "/go2/status": {
+      "count": 60,
+      "hz": 0.9999685180758885,
+      "max_gap_ms": 1007.7024160000292,
+      "gaps_over_200ms": 59,
+      "stamp_backwards": 0,
+      "age_mean_ms": null,
+      "age_max_ms": null
+    }
+  },
+  "radar_socket_drop_delta": {
+    "142342": 0
+  },
+  "status": {
+    "fresh": true,
+    "age_seconds": {
+      "sport": 0.021488851,
+      "low": 0.03479848
+    },
+    "counts": {
+      "sport": 2159,
+      "low": 2158
+    },
+    "source_mode": 0,
+    "source_error_code": 1001,
+    "source_body_height": 0.06616105884313583,
+    "hardware_stamp_offset_seconds": 1845.920138742,
+    "lidar_extrinsics_confirmed": true,
+    "motion_output_enabled": false,
+    "reader_alive": true
+  },
+  "tf": {
+    "map->base_link": {
+      "xyz": [
+        -0.00632438389584422,
+        0.00044619836262427265,
+        0.049896504729986184
+      ],
+      "xyzw": [
+        0.0031493545539274695,
+        -0.04410479856913796,
+        0.0029495783812618897,
+        0.9990175915850742
+      ]
+    },
+    "odom->base_footprint": {
+      "xyz": [
+        -0.006324383895844221,
+        0.0004461983626242727,
+        0.0
+      ],
+      "xyzw": [
+        0.0,
+        0.0,
+        0.0028187609203401786,
+        0.9999960272855457
+      ]
+    },
+    "base_link->hesai_lidar": {
+      "xyz": [
+        0.15,
+        0.0,
+        0.12
+      ],
+      "xyzw": [
+        0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ]
+    },
+    "base_link->imu": {
+      "xyz": [
+        -0.02557,
+        0.0,
+        0.04232
+      ],
+      "xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "odom->FR_foot": {
+      "xyz": [
+        0.20503660494312237,
+        -0.14679061947778996,
+        0.0019311582851065238
+      ],
+      "xyzw": [
+        -0.03180519736290906,
+        -0.7302325044880256,
+        0.032307037630403636,
+        0.6816928737557698
+      ]
+    },
+    "odom->FL_foot": {
+      "xyz": [
+        0.20280247665149584,
+        0.15063936694543578,
+        0.007389930949124906
+      ],
+      "xyzw": [
+        0.041081221266025016,
+        -0.7347498618535482,
+        -0.03362510994003435,
+        0.6762575883101086
+      ]
+    },
+    "odom->RR_foot": {
+      "xyz": [
+        -0.18327717482697914,
+        -0.16416725565727547,
+        0.00398245834703758
+      ],
+      "xyzw": [
+        -0.14930361785918217,
+        -0.7178444780211358,
+        0.13844053714038218,
+        0.6657641870399795
+      ]
+    },
+    "odom->RL_foot": {
+      "xyz": [
+        -0.18473372776257896,
+        0.16728407130489878,
+        -0.005355229752142316
+      ],
+      "xyzw": [
+        0.15633046065176573,
+        -0.7001364822098192,
+        -0.13051238606725296,
+        0.6843509409902924
+      ]
+    }
+  },
+  "nav2_lifecycle": {
+    "planner_server": "unavailable",
+    "controller_server": "unavailable",
+    "bt_navigator": "unavailable"
+  },
+  "cloud": {
+    "frame": "hesai_lidar",
+    "points": 64000,
+    "fields": [
+      "x",
+      "y",
+      "z",
+      "intensity",
+      "ring",
+      "timestamp"
+    ],
+    "finite_xyz_points": 64000,
+    "point_timestamp_age_seconds": [
+      0.08770275115966797,
+      0.18781089782714844
+    ]
+  },
+  "radar_packet_counter": {
+    "total": 561201,
+    "total_lost": 0,
+    "loss_delta": 0
+  },
+  "scan": {
+    "frame": "base_footprint",
+    "finite": 717,
+    "bins": 720
+  },
+  "map": {
+    "width": 118,
+    "height": 63,
+    "resolution": 0.05000000074505806,
+    "occupied": 279,
+    "free": 2546
+  },
+  "motion_preview_messages": 0,
+  "robot_command_publishers": {
+    "/api/sport/request": [],
+    "/cmd_vel": [],
+    "/lowcmd": []
+  }
+}

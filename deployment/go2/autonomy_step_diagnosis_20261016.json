@@ -1,0 +1,93 @@
+{
+  "recorded_at": "2026-10-16T11:17:03.302160+08:00",
+  "execution_report": "runtime/autonomy/onsite-20261016T031134945769Z/execution.json",
+  "post_stop_readonly_report": "runtime/autonomy/onsite-20261016T031134945769Z/stopped_readonly.json",
+  "executed_source_hashes": {
+    "local_autonomy.py": "f287873bc655c0bd013687b381c60bb5013d8cb0d51270c013abac2408c1f4e0",
+    "autonomy_guard.py": "a59ad0bd53b8cc91ca684aa93479b96e8bae09a134fb7e605523ba3896364d4a",
+    "official_sdk_worker.py": "f358fff1441eca7246288e2cb0b51f46f9d917aa8ebd01663e43c4cb61266d90",
+    "run_local_autonomy.py": "b30d2891142552ce3edc45e72d8cc260154b911a37bc8c44e4d2f28d8f833026",
+    "test_local_autonomy.py": "1940352c7e18c565dc548adc7c87d135e2e5489ee6c2ddb54897f924da6a6d09"
+  },
+  "requested_duration_s": 20,
+  "actual_session_duration_s": 12.026657581329346,
+  "command_speed_ceiling_m_s": 0.08,
+  "radius_m": 1,
+  "clearance_m": 0.7041232746604094,
+  "completed": false,
+  "stop_reason": "No walking progress for 5 seconds; stop",
+  "max_odometry_displacement_m": 0.06511247213141856,
+  "state_sample_counts": {
+    "waiting": 2,
+    "preflight": 81,
+    "walking": 120,
+    "fault": 1
+  },
+  "walking_to_settling_transitions": 0,
+  "continuous_ceiling_command_window_elapsed_s": [
+    5.549211303999982,
+    11.430592185000023
+  ],
+  "peak_horizontal_speed_feedback_m_s": 0.0922203003058091,
+  "stop_requests_acknowledged": true,
+  "shutdown_instantaneous_horizontal_speed_m_s": 0.05166235417220211,
+  "additional_StopMove_codes": [
+    0,
+    0,
+    0
+  ],
+  "post_stop_state_available": true,
+  "post_stop_observation_s": 2.0,
+  "post_stop_max_linear_speed_m_s": 8.623776374290087e-07,
+  "post_stop_max_abs_yaw_speed_rad_s": 0.01810949295759201,
+  "post_stop_max_motor_temperature_c": 58,
+  "operator_observation": "机身前倾或晃动，脚没有迈步",
+  "conclusions": [
+    "Repeated walking-to-settling bug is absent in this execution.",
+    "Sustained Move at 0.08 did not produce sustained stepping; odometry shift alone is not walking acceptance.",
+    "The no-progress guard stopped this attempt as designed.",
+    "Stop response success was separated from subsequent stationary telemetry verification."
+  ],
+  "unconfirmed_hypotheses": [
+    "Command may be below the effective stepping threshold for current firmware/gait.",
+    "Motion readiness or configuration may differ from prior physically successful runs."
+  ],
+  "historical_comparison": {
+    "report": "/home/unitree/go2_ros2_ws/tests/continue-20261006-203753/official-sdk-pulse.json",
+    "backend": "sdk2",
+    "command_ceiling_m_s": 0.2,
+    "end_displacement_m": 0.20531952996074557,
+    "not_reexecuted": true
+  },
+  "reference_links": [
+    "https://github.com/unitreerobotics/unitree_sdk2_python/blob/master/unitree_sdk2py/go2/sport/sport_client.py",
+    "https://github.com/legion1581/unitree_webrtc_connect/blob/master/examples/go2/data_channel/sportmode_mcf/sportmode_mcf.py"
+  ],
+  "next_calibration": {
+    "speed_ceiling_m_s": 0.1,
+    "duration_including_preflight_s": 8,
+    "forward_only": true,
+    "radius_m": 1,
+    "requires_new_speed_authorization": true,
+    "authorization_received": true,
+    "executed": true,
+    "authorization_user_reply": "同意",
+    "authorization_recorded_at": "2026-10-16T11:19:25.363215+08:00",
+    "execution_attempted": true,
+    "forward_calibration_executed": true,
+    "calibration_completed": true,
+    "execution_report": "runtime/autonomy/calibration-20261016T033253627817Z/execution.json",
+    "preparation_stop_reason": "Measured speed exceeds the autonomous limit",
+    "requires_manual_unlock_preparation": true,
+    "physical_stepping_success": false,
+    "operator_observation": "没有迈步"
+  },
+  "physical_stepping_validated": false,
+  "physical_obstacle_avoidance_validated": false,
+  "manual_remote_failure_followup": {
+    "operator_reply": "无法正常行走",
+    "diagnosis_report": "autonomy_manual_failure_diagnosis_20261016.json",
+    "sdk_retries_suspended": true,
+    "root_cause_confirmed": false
+  }
+}

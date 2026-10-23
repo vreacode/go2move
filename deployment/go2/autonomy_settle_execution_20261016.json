@@ -1,0 +1,2437 @@
+{
+  "recorded_at": "2026-10-16T11:01:44+0800",
+  "run_directory": "/home/unitree/go2move/deployment/go2/runtime/autonomy/onsite-20261016T025430982Z",
+  "physical_walking_validated": false,
+  "attempt": {
+    "mode": "execute",
+    "motion_started": false,
+    "radius_m": 1.0,
+    "max_speed_m_s": 0.08,
+    "max_yaw_rad_s": 0.15,
+    "clearance_m": 0.7041232746604094,
+    "duration_s": 20.0,
+    "started_at": 1792119296.6158025,
+    "samples": [
+      {
+        "state": "waiting",
+        "reason": "Waiting for scan",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.002141026999197493,
+        "displacement_m": 0.0,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0030038109980523586,
+            -0.0001609718456165865,
+            0.06422177702188492
+          ],
+          "speed": 2.088009299020209e-09,
+          "yaw_speed": -0.0063915858045220375
+        }
+      },
+      {
+        "state": "waiting",
+        "reason": "Waiting for scan",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.05613612599972839,
+        "displacement_m": 0.0,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029796515591442585,
+            -0.00014703787746839225,
+            0.06420476734638214
+          ],
+          "speed": 1.2222092742187153e-08,
+          "yaw_speed": -0.0053263213485479355
+        }
+      },
+      {
+        "state": "waiting",
+        "reason": "Waiting for scan",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.10669476499970187,
+        "displacement_m": 0.0,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029796515591442585,
+            -0.00014703787746839225,
+            0.06420476734638214
+          ],
+          "speed": 1.2222092742187153e-08,
+          "yaw_speed": -0.0053263213485479355
+        }
+      },
+      {
+        "state": "waiting",
+        "reason": "Waiting for scan",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.1593509099993753,
+        "displacement_m": 0.0,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029443735256791115,
+            -9.185983071802184e-05,
+            0.06441717594861986
+          ],
+          "speed": 5.073959667543524e-09,
+          "yaw_speed": -0.0053263213485479355
+        }
+      },
+      {
+        "state": "waiting",
+        "reason": "Waiting for scan",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.21114696399945387,
+        "displacement_m": 0.0,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002920487429946661,
+            -0.00010147391731152311,
+            0.0643589049577713
+          ],
+          "speed": 4.545651264402069e-09,
+          "yaw_speed": -0.010652642697095871
+        }
+      },
+      {
+        "state": "waiting",
+        "reason": "Waiting for scan",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.26217467399965244,
+        "displacement_m": 0.0,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029326542280614376,
+            -0.00012723739200737327,
+            0.06433511525392532
+          ],
+          "speed": 5.1057924319171555e-09,
+          "yaw_speed": -0.009587379172444344
+        }
+      },
+      {
+        "state": "waiting",
+        "reason": "Waiting for scan",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.31767561199922056,
+        "displacement_m": 0.0,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029495873022824526,
+            -0.00014991273928899318,
+            0.06442879140377046
+          ],
+          "speed": 3.214093025803047e-09,
+          "yaw_speed": -0.0031957929022610188
+        }
+      },
+      {
+        "state": "waiting",
+        "reason": "Waiting for scan",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.36916912799915735,
+        "displacement_m": 0.0,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002953206654638052,
+            -0.00013302057050168514,
+            0.06452899426221848
+          ],
+          "speed": 8.251484495115551e-09,
+          "yaw_speed": -0.0063915858045220375
+        }
+      },
+      {
+        "state": "waiting",
+        "reason": "Waiting for scan",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.4212628870000117,
+        "displacement_m": 0.0,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029747141525149345,
+            -6.459462019847706e-05,
+            0.06466295570135115
+          ],
+          "speed": 4.1404640501454e-09,
+          "yaw_speed": -0.012783171609044075
+        }
+      },
+      {
+        "state": "waiting",
+        "reason": "Waiting for scan",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.478061112999967,
+        "displacement_m": 0.0,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002958171535283327,
+            -9.159209002973512e-05,
+            0.06456711888313293
+          ],
+          "speed": 4.85853049641138e-09,
+          "yaw_speed": -0.012783171609044075
+        }
+      },
+      {
+        "state": "waiting",
+        "reason": "Waiting for scan",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.5306359439991866,
+        "displacement_m": 0.0,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029368018731474876,
+            -0.0001294340327149257,
+            0.06453043967485428
+          ],
+          "speed": 3.1195856256617853e-09,
+          "yaw_speed": -0.014913700520992279
+        }
+      },
+      {
+        "state": "waiting",
+        "reason": "Waiting for scan",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.5842581029992289,
+        "displacement_m": 0.0,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029312551487237215,
+            -0.0001192342970171012,
+            0.06462671607732773
+          ],
+          "speed": 8.710874261844035e-09,
+          "yaw_speed": -0.009587379172444344
+        }
+      },
+      {
+        "state": "waiting",
+        "reason": "Waiting for scan",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.6400299609995272,
+        "displacement_m": 0.0,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029334910213947296,
+            -6.852736260043457e-05,
+            0.0647362768650055
+          ],
+          "speed": 6.9826000322942985e-09,
+          "yaw_speed": -0.011717907153069973
+        }
+      },
+      {
+        "state": "waiting",
+        "reason": "Waiting for scan",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.7012489339995227,
+        "displacement_m": 0.0,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002954054158180952,
+            -4.665231244871393e-05,
+            0.06480985879898071
+          ],
+          "speed": 6.45155722080577e-09,
+          "yaw_speed": -0.0021305286791175604
+        }
+      },
+      {
+        "state": "waiting",
+        "reason": "Waiting for scan",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.7685109119993285,
+        "displacement_m": 0.0,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029595254454761744,
+            -0.00010067522816825658,
+            0.06488607078790666
+          ],
+          "speed": 2.923488158625222e-09,
+          "yaw_speed": -0.0021305286791175604
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.8200672139992093,
+        "displacement_m": 0.0,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029855079483240843,
+            -4.484141027205624e-05,
+            0.06502608209848404
+          ],
+          "speed": 3.920268265874085e-09,
+          "yaw_speed": 0.0
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.87614573799965,
+        "displacement_m": 2.4128350109109195e-05,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002995812799781561,
+            -2.3024276742944494e-05,
+            0.0651795193552971
+          ],
+          "speed": 2.646008467168602e-09,
+          "yaw_speed": 0.0021305286791175604
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 0.9279368309998972,
+        "displacement_m": 2.9622850011357116e-05,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.003009565407410264,
+            -6.212585140019655e-05,
+            0.06509173661470413
+          ],
+          "speed": 1.3575241486561093e-08,
+          "yaw_speed": -0.0053263213485479355
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.0090140899992548,
+        "displacement_m": 7.611076103793685e-05,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0030342002864927053,
+            -0.00010333845420973375,
+            0.06503672897815704
+          ],
+          "speed": 5.459817464188054e-09,
+          "yaw_speed": -0.0074568502604961395
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.0684276939991832,
+        "displacement_m": 7.611076103793685e-05,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0030155163258314133,
+            -7.841672049835324e-05,
+            0.065102182328701
+          ],
+          "speed": 4.871204696890196e-09,
+          "yaw_speed": -0.010652642697095871
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.1251689909995548,
+        "displacement_m": 7.611076103793685e-05,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0030155163258314133,
+            -7.841672049835324e-05,
+            0.065102182328701
+          ],
+          "speed": 4.871204696890196e-09,
+          "yaw_speed": -0.010652642697095871
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.2104458369994973,
+        "displacement_m": 7.611076103793685e-05,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029962994158267975,
+            -0.00011782133515225723,
+            0.06498870253562927
+          ],
+          "speed": 1.321907695247263e-08,
+          "yaw_speed": -0.015978964045643806
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.267517448000035,
+        "displacement_m": 0.00011575759842513437,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029659667052328587,
+            -0.00015893769159447402,
+            0.06505000591278076
+          ],
+          "speed": 7.3968481701845226e-09,
+          "yaw_speed": -0.004261057358235121
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.3266426589998446,
+        "displacement_m": 0.00011575759842513437,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029606777243316174,
+            -0.0001103758841054514,
+            0.06507996469736099
+          ],
+          "speed": 1.0519245573446444e-08,
+          "yaw_speed": -0.0031957929022610188
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.3830307279995395,
+        "displacement_m": 0.00011575759842513437,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029716952703893185,
+            -0.00014817409100942314,
+            0.06503672152757645
+          ],
+          "speed": 4.668018318275687e-09,
+          "yaw_speed": -0.0053263213485479355
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.4379731519993584,
+        "displacement_m": 0.00011575759842513437,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029553903732448816,
+            -0.00015513235121034086,
+            0.06495914608240126
+          ],
+          "speed": 2.5375394208279257e-09,
+          "yaw_speed": -0.011717907153069973
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.4884146039994448,
+        "displacement_m": 0.00012196790640071981,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029514050111174583,
+            -0.00016194461204577237,
+            0.06506257504224777
+          ],
+          "speed": 5.710917985118247e-09,
+          "yaw_speed": 0.004261057358235121
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.5401668159993278,
+        "displacement_m": 0.00012196790640071981,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029471542220562696,
+            -0.0001408000971423462,
+            0.06510379910469054
+          ],
+          "speed": 5.313737792660307e-09,
+          "yaw_speed": -0.009587379172444344
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.599959215999661,
+        "displacement_m": 0.00012196790640071981,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002949292538687587,
+            -0.00013878309982828796,
+            0.06502793729305267
+          ],
+          "speed": 8.131884964647005e-09,
+          "yaw_speed": -0.01810949295759201
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.6548371579992818,
+        "displacement_m": 0.00014631034947654135,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.00291717192158103,
+            -0.00017421260417904705,
+            0.06489811092615129
+          ],
+          "speed": 5.515025131532186e-09,
+          "yaw_speed": -0.0031957929022610188
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.7087298529995678,
+        "displacement_m": 0.00014631034947654135,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.00291717192158103,
+            -0.00017421260417904705,
+            0.06489811092615129
+          ],
+          "speed": 5.515025131532186e-09,
+          "yaw_speed": -0.0031957929022610188
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.7675529109992567,
+        "displacement_m": 0.00014631034947654135,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029004504904150963,
+            -0.0001453404693165794,
+            0.06495609134435654
+          ],
+          "speed": 3.834449072670063e-09,
+          "yaw_speed": -0.011717907153069973
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.8262141389996032,
+        "displacement_m": 0.00014631034947654135,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002923740306869149,
+            -0.0001418279280187562,
+            0.0649484172463417
+          ],
+          "speed": 7.613778041011183e-09,
+          "yaw_speed": 0.0021305286791175604
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.897657719999188,
+        "displacement_m": 0.0001804825196759104,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002895089564844966,
+            -0.00020104146096855402,
+            0.06480048596858978
+          ],
+          "speed": 5.398403301906009e-09,
+          "yaw_speed": -0.01810949295759201
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 1.9580858199997238,
+        "displacement_m": 0.0001804825196759104,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0028937081806361675,
+            -0.00017788680270314217,
+            0.06488534063100815
+          ],
+          "speed": 4.973468177451413e-09,
+          "yaw_speed": -0.0021305286791175604
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.009665610999946,
+        "displacement_m": 0.0001804825196759104,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0028956569731235504,
+            -0.00018093755352310836,
+            0.064791202545166
+          ],
+          "speed": 1.0160245337708494e-08,
+          "yaw_speed": -0.009587379172444344
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.0603156769993802,
+        "displacement_m": 0.0001804825196759104,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0028857847210019827,
+            -0.00019360697478987277,
+            0.06470856815576553
+          ],
+          "speed": 9.922701097894701e-09,
+          "yaw_speed": 0.0010652643395587802
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.1145199019993015,
+        "displacement_m": 0.00019189075125454485,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002901053288951516,
+            -0.00021714773902203888,
+            0.06465372443199156
+          ],
+          "speed": 2.667042126866883e-09,
+          "yaw_speed": -0.0031957929022610188
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.166581531999327,
+        "displacement_m": 0.00019189075125454485,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002882027067244053,
+            -0.00018463989545125514,
+            0.06466348469257355
+          ],
+          "speed": 5.489589579017421e-09,
+          "yaw_speed": -0.008522114716470242
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.224988351999855,
+        "displacement_m": 0.00019189075125454485,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002918839920312166,
+            -0.0001758511789375916,
+            0.06470324844121933
+          ],
+          "speed": 7.134558686115522e-09,
+          "yaw_speed": 0.0
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.279821620999428,
+        "displacement_m": 0.00019189075125454485,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029326726216822863,
+            -0.00018571615510154516,
+            0.06468506157398225
+          ],
+          "speed": 5.734421448721515e-09,
+          "yaw_speed": -0.012783171609044075
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.3394356149992745,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029371643904596567,
+            -0.00024267884145956486,
+            0.06452535092830658
+          ],
+          "speed": 1.0778098965085755e-09,
+          "yaw_speed": -0.01810949295759201
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.3957354889998896,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002927724737673998,
+            -0.00023582103312946856,
+            0.06447960436344147
+          ],
+          "speed": 1.4270315692284342e-09,
+          "yaw_speed": -0.0063915858045220375
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.4478560649995416,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029442086815834045,
+            -0.0001456198369851336,
+            0.06462586671113967
+          ],
+          "speed": 3.0374221001029876e-09,
+          "yaw_speed": -0.011717907153069973
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.5056581619992357,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002926203655079007,
+            -0.00013941580255050212,
+            0.06459332257509232
+          ],
+          "speed": 2.35325259542038e-10,
+          "yaw_speed": -0.008522114716470242
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.558307906999289,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002942417748272419,
+            -0.00018056307453662157,
+            0.0645170509815216
+          ],
+          "speed": 5.631030227861104e-09,
+          "yaw_speed": -0.0021305286791175604
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.611787084999378,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029255796689540148,
+            -0.0001759810547810048,
+            0.06456091254949571
+          ],
+          "speed": 9.480111130147731e-09,
+          "yaw_speed": -0.004261057358235121
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.668136816999322,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029288451187312603,
+            -0.0001407972740707919,
+            0.06459898501634598
+          ],
+          "speed": 1.1774160868418216e-08,
+          "yaw_speed": 0.004261057358235121
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.72814576699966,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029393944423645735,
+            -0.00012831113417632878,
+            0.06460195779800415
+          ],
+          "speed": 6.978491522901661e-09,
+          "yaw_speed": -0.0031957929022610188
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for stable sensors and native worker",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.798219352999695,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": false,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029433323070406914,
+            -0.0001778397272573784,
+            0.06447022408246993
+          ],
+          "speed": 1.540670987168981e-09,
+          "yaw_speed": -0.008522114716470242
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.857897540999147,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029798068571835756,
+            -0.00020244104962330312,
+            0.06442154943943024
+          ],
+          "speed": 5.149110498221048e-09,
+          "yaw_speed": -0.0031957929022610188
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.920048478999888,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029798068571835756,
+            -0.00020244104962330312,
+            0.06442154943943024
+          ],
+          "speed": 5.149110498221048e-09,
+          "yaw_speed": -0.0031957929022610188
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 2.9810146109994093,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029935811180621386,
+            -0.0001789443485904485,
+            0.06430081278085707
+          ],
+          "speed": 9.70412845555667e-09,
+          "yaw_speed": -0.011717907153069973
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.032651619999342,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029641548171639442,
+            -0.00018813744827639312,
+            0.06425386667251586
+          ],
+          "speed": 5.208834398348221e-09,
+          "yaw_speed": -0.004261057358235121
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.083981066999513,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029855540487915277,
+            -0.00015828805044293404,
+            0.06426980346441269
+          ],
+          "speed": 6.523776934666185e-09,
+          "yaw_speed": -0.0010652643395587802
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.1446662299995296,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0030282805673778057,
+            -0.0001355085551040247,
+            0.0643230602145195
+          ],
+          "speed": 5.210290804494575e-09,
+          "yaw_speed": -0.013848436065018177
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.1964203309998993,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.003018078161403537,
+            -0.00014195234689395875,
+            0.06421385705471037
+          ],
+          "speed": 4.67527035540553e-09,
+          "yaw_speed": 0.0031957929022610188
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.256407072000002,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0030112203676253557,
+            -0.00017520535038784146,
+            0.0641181468963623
+          ],
+          "speed": 2.3423911078596263e-09,
+          "yaw_speed": -0.0063915858045220375
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.3194327889996202,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0030298451893031597,
+            -0.0001541181845823303,
+            0.06419779360294342
+          ],
+          "speed": 3.944487000915282e-09,
+          "yaw_speed": -0.0031957929022610188
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.3767794479999793,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0030501021537929773,
+            -0.00014185330655891448,
+            0.06416355073451994
+          ],
+          "speed": 5.223041721119725e-09,
+          "yaw_speed": -0.008522114716470242
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.427719282999533,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0030503252055495977,
+            -0.0001284428290091455,
+            0.06416754424571991
+          ],
+          "speed": 3.121159030044114e-09,
+          "yaw_speed": -0.014913700520992279
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.4822367329998087,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0030485792085528374,
+            -0.00017101543198805302,
+            0.06406429409980773
+          ],
+          "speed": 6.971465470684078e-09,
+          "yaw_speed": -0.0021305286791175604
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.5397084199994424,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0030466921161860228,
+            -0.00019360352598596364,
+            0.06397926062345506
+          ],
+          "speed": 2.65835151394843e-09,
+          "yaw_speed": -0.004261057358235121
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.593909156999871,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0030484385788440704,
+            -0.00017684686463326216,
+            0.06400015205144882
+          ],
+          "speed": 4.645232103673059e-09,
+          "yaw_speed": -0.011717907153069973
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.6513210019993494,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0030402857810258865,
+            -0.0001608657621545717,
+            0.06414033472537994
+          ],
+          "speed": 7.971514665869558e-09,
+          "yaw_speed": -0.008522114716470242
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.7067590569995446,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.003055123845115304,
+            -0.00018862100841943175,
+            0.06392430514097212
+          ],
+          "speed": 3.747284033190443e-09,
+          "yaw_speed": 0.0
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.7653605709992917,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.003046766621991992,
+            -0.00020166214380878955,
+            0.06397328525781631
+          ],
+          "speed": 3.2169481266136606e-09,
+          "yaw_speed": 0.0
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.822342738999396,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.003048425307497382,
+            -0.0001424831716576591,
+            0.0641147941350937
+          ],
+          "speed": 6.075479833246774e-09,
+          "yaw_speed": -0.021305285394191742
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.877154246999453,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.003038853406906128,
+            -0.00015366123989224434,
+            0.06409934908151627
+          ],
+          "speed": 3.667687372789832e-09,
+          "yaw_speed": -0.009587379172444344
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.92892690699955,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002999513177201152,
+            -0.00014282531628850847,
+            0.06409602612257004
+          ],
+          "speed": 3.3197027826091063e-09,
+          "yaw_speed": -0.014913700520992279
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 3.986571687999458,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029759283643215895,
+            -0.00015474662359338254,
+            0.0641213357448578
+          ],
+          "speed": 4.532603998259961e-09,
+          "yaw_speed": -0.0053263213485479355
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 4.040887883999858,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029980004765093327,
+            -0.00017711280088406056,
+            0.06411904841661453
+          ],
+          "speed": 1.575464881208682e-08,
+          "yaw_speed": -0.0074568502604961395
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 4.091059277999193,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0029705287888646126,
+            -0.00010003192437579855,
+            0.06410235911607742
+          ],
+          "speed": 5.19473574209809e-09,
+          "yaw_speed": -0.011717907153069973
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 4.143729278999672,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002917231060564518,
+            -0.00013733727973885834,
+            0.06405037641525269
+          ],
+          "speed": 1.265351255960916e-08,
+          "yaw_speed": -0.014913700520992279
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 4.194828189999498,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002917231060564518,
+            -0.00013733727973885834,
+            0.06405037641525269
+          ],
+          "speed": 1.265351255960916e-08,
+          "yaw_speed": -0.014913700520992279
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 4.254379685999993,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0028789148200303316,
+            -0.00010531703446758911,
+            0.06420008838176727
+          ],
+          "speed": 3.1578542635313546e-09,
+          "yaw_speed": -0.013848436065018177
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 4.305675211999187,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.0028789148200303316,
+            -0.00010531703446758911,
+            0.06420008838176727
+          ],
+          "speed": 3.1578542635313546e-09,
+          "yaw_speed": -0.013848436065018177
+        },
+        "native_motion": {
+          "commanded": null,
+          "native_state": null,
+          "last_response": null,
+          "guard_reason": null,
+          "autonomy_preparation": null
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 4.365169969999442,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.00286007858812809,
+            -7.65360746299848e-05,
+            0.06417238712310791
+          ],
+          "speed": 3.263985347952452e-09,
+          "yaw_speed": -0.011717907153069973
+        },
+        "native_motion": {
+          "commanded": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "native_state": {},
+          "last_response": {},
+          "guard_reason": "运动状态时间缺失或不是有限数值。",
+          "autonomy_preparation": {
+            "synchronized": false
+          }
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 4.422183593999762,
+        "displacement_m": 0.00020365841196931558,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.002860544016584754,
+            -0.00012885320757050067,
+            0.06415202468633652
+          ],
+          "speed": 2.7946845736609893e-09,
+          "yaw_speed": -0.008522114716470242
+        },
+        "native_motion": {
+          "commanded": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "native_state": {
+            "at": 5833.818700403,
+            "height": 0.3295746445655823,
+            "rpy": [
+              -0.0106216324493289,
+              -0.011732185259461403,
+              0.06417238712310791
+            ],
+            "mode": 0,
+            "gait": 0,
+            "error": 1002,
+            "velocity": [
+              -5.689906878991735e-10,
+              3.2140083927600926e-09,
+              6.736674862395375e-08
+            ],
+            "position": [
+              -0.00286007858812809,
+              -7.65360746299848e-05,
+              0.3234933018684387
+            ],
+            "yaw_speed": -0.011717907153069973
+          },
+          "last_response": {
+            "api": 1003,
+            "code": 0,
+            "zero_move_code": 0,
+            "errors": [],
+            "source": "official SDK StopMove"
+          },
+          "guard_reason": null,
+          "autonomy_preparation": {
+            "before": {
+              "at": 5833.818700403,
+              "height": 0.3295746445655823,
+              "rpy": [
+                -0.0106216324493289,
+                -0.011732185259461403,
+                0.06417238712310791
+              ],
+              "mode": 0,
+              "gait": 0,
+              "error": 1002,
+              "velocity": [
+                -5.689906878991735e-10,
+                3.2140083927600926e-09,
+                6.736674862395375e-08
+              ],
+              "position": [
+                -0.00286007858812809,
+                -7.65360746299848e-05,
+                0.3234933018684387
+              ],
+              "yaw_speed": -0.011717907153069973
+            },
+            "stop_response": {
+              "api": 1003,
+              "code": 0,
+              "zero_move_code": 0,
+              "errors": [],
+              "source": "official SDK StopMove"
+            },
+            "started_at": 5833.86127412,
+            "synchronized": false
+          }
+        }
+      },
+      {
+        "state": "preflight",
+        "reason": "Waiting for native healthy standing telemetry",
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "elapsed_s": 4.476047871999981,
+        "displacement_m": 0.00299303034845485,
+        "motion_output_enabled": true,
+        "execute_hold": null,
+        "observed_odometry": {
+          "pose": [
+            -0.005978121422231197,
+            5.1111928769387305e-06,
+            0.06596241891384125
+          ],
+          "speed": 2.2089952609509326e-05,
+          "yaw_speed": 0.09693904966115952
+        },
+        "native_motion": {
+          "commanded": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "native_state": {
+            "at": 5833.869326372,
+            "height": 0.3295775055885315,
+            "rpy": [
+              -0.010481988079845905,
+              -0.011740163899958134,
+              0.06415202468633652
+            ],
+            "mode": 0,
+            "gait": 0,
+            "error": 1002,
+            "velocity": [
+              2.0869870276385427e-09,
+              -1.8586949757093407e-09,
+              1.7714415889713564e-07
+            ],
+            "position": [
+              -0.002860544016584754,
+              -0.00012885320757050067,
+              0.323493629693985
+            ],
+            "yaw_speed": -0.008522114716470242
+          },
+          "last_response": {
+            "api": 1003,
+            "code": 0,
+            "zero_move_code": 0,
+            "errors": [],
+            "source": "official SDK StopMove"
+          },
+          "guard_reason": null,
+          "autonomy_preparation": {
+            "before": {
+              "at": 5833.818700403,
+              "height": 0.3295746445655823,
+              "rpy": [
+                -0.0106216324493289,
+                -0.011732185259461403,
+                0.06417238712310791
+              ],
+              "mode": 0,
+              "gait": 0,
+              "error": 1002,
+              "velocity": [
+                -5.689906878991735e-10,
+                3.2140083927600926e-09,
+                6.736674862395375e-08
+              ],
+              "position": [
+                -0.00286007858812809,
+                -7.65360746299848e-05,
+                0.3234933018684387
+              ],
+              "yaw_speed": -0.011717907153069973
+            },
+            "stop_response": {
+              "api": 1003,
+              "code": 0,
+              "zero_move_code": 0,
+              "errors": [],
+              "source": "official SDK StopMove"
+            },
+            "started_at": 5833.86127412,
+            "synchronized": false
+          }
+        }
+      }
+    ],
+    "completed": false,
+    "nearest_obstacle": {
+      "distance_m": 0.850022792816162,
+      "x_base_m": 0.08147117846317203,
+      "y_base_m": 0.8461094464587959
+    },
+    "error": "启动前机器狗尚未停稳。",
+    "worker_shutdown": {
+      "worker_ready": false,
+      "latched_stop": true,
+      "commanded": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "body_height": 0.3250875473022461,
+      "last_response": {
+        "api": 1003,
+        "code": 0,
+        "zero_move_code": 0,
+        "errors": [],
+        "source": "official SDK StopMove"
+      },
+      "native_state": {
+        "at": 5833.969296508,
+        "height": 0.3250875473022461,
+        "rpy": [
+          -0.018503054976463318,
+          -0.00849534198641777,
+          0.07329414784908295
+        ],
+        "mode": 0,
+        "gait": 0,
+        "error": 100,
+        "velocity": [
+          -0.06075931712985039,
+          -0.010394269600510597,
+          0.027206577360630035
+        ],
+        "position": [
+          -0.007270296569913626,
+          0.0011782626388594508,
+          0.3214121162891388
+        ],
+        "yaw_speed": 0.11291801929473877
+      },
+      "native_low": {
+        "at": 5834.005567372,
+        "foot_force": [
+          44,
+          37,
+          46,
+          58
+        ],
+        "joint_q": [
+          -0.027196645736694336,
+          0.6620627641677856,
+          -1.4024953842163086,
+          0.03991323709487915,
+          0.6653472185134888,
+          -1.470359206199646,
+          -0.03150118142366409,
+          0.695332407951355,
+          -1.4266172647476196,
+          0.07068032026290894,
+          0.646888256072998,
+          -1.4038223028182983
+        ],
+        "joint_dq": [
+          0.15114542841911316,
+          -0.08138599991798401,
+          -0.6207578182220459,
+          0.034879714250564575,
+          -0.08913704752922058,
+          -0.6308678984642029,
+          0.2519090473651886,
+          -0.1937761902809143,
+          -0.2608396112918854,
+          0.3100419044494629,
+          -0.3022908568382263,
+          -0.2305094301700592
+        ],
+        "temperatures": [
+          35,
+          33,
+          35,
+          37,
+          34,
+          35,
+          53,
+          33,
+          33,
+          47,
+          33,
+          34
+        ],
+        "motor_lost": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          5,
+          0,
+          0,
+          5,
+          0
+        ],
+        "motor_faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "soc": 77,
+        "power_v": 31.07561492919922,
+        "wireless_remote": [
+          85,
+          81,
+          0,
+          0,
+          0,
+          0,
+          0,
+          128,
+          0,
+          0,
+          0,
+          128,
+          0,
+          0,
+          0,
+          128,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          128
+        ],
+        "bit_flag": 4,
+        "tick": 5856576
+      },
+      "backend": "official_sdk2",
+      "guard_reason": "启动前机器狗尚未停稳。",
+      "rotation": {
+        "angle_deg": 0.0,
+        "net_angle_deg": 0.0,
+        "displacement_m": 0.0
+      },
+      "autonomy_preparation": {
+        "before": {
+          "at": 5833.818700403,
+          "height": 0.3295746445655823,
+          "rpy": [
+            -0.0106216324493289,
+            -0.011732185259461403,
+            0.06417238712310791
+          ],
+          "mode": 0,
+          "gait": 0,
+          "error": 1002,
+          "velocity": [
+            -5.689906878991735e-10,
+            3.2140083927600926e-09,
+            6.736674862395375e-08
+          ],
+          "position": [
+            -0.00286007858812809,
+            -7.65360746299848e-05,
+            0.3234933018684387
+          ],
+          "yaw_speed": -0.011717907153069973
+        },
+        "stop_response": {
+          "api": 1003,
+          "code": 0,
+          "zero_move_code": 0,
+          "errors": [],
+          "source": "official SDK StopMove"
+        },
+        "started_at": 5833.86127412,
+        "synchronized": false
+      },
+      "received_at": 5834.012865968
+    },
+    "stop_acknowledged": false,
+    "max_displacement_m": 0.004455939524578973,
+    "ended_at": 1792119301.4281352,
+    "source_errors": {},
+    "execute_hold": null,
+    "input_status": {
+      "odom": {
+        "source_stamp_s": 1792119301.271256,
+        "receive_age_s": 0.14912009099953139,
+        "source_age_s": 0.15760326385498047
+      },
+      "cloud": {
+        "source_stamp_s": 1792119301.152937,
+        "receive_age_s": 0.1627953030001663,
+        "source_age_s": 0.2759678363800049
+      },
+      "scan": {
+        "source_stamp_s": 1792119301.152937,
+        "receive_age_s": 0.15702853099992353,
+        "source_age_s": 0.275982141494751
+      }
+    },
+    "robot_command_publishers": {
+      "/api/sport/request": [],
+      "/cmd_vel": [],
+      "/lowcmd": []
+    }
+  },
+  "supplementary_stop": {
+    "stopped": true,
+    "stop_codes": [
+      0,
+      0,
+      0
+    ],
+    "source": "native_stop.py tool result after the preparation abort; zero nonzero-speed requests"
+  },
+  "latest_software_validation": {
+    "tested_at": "2026-10-16T10:59:46+0800",
+    "passed": true,
+    "tests_run": 72,
+    "failure_count": 0,
+    "error_count": 0,
+    "duration_s": 46.701,
+    "command": "python3 -B -m unittest test_local_autonomy test_autonomy_worker test_autonomy_session test_rotation_guard test_rotation_worker",
+    "synthetic_motion_only": true,
+    "physical_walking_validated": false,
+    "stop_preparation": {
+      "timeout_s": 3.0,
+      "max_displacement_m": 0.08,
+      "required_stationary_s": 0.5,
+      "minimum_settling_s": 0.75,
+      "final_stationary_speed_limit_m_s": 0.025,
+      "yaw_limit_rad_s": 0.04
+    },
+    "sha256": {
+      "local_autonomy.py": "3fce43c55ee43b85a1226aaee64e63ade4675f95449ef9ff3f1aa2c1ab383bb1",
+      "autonomy_guard.py": "a59ad0bd53b8cc91ca684aa93479b96e8bae09a134fb7e605523ba3896364d4a",
+      "official_sdk_worker.py": "f358fff1441eca7246288e2cb0b51f46f9d917aa8ebd01663e43c4cb61266d90",
+      "run_local_autonomy.py": "b30d2891142552ce3edc45e72d8cc260154b911a37bc8c44e4d2f28d8f833026"
+    }
+  },
+  "current_health": {
+    "sampled_at": 1792119703.8155696,
+    "height": 0.06707373261451721,
+    "rpy": [
+      0.002109940629452467,
+      -0.09689120203256607,
+      0.03462767228484154
+    ],
+    "temperatures": [
+      36,
+      33,
+      35,
+      37,
+      34,
+      35,
+      53,
+      33,
+      34,
+      49,
+      33,
+      35
+    ],
+    "motor_faults": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "soc": 75
+  },
+  "next_step": "Remote stand then fresh clearance verification; same 0.08 m/s, 1 m radius, <=20 s physical retest. Existing authorization applies. No automatic posture or gait change."
+}

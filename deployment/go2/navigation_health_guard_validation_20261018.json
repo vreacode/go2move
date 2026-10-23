@@ -1,0 +1,108 @@
+{
+  "recorded_at": "2026-10-18T20:41:45.569313+08:00",
+  "project": "/home/unitree/go2move",
+  "git_head": "6e980515adf60cd37bc291f66ef80a5987e7cee0",
+  "title": "通用导航/建图写入器健康门禁与停止锁存补齐",
+  "scope": [
+    "ROS2和SDK2通用写入器复用已有自主行走健康门禁",
+    "已就绪后任何输入失效锁存，恢复数据/新命令不能自动恢复运动",
+    "独立子进程时限和ROS退出定时器取消"
+  ],
+  "source_sha256": {
+    "deployment/go2/motion_health_guard.py": "f11be6866d4c978549e9ba028a96156a3cf36b78400f1adc4f810deaaa52024c",
+    "deployment/go2/low_speed_bridge.py": "cf8dfbe128eb23b0816cd47c3c268b7861741f4ec46591cb827f5435c1f0d279",
+    "deployment/go2/official_sdk_worker.py": "2ee95610c53a2403812e6ef4c6cc8ee56004e34a5d1dc91257803cd4d9d166eb",
+    "deployment/go2/test_motion_health_guard.py": "cfa51f7af360f6ad69398b5a48b7a6461252b3628e496b1f098d30b2b11c454f",
+    "deployment/go2/test_motion_health_worker.py": "87311ac4b8758e23da1053894b1dab37a0447033cbe6347f78f3a482f506de0f"
+  },
+  "original_backups": {
+    "deployment/go2/low_speed_bridge.py": "/home/unitree/go2_ros2_ws/backups/platform-20261005-194025/revisions/1792326792224269833/home/unitree/go2move/deployment/go2/low_speed_bridge.py",
+    "deployment/go2/official_sdk_worker.py": "/home/unitree/go2_ros2_ws/backups/platform-20261005-194025/revisions/1792326792226590998/home/unitree/go2move/deployment/go2/official_sdk_worker.py"
+  },
+  "reused_guard_sha256": {
+    "rotation_guard.py": "c45e877fceea3a616840b1d001984038c0f3bfe4e1d89099dacf10984f419229",
+    "autonomy_guard.py": "c7fbfa7e965ce1fe0ddc9eb095585cf78db4b5087fe8a000c659064a47caa479",
+    "local_autonomy.py": "f287873bc655c0bd013687b381c60bb5013d8cb0d51270c013abac2408c1f4e0"
+  },
+  "baseline_before_fix": {
+    "command": "python3 -B -m unittest test_motion_health_worker.MotionHealthWorkerTests.test_temperature_fault_remote_and_stale_state_stop_without_resuming",
+    "exit_code": 1,
+    "failing_subtests": 8,
+    "raw_log_saved": false,
+    "note": "8个SDK2/ROS2与温度/故障/手柄/低层陈旧组合未通过；陈旧输入此前已有部分停车行为，但缺少健康原因诊断。"
+  },
+  "validation": {
+    "regression": {
+      "command": "python3 -B -m unittest -v test_motion_health_guard test_motion_health_worker test_rotation_guard test_rotation_worker test_local_autonomy test_autonomy_worker",
+      "exit_code": 0,
+      "test_methods": 85,
+      "seconds": 80.384,
+      "existing_test_methods": 71,
+      "new_test_methods_at_run_time": 14,
+      "raw_log_saved": false,
+      "note": "完整回归后只增加并调整测试用例，生产源码未再次修改。"
+    },
+    "final_new_tests": {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_motion_health_guard",
+        "test_motion_health_worker"
+      ],
+      "cwd": "/home/unitree/go2move/deployment/go2",
+      "exit_code": 0,
+      "seconds": 31.452,
+      "completed_at": "2026-10-18T20:40:47.662378+08:00",
+      "log": "/home/unitree/go2move/runtime/validation/navigation_health_guard_20261018/new_guard_tests_final.log",
+      "test_methods": 15
+    },
+    "sdk_python_guard_tests": {
+      "command": "/home/unitree/go2_sdk2_venv/bin/python -B -m unittest -v test_motion_health_guard",
+      "exit_code": 0,
+      "test_methods": 8
+    },
+    "unique_test_methods_passed": 86,
+    "new_worker_backend_scenarios": 24,
+    "syntax_parsed_files": [
+      "motion_health_guard.py",
+      "low_speed_bridge.py",
+      "official_sdk_worker.py",
+      "test_motion_health_guard.py",
+      "test_motion_health_worker.py"
+    ],
+    "whitespace_errors": [],
+    "fixture_correction": {
+      "first_attempt_log": "/home/unitree/go2move/runtime/validation/navigation_health_guard_20261018/new_guard_tests.log",
+      "first_attempt_exit_code": 1,
+      "reason": "新增启动前静止故障用例最初从进程导入开始计时，故障窗口可能在就绪前结束；改为从真实命令馈送开始计时。最终15项通过，保留第一次失败日志。"
+    }
+  },
+  "limits": {
+    "start_temperature_c_exclusive_max": 65,
+    "running_temperature_c_exclusive_max": 70,
+    "telemetry_max_age_s": 0.25,
+    "stance_height_m": [
+      0.25,
+      0.4
+    ],
+    "tilt_abs_rad_exclusive_max": 0.25,
+    "worker_duration_s_range": [
+      1,
+      60
+    ],
+    "geometry_guard": "继承父控制器的路线/位移边界，不把旋转0.10米漂移上限误用于导航",
+    "temperature_threshold_source": "沿用本项目保守软件阈值，不代表厂家额定限制"
+  },
+  "physical_execution": {
+    "real_robot_commands_sent": 0,
+    "real_dds_initialized": false,
+    "services_restarted": false,
+    "motion_pause_released": false,
+    "physical_navigation_validated": false
+  },
+  "next_minimum_task": "将原生guard_reason传递到导航任务失败原因和前端，验证相应失败反馈；实机动作仍需先解决已有手动行走异常并现场验收。",
+  "workflow_requirement": "后续每轮必须交付有价值的具体改动、验证证据与报告；保留已有工作，不把巡视或假设备测试表述为实机成功。"
+}

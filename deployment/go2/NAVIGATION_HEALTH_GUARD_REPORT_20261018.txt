@@ -1,0 +1,50 @@
+Go2 项目推进报告：导航/建图健康门禁补齐
+记录时间：2026-10-18T20:41:45.569313+08:00
+工程：/home/unitree/go2move
+基线 commit：6e980515adf60cd37bc291f66ef80a5987e7cee0（原工作区已有大量改动，本轮不提交、不覆盖其他工作）
+
+本轮解决的问题
+原来只有扫描/自主行走分支执行完整健康门禁；通用 ROS2/SDK2 写入器未完整检查电机温度、故障、遥控接管。
+修复前两个后端的8个异常组合未通过；其中遥测陈旧已有部分停车逻辑，但缺少具体健康拒绝原因。
+
+具体成果
+1. 新增 motion_health_guard.py，复用现有 AutonomyGuard/RotationGuard。
+   通用导航/建图两条写入链均检查12电机温度/故障/丢包、系统故障位、手柄按键/轴、遥测时效和tick冻结、站姿和实际速度。
+   启动温度须低于65℃、运行须低于70℃，是本项目保守软件阈值，不是厂家额定限制。
+   启动站高收紧为0.25..0.40米，倾角须低于0.25弧度，并要求停稳、非1001/1002锁定状态。
+2. 一旦已就绪，命令或健康输入失效即锁存；即使正在静止观察、甚至尚未发出第一条非零命令，也不能靠数据恢复自动继续。
+3. 子进程从首次运动起独立计时，范围1..60秒；父进程将本次时限传入两种后端。
+   通用导航仍由父控制器约束路线，不继承原地扫描0.10米位移上限；保持机身高度异常保护。
+4. ROS退出先取消运动定时器，再等待停车回执，避免spin_once在清理阶段重新调度非零请求。
+   ROS首次运动请求前即记录已尝试运动，传输异常也进入已有停车清理。
+
+验证结果
+- 原有71项相关测试通过；新增15项测试通过，共86个不同测试方法。
+- 新增写入器测试在SDK2/ROS2两种假传输下覆盖24个场景组合：正常/EOF、初始过热/故障/锁定、运行故障/手柄/遥测陈旧、静止期异常、命令超时、独立时限。
+- 完整85项回归耗时80.384秒；随后补充启动前静止故障用例，最终新增15项复核耗时31.452秒。
+- 实际SDK Python环境的8项纯健康门禁测试也通过；5个改动/新增Python文件语法检查通过。
+- 新增静止故障用例首次暴露测试计时窗口过早的问题，已改为从命令馈送开始计时；保留失败日志，不作为设备故障证据。
+
+复现
+cd /home/unitree/go2move/deployment/go2
+python3 -B -m unittest -v test_motion_health_guard test_motion_health_worker test_rotation_guard test_rotation_worker test_local_autonomy test_autonomy_worker
+
+报告与证据
+机器可读报告：deployment/go2/navigation_health_guard_validation_20261018.json
+最终新增测试日志：runtime/validation/navigation_health_guard_20261018/new_guard_tests_final.log
+原始失败日志：runtime/validation/navigation_health_guard_20261018/new_guard_tests.log
+本轮独立差异：runtime/validation/navigation_health_guard_20261018/source_changes.patch
+修改前哈希：runtime/validation/navigation_health_guard_20261018/before.json
+修改前备份：/home/unitree/go2_ros2_ws/backups/platform-20261005-194025/revisions/（JSON报告列出对应源文件）
+
+验收边界
+本轮只做离线代码与假传输验证，真实机器人命令0、真实DDS初始化0、服务重启0。
+现有运动暂停未解除；没有将软件通过宣称为实机导航/避障成功。
+新门禁要求低层消息字段齐全，缺失即拒绝；本机ROS LowState/SportModeState源码已核对所需字段存在。
+
+下一轮最小任务
+将原生guard_reason透传到导航任务与前端，给出可读失败原因并测试。
+实机导航仍须先处理已有手动行走异常，保持现场验收边界。
+
+后续推进要求
+每轮交付具体有用的改动、可复现验证、结果与限制、下一项最小任务，并写报告与LAST_SESSION交接。

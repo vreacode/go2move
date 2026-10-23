@@ -1,0 +1,19 @@
+2026-10-09 D435i接入与手柄建图准备（当前状态）
+- 真实USB设备Intel RealSense D435I，8086:0b3a，序列号233622071429，USB3.2/5000Mbps；不是D455。
+- 固件05.13.00.55未修改。原ROS2 Foxy和系统SDK2.50.0保留。
+- 官方librealsense2.51.1 RSUSB独立安装到go2_ros2_ws/deps；复用realsense-ros3.2.3仅重编译相机包，private realsense_rsusb_install。
+- 两套SDK/相机软件重置均未恢复RGB和IMU。完整配置启用RGB640x480/15、深度、align、pointcloud、gyro200、accel100；保留d435i.yaml。
+- 当前go2-depth-camera.service使用d435i_depth_only.yaml：RGB/IMU/align关闭，RS2_STREAM_ANY生成纯XYZ几何点云。
+- 复用SDK decimation倍率2、stereo_module.frames_queue_size=1，输出深度320x240；改善原8.38Hz/1.59s延迟。
+- 连续60.0秒最终实测：深度15.00Hz，点云14.98Hz。
+  最大帧间隔0.225s，最大时间戳年龄0.351s，倒退0；有效深度约80%、点云约6.1万点、采样XYZ有限且非零。
+- topic /camera/depth/image_rect_raw、/camera/depth/color/points（名称沿用上游；当前没有RGB字段），frame=d435i_depth_optical_frame。
+- RViz已实看深度图/点云；go2-depth-rviz为临时用户服务，无导航操作工具。截图depth_camera_rviz_20261009.png。
+- 雷达/SLAM已按用户要求启动：/lidar_points、/scan约10Hz，/odom约20Hz，/map1Hz；map->base_footprint连通；hesai外参不改。
+  一键：/home/unitree/go2move/deployment/go2/start_mapping_with_depth.sh（只启动接收、建图、相机；没有运动/导航控制桥）。
+- 关节故障位全0、温度约30..35度，仍趴着；未发速度/姿态/导航/声音RPC，自动运动/语音策略继续暂停。
+- 还需用户物理重插相机10秒，优先绕过USB扩展坞直连；不能据当前软件日志断言是线缆、供电或相机硬件中的哪一种。
+- 摄像头是否已安装及朝向尚未回复，未设置base_link->d435i_link假外参。相机尚未接入Nav2障碍层或视觉SLAM。
+- 重插后应先停止depth服务、将用户unit切回完整d435i.yaml（备份后编辑），再验证RGB/Depth/IMU及彩色点云。
+- 所有源码、配置、unit及脚本修改前均备份到go2_ros2_ws/backups/platform-20261005-194025/revisions。
+- 证据depth_camera_setup_20261009.json、depth_camera_rsusb_probe_20261009.json、depth_camera_validation_20261009.json、depth_camera_realtime_validation_20261009.json。

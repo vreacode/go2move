@@ -1,0 +1,26 @@
+{
+  "tested_at": "2026-10-16T10:45:50+0800",
+  "passed": true,
+  "tests_run": 68,
+  "failure_count": 0,
+  "error_count": 0,
+  "duration_s": 40.3519679230003,
+  "modules": [
+    "test_local_autonomy",
+    "test_autonomy_session",
+    "test_autonomy_worker",
+    "test_rotation_guard",
+    "test_rotation_worker"
+  ],
+  "clearance_m": 0.7041232746604094,
+  "synthetic_motion_only": true,
+  "physical_walking_validated": false,
+  "sha256": {
+    "local_autonomy.py": "3fce43c55ee43b85a1226aaee64e63ade4675f95449ef9ff3f1aa2c1ab383bb1",
+    "autonomy_guard.py": "e755d5ecbcc4ac4ff3b9ab906fe64d21c24940280e343839d860726d425ae5b2",
+    "official_sdk_worker.py": "da800a87f69a552a6e93e986c8c7afd5dac90bfdf5f63bd11a0e8f43834e28fd",
+    "run_local_autonomy.py": "b30d2891142552ce3edc45e72d8cc260154b911a37bc8c44e4d2f28d8f833026"
+  },
+  "failures": [],
+  "errors": []
+}

@@ -1,0 +1,48 @@
+Go2 深度相机寻人接入报告
+时间：2026-10-18T21:47:26.078914+08:00
+
+已交付
+- 找人画面已从机身相机切换到真实 D435i 彩色＋对齐深度，640×480。
+- 复用所给上游项目的标准 realsense2_camera 接入思路，使用本机现有 Foxy/RSUSB 适配；没有照搬 Humble 启动配置。
+- 上游参考：https://github.com/Unitree-Go2-Robot/go2_robot
+- 增加同步彩色、对齐深度、CameraInfo 的只读缓存；校验时间、光学坐标系、分辨率及图像/数据包哈希。
+- 人物躯干区域取有效深度中位数，过滤缺失、稀疏、混合深度；网页显示前向距离，随候选照片写入历史。
+- 距离随实际保存的最佳照片更新；较弱新画面不会覆盖旧照片所对应的距离。旧历史不补造距离。
+- 不匹配的深度只会使当帧测距缺失，彩色识别仍可继续。找人预览保留原画面比例。
+- 后台驱动、同步缓存、寻人服务已运行；当前未启动找人任务，没有运动或语音命令，自启动设置未改。
+- 启动脚本固定连接当前用户服务总线，避免桌面旧 D-Bus 地址导致服务重载失败。
+
+验证结果
+- 73 项 Python 测试通过，含真实 TensorRT YOLOX/OSNet 历史流程；12 项界面测试通过；TypeScript/Vite 构建通过。
+- Python 语法、shell 语法、systemd 单元、git diff --check 通过。
+- 预热后连续 30 秒采集：彩色约 13.63Hz，对齐深度约 13.06Hz，无时间戳倒退；缓存实测约 2.7 帧/秒。
+- 20 次配对抽样通过，彩色/深度时间差最大约 0.50 毫秒；抽样含重复帧，不能解释为 20 个不同帧。
+- 真实 D435i 输入＋真实 YOLOX 检测链路处理 8 个不同帧，深度读取全部匹配，现场未检出人物。
+- 更早的一次试读遇到 1 次缓存更新中的深度校验不匹配，按预期退回仅彩色，没有输出错误距离。
+- 网页状态、相机和历史接口登录后 HTTP200，未登录 HTTP401。
+- 原目标 JSON/照片、4 条历史记录及照片哈希保持；SQLite quick_check=ok。
+- 初次冷启动检查有时间戳/间隙异常，预热检查通过；尚不宣称冷启动可靠性完成验收。
+
+使用方式
+项目目录下运行：bash deployment/go2/start_person_rgbd.sh
+切回机身相机：bash deployment/go2/start_person_rgbd.sh --native
+先结束当前找人任务再切换来源；脚本确认新相机就绪后才保存来源。
+网页沿用原来的上传/拍摄目标或上衣颜色描述、开始找人、人工确认/否认流程。
+原 --raw / --depth-only 配置仍保留；不要与当前驱动重复启动。
+
+验收边界
+- 当前“前向距离”为深度相机光轴 Z 深度，不是地图坐标或机器人中心距离。
+- 安装位置/外参未标定，未接入自动跟随、追人或深度避障导航；没有猜测 base_link 变换。
+- 现场没有真人参与本轮验证，因此真人测距精度和移动寻人闭环仍需现场验收。
+- 本轮只开启彩色与对齐深度；IMU、点云、SLAM 未作为此次接入的一部分。
+- 现有测试输出包含 TensorRT/旧 Python 依赖及 event-loop 资源警告，不影响此次测试通过，未进行系统升级。
+
+证据与回退
+证据目录：runtime/validation/rgbd_integration_20261018/
+主要证据：warm_camera_streams.json、live_rgbd_checks.json、live_model_pipeline.json、final_service_checks.json
+测试日志：depth_search_tests.log、depth_search_ui_tests.log
+差异与源码校验：depth_search_changes.patch、final_source_sha256.json
+机器汇总：deployment/go2/depth_search_integration_validation_20261018.json
+修改前源码、服务单元、相机来源配置和数据库迁移均经既有 go2_platform_write 备份；备份记录位于 /home/unitree/go2_ros2_ws/backups/platform-20261005-194025/changes.jsonl。
+前端源文件有修改前备份，可重建回退；本轮 dist 备份不是原始发布版本，不用于承诺二进制原样回退。
+现有项目改动保留，没有提交或推送。

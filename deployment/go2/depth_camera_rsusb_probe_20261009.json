@@ -1,0 +1,216 @@
+{
+  "sampled_at": 1791517494.6460643,
+  "duration_s": 10.003982785000062,
+  "motion_sent": false,
+  "topics": {
+    "/camera/color/image_raw": {
+      "count": 0,
+      "hz": 0,
+      "max_gap_s": null,
+      "stamp_backwards": 0,
+      "max_stamp_age_s": null,
+      "min_stamp_age_s": null,
+      "latest_frame_age_s": null,
+      "frame_id": null
+    },
+    "/camera/depth/image_rect_raw": {
+      "count": 87,
+      "hz": 8.692211420468448,
+      "max_gap_s": 0.28796348700007,
+      "stamp_backwards": 0,
+      "max_stamp_age_s": 0.9574806690216064,
+      "min_stamp_age_s": 0.7052178382873535,
+      "latest_frame_age_s": 0.030825768999875436,
+      "frame_id": "d435i_depth_optical_frame",
+      "width": 640,
+      "height": 480,
+      "encoding": "16UC1",
+      "valid_depth_fraction": 0.7608235677083334,
+      "median_valid_depth_m": 1.319
+    },
+    "/camera/aligned_depth_to_color/image_raw": {
+      "count": 87,
+      "hz": 8.691941730758195,
+      "max_gap_s": 0.3077182890001495,
+      "stamp_backwards": 0,
+      "max_stamp_age_s": 0.9782688617706299,
+      "min_stamp_age_s": 0.7057864665985107,
+      "latest_frame_age_s": 0.0385052579999865,
+      "frame_id": "d435i_color_optical_frame",
+      "width": 640,
+      "height": 480,
+      "encoding": "16UC1",
+      "valid_depth_fraction": 0.7608235677083334,
+      "median_valid_depth_m": 1.319
+    },
+    "/camera/imu": {
+      "count": 0,
+      "hz": 0,
+      "max_gap_s": null,
+      "stamp_backwards": 0,
+      "max_stamp_age_s": null,
+      "min_stamp_age_s": null,
+      "latest_frame_age_s": null,
+      "frame_id": null
+    },
+    "/camera/depth/color/points": {
+      "count": 0,
+      "hz": 0,
+      "max_gap_s": null,
+      "stamp_backwards": 0,
+      "max_stamp_age_s": null,
+      "min_stamp_age_s": null,
+      "latest_frame_age_s": null,
+      "frame_id": null
+    },
+    "/camera/color/camera_info": {
+      "count": 0,
+      "hz": 0,
+      "max_gap_s": null,
+      "stamp_backwards": 0,
+      "max_stamp_age_s": null,
+      "min_stamp_age_s": null,
+      "latest_frame_age_s": null,
+      "frame_id": null
+    },
+    "/camera/aligned_depth_to_color/camera_info": {
+      "count": 87,
+      "hz": 8.691842187063155,
+      "max_gap_s": 0.25922304999994594,
+      "stamp_backwards": 0,
+      "max_stamp_age_s": 0.9303531646728516,
+      "min_stamp_age_s": 0.706153392791748,
+      "latest_frame_age_s": 0.04230493800014301,
+      "frame_id": "d435i_color_optical_frame",
+      "width": 640,
+      "height": 480,
+      "k": [
+        608.1387329101562,
+        0.0,
+        313.6827697753906,
+        0.0,
+        608.0160522460938,
+        253.1404266357422,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "distortion_model": "plumb_bob"
+    },
+    "/lidar_points": {
+      "count": 100,
+      "hz": 10.030747724166496,
+      "max_gap_s": 0.1459578250000959,
+      "stamp_backwards": 0,
+      "max_stamp_age_s": 0.17557358741760254,
+      "min_stamp_age_s": 0.10763168334960938,
+      "latest_frame_age_s": 0.090007388000231,
+      "frame_id": "hesai_lidar",
+      "points": 64000,
+      "fields": [
+        "x",
+        "y",
+        "z",
+        "intensity",
+        "ring",
+        "timestamp"
+      ],
+      "sampled_finite_point_fraction": 1.0,
+      "sampled_nonzero_points": 7436
+    },
+    "/scan": {
+      "count": 100,
+      "hz": 10.047556543538605,
+      "max_gap_s": 0.15062917199975345,
+      "stamp_backwards": 0,
+      "max_stamp_age_s": 0.17700576782226562,
+      "min_stamp_age_s": 0.11594247817993164,
+      "latest_frame_age_s": 0.09259218899978805,
+      "frame_id": "base_footprint"
+    },
+    "/odom": {
+      "count": 200,
+      "hz": 19.950764136783977,
+      "max_gap_s": 0.11185587599993596,
+      "stamp_backwards": 0,
+      "max_stamp_age_s": 0.0792686939239502,
+      "min_stamp_age_s": 0.003173351287841797,
+      "latest_frame_age_s": 0.04505175899976166,
+      "frame_id": "odom"
+    },
+    "/map": {
+      "count": 10,
+      "hz": 0.9975666979570285,
+      "max_gap_s": 1.028875692999918,
+      "stamp_backwards": 0,
+      "max_stamp_age_s": 0.24332213401794434,
+      "min_stamp_age_s": 0.12395048141479492,
+      "latest_frame_age_s": 0.6680352010002935,
+      "frame_id": "map",
+      "width": 118,
+      "height": 59,
+      "resolution": 0.05000000074505806,
+      "known_cells": 2075
+    }
+  },
+  "tf": {
+    "map->base_footprint": {
+      "xyz": [
+        -0.004565483890473843,
+        0.0008464735583402218,
+        0.0
+      ],
+      "xyzw": [
+        0.0,
+        0.0,
+        -0.00963808574875285,
+        0.9999535525728681
+      ]
+    },
+    "base_link->hesai_lidar": {
+      "xyz": [
+        0.15,
+        0.0,
+        0.12
+      ],
+      "xyzw": [
+        0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ]
+    },
+    "d435i_link->d435i_color_optical_frame": {
+      "xyz": [
+        -0.0004221106937620789,
+        0.014758531004190445,
+        0.0001653697108849883
+      ],
+      "xyzw": [
+        -0.492900148913904,
+        0.5031203504882577,
+        -0.4974993352953868,
+        0.5063731504590981
+      ]
+    },
+    "d435i_link->d435i_depth_optical_frame": {
+      "xyz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "xyzw": [
+        -0.5,
+        0.4999999999999999,
+        -0.5,
+        0.5000000000000001
+      ]
+    }
+  },
+  "snapshots": {},
+  "rgb_depth_ready": false,
+  "imu_ready": false,
+  "pointcloud_ready": false,
+  "slam_ready": true,
+  "base_link_camera_mount_verified": false
+}

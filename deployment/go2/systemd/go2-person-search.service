@@ -1,0 +1,16 @@
+[Unit]
+Description=Go2 stationary photo person search (no motion)
+Wants=go2-native-camera.service
+After=go2-native-camera.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/unitree/go2move
+ExecStart=/home/unitree/go2move/.venv/bin/uvicorn person_search:app --app-dir /home/unitree/go2move/deployment/go2 --host 127.0.0.1 --port 8768
+Restart=on-failure
+RestartSec=4
+TimeoutStopSec=8
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=default.target

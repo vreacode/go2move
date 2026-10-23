@@ -8,6 +8,16 @@ Tailscale access. It deliberately does not start or send commands to Go2
 motion APIs, a Wheeltec chassis, `/cmd_vel_*`, C16 LiDAR, `slam_toolbox`, Nav2,
 SIYI ZT6 or battery serial hardware.
 
+## Current snapshot: 2026-10-23
+
+The current Go2 development snapshot includes person search and target management,
+multi-person helmet monitoring with the original trained YOLOv5 model, native
+camera/audio integration, and ROS2 platform/SLAM/navigation preparation. See
+[`deployment/go2/archive_20261023/ARCHIVE.txt`](deployment/go2/archive_20261023/ARCHIVE.txt)
+for the exact scope, validation limits, dependency pins and restore instructions.
+Motion follow and autonomous patrol still require separate physical validation.
+The first-stage notes below describe the original deployment baseline.
+
 ## First-stage deployment
 
 Deployment files are under [`deployment/go2`](deployment/go2/):

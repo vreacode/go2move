@@ -1,6 +1,12 @@
 from __future__ import annotations
+import re
 
 from contextlib import asynccontextmanager
+from functools import lru_cache
+import importlib.util
+import json
+from pathlib import Path
+import time
 from typing import AsyncIterator, Literal
 
 import httpx
@@ -152,6 +158,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.exception_handler(httpx.RequestError)
+async def backend_connection_error(request, exc: httpx.RequestError) -> JSONResponse:
+    # Agent unavailability is a service outage, not an unhandled application bug.
+    # Do not expose upstream addresses, credentials or raw exception text.
+    return JSONResponse(status_code=503, content={
+        "detail": "设备服务暂时无法连接，请重新运行启动命令；视觉识别服务可独立运行。"
+    })
 
 
 @app.post("/api/auth/login")
@@ -813,6 +828,484 @@ async def ws_pose(websocket: WebSocket) -> None:
         pass
     finally:
         hub.pose_clients.discard(websocket)
+
+
+
+_GO2_HEALTH_PATH = Path('/home/unitree/go2_ros2_ws/runtime/health/status.json')
+
+
+@lru_cache(maxsize=1)
+def _go2_health_summarizer():
+    # This module is pure data decoding: importing it cannot initialize robot SDKs.
+    module_path = Path(__file__).resolve().parents[4] / 'deployment/go2/health_status.py'
+    spec = importlib.util.spec_from_file_location('go2_health_status', module_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError('Health status decoder unavailable')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.summarize_health
+
+
+@app.get('/api/go2/health')
+def go2_health_status(_: str = Depends(require_token)) -> JSONResponse:
+    try:
+        raw = json.loads(_GO2_HEALTH_PATH.read_text())
+    except (OSError, ValueError):
+        raw = None
+    summary = _go2_health_summarizer()(raw, time.time())
+    return JSONResponse(summary, headers={'Cache-Control': 'no-store'})
+
+
+class Go2VoiceText(BaseModel):
+    text: str = Field(min_length=1, max_length=160)
+    speak: bool = True
+
+
+class Go2VoiceListen(BaseModel):
+    seconds: float = Field(default=5.0, ge=2.0, le=10.0)
+    execute: bool = True
+    speak: bool = True
+
+
+class Go2VoiceSelection(BaseModel):
+    voice_id: str = Field(min_length=1, max_length=64)
+
+
+async def go2_voice_request(method: str, path: str, payload: dict | None = None) -> dict:
+    try:
+        async with httpx.AsyncClient(trust_env=False, timeout=125.0 if path == '/pack/import' else 65.0) as client:
+            response = await client.request(method, "http://127.0.0.1:8767" + path, json=payload)
+            response.raise_for_status()
+            return response.json()
+    except httpx.HTTPStatusError as exc:
+        raise HTTPException(status_code=exc.response.status_code, detail=exc.response.json().get("detail", "语音请求失败")) from exc
+    except httpx.HTTPError as exc:
+        raise HTTPException(status_code=503, detail="Go2语音服务未连接，请启动机身媒体服务。") from exc
+
+
+@app.get("/api/go2/voice/status")
+async def go2_voice_status(_: str = Depends(require_token)) -> dict:
+    return await go2_voice_request("GET", "/status")
+
+
+@app.post("/api/go2/voice/command")
+async def go2_voice_command(payload: Go2VoiceText, _: str = Depends(require_token)) -> dict:
+    return await go2_voice_request("POST", "/command", payload.model_dump())
+
+
+@app.post("/api/go2/voice/say")
+async def go2_voice_say(payload: Go2VoiceText, _: str = Depends(require_token)) -> dict:
+    return await go2_voice_request("POST", "/say", payload.model_dump())
+
+
+@app.post("/api/go2/voice/listen")
+async def go2_voice_listen(payload: Go2VoiceListen, _: str = Depends(require_token)) -> dict:
+    return await go2_voice_request("POST", "/listen", payload.model_dump())
+
+
+@app.post("/api/go2/voice/select")
+async def go2_voice_select(payload: Go2VoiceSelection, _: str = Depends(require_token)) -> dict:
+    return await go2_voice_request("POST", "/select", payload.model_dump())
+
+
+@app.post("/api/go2/voice/pack/import")
+async def go2_voice_pack_import(_: str = Depends(require_token)) -> dict:
+    return await go2_voice_request("POST", "/pack/import")
+
+
+class Go2PersonTarget(BaseModel):
+    image_base64: str = Field(min_length=16, max_length=8_000_000)
+    name: str = Field(default="目标人物", min_length=1, max_length=32)
+
+
+class Go2PersonDescription(BaseModel):
+    model_config = {"extra": "forbid"}
+    text: str = Field(min_length=1, max_length=160)
+    name: str | None = Field(default=None, min_length=1, max_length=32)
+
+
+class Go2HistoryReview(BaseModel):
+    model_config = {"extra": "forbid"}
+    status: Literal["confirmed", "rejected", "suspected"]
+    note: str = Field(default="", max_length=240)
+
+
+class Go2TaskText(BaseModel):
+    model_config = {"extra": "forbid"}
+    text: str = Field(min_length=1, max_length=160)
+
+
+class Go2TaskAudio(BaseModel):
+    model_config = {"extra": "forbid"}
+    wav_base64: str = Field(min_length=44, max_length=600000)
+
+
+class Go2PersonCapture(BaseModel):
+    name: str = Field(default="目标人物", min_length=1, max_length=32)
+
+
+class Go2PersonCaptureSelect(Go2PersonCapture):
+    capture_id: str = Field(min_length=1, max_length=64)
+    index: int = Field(ge=0, le=99)
+
+
+class Go2PersonStart(BaseModel):
+    mode: Literal["stationary"] = "stationary"
+    similarity_threshold: float = Field(default=0.75, ge=0.5, le=0.99)
+    speak: bool = False
+    timeout_seconds: int = Field(default=120, ge=30, le=600)
+    color_threshold: float = Field(default=0.35, ge=0.15, le=0.9)
+
+
+class Go2FollowStart(BaseModel):
+    model_config = {"extra": "forbid", "allow_inf_nan": False}
+    mode: Literal["preview"] = "preview"
+    distance_m: float = Field(default=1.8, ge=1.5, le=2.5)
+
+
+@app.get("/api/go2/person/follow/status")
+async def go2_follow_status(_: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("GET", "/follow/status")).json()
+
+
+@app.post("/api/go2/person/follow/start")
+async def go2_follow_start(payload: Go2FollowStart, _: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/follow/start", payload.model_dump())).json()
+
+
+@app.post("/api/go2/person/follow/stop")
+async def go2_follow_stop(_: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/follow/stop")).json()
+
+
+@app.post("/api/go2/person/follow/execute")
+async def go2_follow_execute(_: str = Depends(require_token)) -> dict:
+    raise HTTPException(status_code=409, detail="实际跟随尚未验收，当前仅开放无运动预览。")
+
+
+class Go2PatrolModel(BaseModel):
+    model_config = {"extra": "forbid", "allow_inf_nan": False}
+
+
+class Go2PatrolPoint(Go2PatrolModel):
+    name: str = Field(min_length=1, max_length=24)
+    x: float = Field(ge=-1000, le=1000)
+    y: float = Field(ge=-1000, le=1000)
+    yaw: float = Field(ge=-3.141592653589793, le=3.141592653589793)
+
+    @field_validator("name")
+    @classmethod
+    def nonempty_name(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("观察点名称不能为空。")
+        return value.strip()
+
+
+class Go2PatrolRoute(Go2PatrolModel):
+    name: str = Field(min_length=1, max_length=32)
+    frame_id: Literal["map"] = "map"
+    points: list[Go2PatrolPoint] = Field(min_length=1, max_length=12)
+
+    @field_validator("name")
+    @classmethod
+    def nonempty_name(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("区域名称不能为空。")
+        return value.strip()
+
+    @field_validator("points")
+    @classmethod
+    def distinct_points(cls, points: list[Go2PatrolPoint]) -> list[Go2PatrolPoint]:
+        if len({point.name for point in points}) != len(points):
+            raise ValueError("观察点名称不能重复。")
+        if len({(point.x, point.y, point.yaw) for point in points}) != len(points):
+            raise ValueError("观察点位置与朝向不能完全重复。")
+        return points
+
+
+class Go2PatrolSelection(Go2PatrolModel):
+    route_id: str = Field(pattern=r"^[0-9a-f]{32}$")
+
+
+class Go2PatrolSuggest(Go2PatrolModel):
+    map_id: str = Field(pattern=r"^[A-Za-z0-9][A-Za-z0-9_-]{0,95}$")
+    count: int = Field(default=3, ge=1, le=6)
+    radius_m: float = Field(default=2.0, ge=0.5, le=5.0)
+
+
+class Go2PatrolRehearsal(Go2PatrolSelection):
+    scenario: Literal["not_found", "found", "navigation_failed"] = "not_found"
+
+
+class Go2ScanStart(BaseModel):
+    model_config = {"extra": "forbid"}
+    confirmed: Literal[True]
+
+
+async def go2_person_request(method: str, path: str, payload: dict | None = None) -> httpx.Response:
+    try:
+        async with httpx.AsyncClient(trust_env=False, timeout=45.0) as client:
+            response = await client.request(method, "http://127.0.0.1:8768" + path, json=payload)
+            response.raise_for_status()
+            return response
+    except httpx.HTTPStatusError as exc:
+        try:
+            detail = exc.response.json().get("detail", exc.response.text)
+        except (ValueError, AttributeError):
+            detail = exc.response.text
+        raise HTTPException(status_code=exc.response.status_code, detail=detail) from exc
+    except httpx.HTTPError as exc:
+        raise HTTPException(status_code=503, detail="找人服务连接失败：" + str(exc)) from exc
+
+
+@app.get("/api/go2/person/status")
+async def go2_person_status(_: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("GET", "/status")).json()
+
+
+@app.post("/api/go2/person/target")
+async def go2_person_target(payload: Go2PersonTarget, _: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/target", payload.model_dump())).json()
+
+
+@app.post("/api/go2/person/description")
+async def go2_person_description(payload: Go2PersonDescription, _: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/description", payload.model_dump(exclude_none=True))).json()
+
+
+@app.get("/api/go2/person/targets")
+async def go2_person_targets(_: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("GET", "/targets")).json()
+
+
+@app.get("/api/go2/person/targets/{target_id}/image.jpg")
+async def go2_person_saved_target_image(target_id: str, _: str = Depends(require_token)) -> Response:
+    import re
+    if not re.fullmatch(r"[0-9a-f]{32}", target_id):
+        raise HTTPException(404, detail="目标不存在。")
+    response = await go2_person_request("GET", f"/targets/{target_id}/image.jpg")
+    return Response(response.content, media_type="image/jpeg", headers={"Cache-Control":"no-store"})
+
+
+@app.post("/api/go2/person/targets/{target_id}/select")
+async def go2_person_select_target(target_id: str, _: str = Depends(require_token)) -> dict:
+    import re
+    if not re.fullmatch(r"[0-9a-f]{32}", target_id):
+        raise HTTPException(404, detail="目标不存在。")
+    return (await go2_person_request("POST", f"/targets/{target_id}/select")).json()
+
+
+@app.delete("/api/go2/person/targets/{target_id}")
+async def go2_person_delete_target(target_id: str, _: str = Depends(require_token)) -> dict:
+    import re
+    if not re.fullmatch(r"[0-9a-f]{32}", target_id):
+        raise HTTPException(404, detail="目标不存在。")
+    return (await go2_person_request("DELETE", f"/targets/{target_id}")).json()
+
+
+@app.delete("/api/go2/person/history/{event_id}")
+async def go2_person_delete_history(event_id: str, _: str = Depends(require_token)) -> dict:
+    import re
+    if not re.fullmatch(r"[0-9a-f]{32}", event_id):
+        raise HTTPException(404, detail="记录不存在。")
+    return (await go2_person_request("DELETE", f"/history/{event_id}")).json()
+
+
+@app.get("/api/go2/person/tasks")
+async def go2_person_tasks(limit: int = Query(default=20, ge=1, le=100), _: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("GET", f"/tasks?limit={limit}")).json()
+
+
+@app.post("/api/go2/task/command")
+async def go2_task_command(payload: Go2TaskText, _: str = Depends(require_token)) -> dict:
+    from .go2_commands import execute_command
+    async def person_call(method, path, body):
+        return (await go2_person_request(method, path, body)).json()
+    return await execute_command(payload.text, person_call)
+
+
+@app.post("/api/go2/task/transcribe")
+async def go2_task_transcribe(payload: Go2TaskAudio, _: str = Depends(require_token)) -> dict:
+    from .go2_commands import transcribe_audio
+    return await transcribe_audio(payload.wav_base64)
+
+
+@app.get("/api/go2/person/history/export.json")
+async def go2_person_history_export(_: str = Depends(require_token)) -> Response:
+    response = await go2_person_request("GET", "/history/export.json")
+    return Response(content=response.content, media_type="application/json",
+                    headers={"Content-Disposition": 'attachment; filename="go2-person-history.json"', "Cache-Control": "no-store"})
+
+
+@app.post("/api/go2/person/history/{event_id}/review")
+async def go2_person_history_review(event_id: str, payload: Go2HistoryReview, _: str = Depends(require_token)) -> dict:
+    import re
+    if not re.fullmatch(r"[0-9a-f]{32}", event_id):
+        raise HTTPException(404, detail="记录不存在。")
+    return (await go2_person_request("POST", f"/history/{event_id}/review", payload.model_dump())).json()
+
+
+@app.post("/api/go2/person/capture")
+async def go2_person_capture(payload: Go2PersonCapture, _: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/capture", payload.model_dump())).json()
+
+
+@app.post("/api/go2/person/capture/select")
+async def go2_person_capture_select(payload: Go2PersonCaptureSelect, _: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/capture/select", payload.model_dump())).json()
+
+
+@app.post("/api/go2/person/start")
+async def go2_person_start(payload: Go2PersonStart, _: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/start", payload.model_dump())).json()
+
+
+@app.post("/api/go2/person/stop")
+async def go2_person_stop(_: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/stop")).json()
+
+
+@app.get("/api/go2/person/preview.jpg")
+async def go2_person_preview(_: str = Depends(require_token)) -> Response:
+    response = await go2_person_request("GET", "/preview.jpg")
+    return Response(content=response.content, media_type="image/jpeg", headers={"Cache-Control": "no-store"})
+
+
+@app.get("/api/go2/person/history")
+async def go2_person_history(limit: int = Query(default=20, ge=1, le=100), _: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("GET", f"/history?limit={limit}")).json()
+
+
+@app.get("/api/go2/person/history/{history_id}/{kind}.jpg")
+async def go2_person_history_image(history_id: str, kind: Literal["snapshot", "target"], _: str = Depends(require_token)) -> Response:
+    from urllib.parse import quote
+    response = await go2_person_request("GET", f"/history/{quote(history_id, safe='')}/{kind}.jpg")
+    return Response(content=response.content, media_type="image/jpeg", headers={"Cache-Control": "no-store"})
+
+
+@app.get("/api/go2/person/target.jpg")
+async def go2_person_target_image(_: str = Depends(require_token)) -> Response:
+    response = await go2_person_request("GET", "/target.jpg")
+    return Response(content=response.content, media_type="image/jpeg", headers={"Cache-Control": "no-store"})
+
+
+@app.get("/api/go2/person/camera.jpg")
+async def go2_person_camera_image(_: str = Depends(require_token)) -> Response:
+    response = await go2_person_request("GET", "/camera.jpg")
+    return Response(content=response.content, media_type="image/jpeg", headers={"Cache-Control": "no-store"})
+
+
+@app.get("/api/go2/person/patrol/status")
+async def go2_person_patrol_status(_: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("GET", "/patrol/status")).json()
+
+
+@app.get("/api/go2/person/patrol/maps")
+async def go2_patrol_maps(_: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("GET", "/patrol/maps")).json()
+
+
+@app.get("/api/go2/person/patrol/maps/{map_id}/preview.png")
+async def go2_patrol_map_preview(map_id: str, _: str = Depends(require_token)) -> Response:
+    import re
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,95}", map_id):
+        raise HTTPException(400, detail="地图编号无效。")
+    response = await go2_person_request("GET", f"/patrol/maps/{map_id}/preview.png")
+    return Response(response.content, media_type="image/png", headers={"Cache-Control":"no-store"})
+
+
+@app.post("/api/go2/person/patrol/suggest")
+async def go2_patrol_suggest(payload: Go2PatrolSuggest, _: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/patrol/suggest", payload.model_dump())).json()
+
+
+@app.get("/api/go2/person/patrol/execution/status")
+async def go2_patrol_execution_status(_: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("GET", "/patrol/execution/status")).json()
+
+
+@app.post("/api/go2/person/patrol/execution/rehearse", status_code=202)
+async def go2_patrol_execution_rehearse(payload: Go2PatrolRehearsal, _: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/patrol/execution/rehearse", payload.model_dump())).json()
+
+
+@app.post("/api/go2/person/patrol/execution/cancel")
+async def go2_patrol_execution_cancel(_: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/patrol/execution/cancel")).json()
+
+
+@app.post("/api/go2/person/patrol/routes")
+async def go2_person_patrol_route(payload: Go2PatrolRoute, _: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/patrol/routes", payload.model_dump())).json()
+
+
+@app.post("/api/go2/person/patrol/preview")
+async def go2_person_patrol_preview(payload: Go2PatrolSelection, _: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/patrol/preview", payload.model_dump())).json()
+
+
+@app.post("/api/go2/person/patrol/rehearse")
+async def go2_person_patrol_rehearse(payload: Go2PatrolSelection, _: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/patrol/rehearse", payload.model_dump())).json()
+
+
+@app.post("/api/go2/person/patrol/run")
+async def go2_person_patrol_run(payload: Go2PatrolSelection, _: str = Depends(require_token)) -> dict:
+    raise HTTPException(status_code=409, detail="实机巡航测试已暂停，仅可检查观察点与演练流程。")
+
+
+@app.get("/api/go2/person/scan/status")
+async def go2_person_scan_status(_: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("GET", "/scan/status")).json()
+
+
+@app.post("/api/go2/person/scan/start")
+async def go2_person_scan_start(payload: Go2ScanStart, _: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/scan/start", payload.model_dump())).json()
+
+
+@app.post("/api/go2/person/scan/stop")
+async def go2_person_scan_stop(_: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/scan/stop")).json()
+
+
+@app.get("/api/go2/person/helmet/status")
+async def go2_helmet_status(_: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("GET", "/helmet/status")).json()
+
+
+@app.post("/api/go2/person/helmet/start")
+async def go2_helmet_start(_: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/helmet/start")).json()
+
+
+@app.post("/api/go2/person/helmet/stop")
+async def go2_helmet_stop(_: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("POST", "/helmet/stop")).json()
+
+
+@app.get("/api/go2/person/helmet/records")
+async def go2_helmet_records(_: str = Depends(require_token)) -> dict:
+    return (await go2_person_request("GET", "/helmet/records")).json()
+
+
+@app.get("/api/go2/person/helmet/export.json")
+async def go2_helmet_export(_: str = Depends(require_token)) -> Response:
+    response = await go2_person_request("GET", "/helmet/export.json")
+    return Response(response.content, media_type="application/json", headers={"Cache-Control":"no-store"})
+
+
+@app.get("/api/go2/person/helmet/preview.jpg")
+async def go2_helmet_preview(_: str = Depends(require_token)) -> Response:
+    response = await go2_person_request("GET", "/helmet/preview.jpg")
+    return Response(response.content, media_type="image/jpeg", headers={"Cache-Control":"no-store"})
+
+
+@app.get("/api/go2/person/helmet/records/{event_id}/{kind}.jpg")
+async def go2_helmet_image(event_id: str, kind: Literal["snapshot","crop"], _: str = Depends(require_token)) -> Response:
+    if not re.fullmatch(r"[0-9a-f]{32}",event_id):raise HTTPException(404,"记录不存在。")
+    response = await go2_person_request("GET", f"/helmet/records/{event_id}/{kind}.jpg")
+    return Response(response.content, media_type="image/jpeg", headers={"Cache-Control":"no-store"})
 
 
 frontend_dist = settings.frontend_dist_dir.resolve()

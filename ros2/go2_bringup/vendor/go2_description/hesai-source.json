@@ -1,0 +1,16 @@
+{
+  "repository": "Unitree-Go2-Robot/go2_description",
+  "commit": "6d8b497994c6ccb0e814fdaafb02aed37254745b",
+  "file": "robots/go2_description.urdf.xacro",
+  "xyz": [
+    0.15,
+    0,
+    0.12
+  ],
+  "rpy": [
+    0,
+    0,
+    1.5707963267948966
+  ],
+  "adaptation": "Keep hesai_lidar frame, no Gazebo sensor"
+}

@@ -1,0 +1,30 @@
+{
+  "model_file": "helmet.onnx",
+  "model_sha256": "fd6194634d1f92fbb3e6c83493bd7c1734edacadba05919af9fe87026bf4e9e0",
+  "labels": [
+    "helmet",
+    "head"
+  ],
+  "class_map": {
+    "helmet": "Hardhat",
+    "head": "NO-Hardhat"
+  },
+  "format": "yolov5_objectness",
+  "source": "original_trained_helmet",
+  "source_checkpoint": "/home/unitree/go2_ros2_ws/models/helmet_custom/helmet.pt",
+  "source_checkpoint_sha256": "aa1563af00d971e4e6d8087b0d36750d2fb4c9f04e7cb1f3129fad0e3c91d806",
+  "backend": "TensorRT FP16 / original YOLOv5 helmet",
+  "input_shape": [
+    1,
+    3,
+    640,
+    640
+  ],
+  "output_shape": [
+    1,
+    25200,
+    7
+  ],
+  "checkpoint_date": "2025-12-06T21:59:45.761455",
+  "note": "head is the original training dataset bare-head class, not absence of a helmet detection"
+}

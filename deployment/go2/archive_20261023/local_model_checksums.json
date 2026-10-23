@@ -1,0 +1,56 @@
+[
+  {
+    "local_file": "/home/unitree/go2_ros2_ws/models/person_search/osnet_x0_25_msmt17.onnx",
+    "bytes": 907169,
+    "sha256": "e78604f4ccda49b8f41cd0f8f7303800ce75d2361895ebb0729513c1bf53d277",
+    "uploaded_to_git": false
+  },
+  {
+    "local_file": "/home/unitree/go2_ros2_ws/models/person_search/osnet_x0_25_msmt17_fp16.engine",
+    "bytes": 1303706,
+    "sha256": "47d2dab2e26b85176beb4c80555bcdcc60bfde58634020641c4fbd48fe96260f",
+    "uploaded_to_git": false
+  },
+  {
+    "local_file": "/home/unitree/go2_ros2_ws/models/person_search/yolox_tiny.onnx",
+    "bytes": 20219662,
+    "sha256": "427cc366d34e27ff7a03e2899b5e3671425c262ea2291f88bb942bc1cc70b0f7",
+    "uploaded_to_git": false
+  },
+  {
+    "local_file": "/home/unitree/go2_ros2_ws/models/person_search/yolox_tiny.trt8.5.2.2.fp16.engine",
+    "bytes": 11724055,
+    "sha256": "94d71b8f6d21d1b1da7401812545a6e10619ee63068933b9e3c609bd4d15ada6",
+    "uploaded_to_git": false
+  },
+  {
+    "local_file": "/home/unitree/go2_ros2_ws/models/helmet_custom/helmet.onnx",
+    "bytes": 28509982,
+    "sha256": "fd6194634d1f92fbb3e6c83493bd7c1734edacadba05919af9fe87026bf4e9e0",
+    "uploaded_to_git": false
+  },
+  {
+    "local_file": "/home/unitree/go2_ros2_ws/models/helmet_custom/helmet.pt",
+    "bytes": 14288040,
+    "sha256": "aa1563af00d971e4e6d8087b0d36750d2fb4c9f04e7cb1f3129fad0e3c91d806",
+    "uploaded_to_git": false
+  },
+  {
+    "local_file": "/home/unitree/go2_ros2_ws/models/helmet_custom/helmet.trt8.5.2.2.fp16.engine",
+    "bytes": 16121393,
+    "sha256": "f37742f2b26a0a81d054484b9e59b57fca93d6b7f9e0367fb49b76811e074d75",
+    "uploaded_to_git": false
+  },
+  {
+    "local_file": "/home/unitree/go2_ros2_ws/models/helmet_demo/yolo11n.onnx",
+    "bytes": 10590715,
+    "sha256": "1eb7911cbfcae972da752a7cd9d3939c8e060f0bf0f7e8b4d0ab6cd979703165",
+    "uploaded_to_git": false
+  },
+  {
+    "local_file": "/home/unitree/go2_ros2_ws/models/helmet_demo/yolo11n.trt8.5.2.2.fp16.engine",
+    "bytes": 7536748,
+    "sha256": "b136ef3ee16032fbbec45f37d59e2c386e7179fedcce026ef72032eacfece537",
+    "uploaded_to_git": false
+  }
+]

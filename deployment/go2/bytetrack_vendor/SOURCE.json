@@ -1,0 +1,27 @@
+{
+  "repository": "https://github.com/FoundationVision/ByteTrack",
+  "commit": "d1bf0191adff59bc8fcfeaa0b33d3d1642552a99",
+  "license": "MIT",
+  "changes": [
+    "Internal yolox.tracker imports rewritten to relative imports.",
+    "Removed unused torch and torch.nn.functional imports; the original five-column NumPy algorithm is unchanged."
+  ],
+  "files": {
+    "byte_tracker.py": {
+      "upstream_sha256": "7cecdcdd7998103969a4ba1772f4c9fb5560fd5eef05ca03e0d2df28346ca50b",
+      "vendored_sha256": "2b00edaf85a400e9aff5572ddc4513770b003c9d76286b45fd85ba348d0a624d"
+    },
+    "basetrack.py": {
+      "upstream_sha256": "c938afcf7c516bba4a77155c2499fcae6f926df7a2faa6f73a4be1b073f9bb2d",
+      "vendored_sha256": "c938afcf7c516bba4a77155c2499fcae6f926df7a2faa6f73a4be1b073f9bb2d"
+    },
+    "matching.py": {
+      "upstream_sha256": "2f54bf0c183f577087391901562ae2bcd3c01633a3e077bd5d4168fafbd899a6",
+      "vendored_sha256": "c800cef88c56708672e3b3211ecdcf02521f53da178be5cc982d352e0904c6fe"
+    },
+    "kalman_filter.py": {
+      "upstream_sha256": "9842d0dd9957c97e312d42e5789441add55082066d87cc051ac768143a46eb39",
+      "vendored_sha256": "9842d0dd9957c97e312d42e5789441add55082066d87cc051ac768143a46eb39"
+    }
+  }
+}

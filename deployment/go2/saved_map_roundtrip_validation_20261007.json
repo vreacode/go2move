@@ -1,0 +1,17 @@
+{
+  "read_only_original_map": true,
+  "motion_sent": false,
+  "ros_domain_id": 77,
+  "original": {
+    "free": 7071,
+    "occupied": 609,
+    "unknown": 0
+  },
+  "corrected": {
+    "free": 3832,
+    "occupied": 609,
+    "unknown": 3239
+  },
+  "passed": true,
+  "owned_map_server_stopped": true
+}

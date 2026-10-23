@@ -1,0 +1,76 @@
+[
+  {
+    "name": "unitree_ros2",
+    "path": "/home/unitree/go2_ros2_ws/src/unitree_ros2",
+    "revision": "668d1ec5a05d1c38d3306bdca7d59f2ba3581a88",
+    "remote": "https://github.com/unitreerobotics/unitree_ros2.git"
+  },
+  {
+    "name": "hesai_ros_driver",
+    "path": "/home/unitree/hesai_ros2_ws/src/hesai_ros_driver",
+    "revision": "e7e112f0809f0eed5e3c81c55a1a0376474db234",
+    "remote": "https://github.com/HesaiTechnology/HesaiLidar_ROS_2.0.git",
+    "patch": "external/patches/hesai_ros_driver.patch",
+    "patch_sha256": "985e51c3db746d4866c2f35190b66fb555fecd9f6dc7fbe346740f9372c195e6"
+  },
+  {
+    "name": "platform_src_pointcloud_to_laserscan",
+    "path": "/home/unitree/go2_ros2_ws/platform_src/pointcloud_to_laserscan",
+    "revision": "21c8973506b559fbeaf662b181b8a0d2f0955658",
+    "remote": "https://github.com/ros-perception/pointcloud_to_laserscan.git"
+  },
+  {
+    "name": "platform_src_realsense-ros",
+    "path": "/home/unitree/go2_ros2_ws/platform_src/realsense-ros",
+    "revision": "b30a25b400bddf28292058968fb69d96f9e1af9b",
+    "remote": "https://github.com/realsenseai/realsense-ros.git"
+  },
+  {
+    "name": "platform_src_slam_toolbox",
+    "path": "/home/unitree/go2_ros2_ws/platform_src/slam_toolbox",
+    "revision": "4786e90c06a4dc6fa811c5057d4e88387fba3829",
+    "remote": "https://github.com/SteveMacenski/slam_toolbox.git",
+    "patch": "external/patches/platform_src_slam_toolbox.patch",
+    "patch_sha256": "7c25f7f95e623c86efa98a3ceae29fb82214b53c964bfafde12e9eee27f4b213"
+  },
+  {
+    "name": "upstream_foxy_src_go2_bringup",
+    "path": "/home/unitree/go2_ros2_ws/upstream_foxy_src/go2_bringup",
+    "revision": "291ea596abe43f99361a7ccbc4073e6e680f7ceb",
+    "remote": "https://github.com/Unitree-Go2-Robot/go2_bringup.git"
+  },
+  {
+    "name": "upstream_foxy_src_go2_description",
+    "path": "/home/unitree/go2_ros2_ws/upstream_foxy_src/go2_description",
+    "revision": "8bd6717ff0c7b5ca388c0e10e426dd9ad873ceaf",
+    "remote": "https://github.com/Unitree-Go2-Robot/go2_description.git",
+    "patch": "external/patches/upstream_foxy_src_go2_description.patch",
+    "patch_sha256": "f8883be7aeb0cf2789e54e44a77cde485d4447e26cf93a5210ea7cdfd89cb69d"
+  },
+  {
+    "name": "upstream_foxy_src_go2_driver",
+    "path": "/home/unitree/go2_ros2_ws/upstream_foxy_src/go2_driver",
+    "revision": "5a921a7df9b84b433cb5f62ab38ae4c553d39249",
+    "remote": "https://github.com/Unitree-Go2-Robot/go2_driver.git",
+    "patch": "external/patches/upstream_foxy_src_go2_driver.patch",
+    "patch_sha256": "cb7193f2710a8a4b306cf97aab93b5c4969514db7fab8a032006a17ce2d9cceb"
+  },
+  {
+    "name": "upstream_foxy_src_go2_interfaces",
+    "path": "/home/unitree/go2_ros2_ws/upstream_foxy_src/go2_interfaces",
+    "revision": "0e0e3a0a9e4fb80f3b1cfe8cde187046d55af308",
+    "remote": "https://github.com/Unitree-Go2-Robot/go2_interfaces.git"
+  },
+  {
+    "name": "upstream_foxy_src_go2_robot",
+    "path": "/home/unitree/go2_ros2_ws/upstream_foxy_src/go2_robot",
+    "revision": "6340ee5cf4bbc80a0556e4a818d2b39ebc6db0c3",
+    "remote": "https://github.com/Unitree-Go2-Robot/go2_robot.git"
+  },
+  {
+    "name": "upstream_foxy_src_go2_rviz",
+    "path": "/home/unitree/go2_ros2_ws/upstream_foxy_src/go2_rviz",
+    "revision": "adfb46c36ad114678ffb0507dcd008a4b9a5f988",
+    "remote": "https://github.com/Unitree-Go2-Robot/go2_rviz.git"
+  }
+]

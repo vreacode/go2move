@@ -1,0 +1,12 @@
+diff --git a/lib/karto_sdk/src/Mapper.cpp b/lib/karto_sdk/src/Mapper.cpp
+index 27c0293..81d436d 100644
+--- a/lib/karto_sdk/src/Mapper.cpp
++++ b/lib/karto_sdk/src/Mapper.cpp
+@@ -3209,6 +3209,7 @@ void Mapper::FireBeginLoopClosure(const std::string & rInfo) const
+ 
+ void Mapper::FireEndLoopClosure(const std::string & rInfo) const
+ {
++  RCLCPP_INFO(rclcpp::get_logger("slam_toolbox"), "Karto accepted loop closure: %s", rInfo.c_str());
+   const_forEach(std::vector<MapperListener *>, &m_Listeners)
+   {
+     MapperLoopClosureListener * pListener = dynamic_cast<MapperLoopClosureListener *>(*iter);

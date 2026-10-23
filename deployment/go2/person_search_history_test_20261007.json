@@ -1,0 +1,63 @@
+{
+  "continuous_and_persistence": {
+    "passed": true,
+    "frames": 6,
+    "observations": 4,
+    "event_ids": [
+      "811ab34413494d40a34bb7424b688de1"
+    ],
+    "sqlite": {
+      "id": "811ab34413494d40a34bb7424b688de1",
+      "target_id": "5328bac46fba4db2830f3058d235411a",
+      "target_name": "Public test person",
+      "found_at": 1791336872.6869338,
+      "last_seen_at": 1791336873.4369338,
+      "snapshot_at": 1791336872.6869338,
+      "similarity": 0.9703890085220337,
+      "observations": 4,
+      "track_id": 2,
+      "source": "live_camera",
+      "status": "suspected"
+    },
+    "images_after_stop_target_change_restart": true
+  },
+  "gap_new_event": {
+    "passed": true,
+    "gap_seconds": 5.75,
+    "total": 2
+  },
+  "restoration_and_errors": {
+    "passed": true,
+    "restored_id": "5f926cd40ade49d89fec450864421dfe",
+    "restored_embedding_dimension": 512,
+    "restored_cosine": 0.9998498558998108,
+    "active_after_restore": false,
+    "write_failure_visible_and_next_save_recovers": true
+  },
+  "invalid_sources": {
+    "passed": true,
+    "stale": true,
+    "stopped": true,
+    "unmatched": true,
+    "hash_mismatch": true
+  },
+  "tests_run": 4,
+  "failures": 0,
+  "errors": 0,
+  "real_user_camera_or_target_files_modified": false,
+  "motion_commands_sent": 0,
+  "regressions": {
+    "lifecycle": {
+      "tests": 5,
+      "failures": 0,
+      "errors": 0
+    },
+    "capture": {
+      "tests": 7,
+      "failures": 0,
+      "errors": 0
+    }
+  },
+  "product_files_modified": false,
+  "total_tests_passed": 16
+}

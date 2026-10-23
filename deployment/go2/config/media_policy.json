@@ -1,0 +1,8 @@
+{
+  "voice_enabled": true,
+  "reason": "机身音频已由用户现场确认开启；运动控制保持暂停。",
+  "incident": "2026-10-07 audio playback followed by reported unexpected loss of stance",
+  "automatic_resume": false,
+  "pause_reason": "左后髋驱动过热报警已确认，机身语音与运动测试继续暂停；可使用静止视觉找人与手机/电脑本机提示。",
+  "onsite_confirmed_at": "2026-10-12T09:44:11+08:00"
+}

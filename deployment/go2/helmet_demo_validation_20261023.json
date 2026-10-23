@@ -1,0 +1,1817 @@
+{
+  "date": "2026-10-23",
+  "motion_commands_sent": 0,
+  "speech_commands_sent": 0,
+  "camera_source": "native_camera",
+  "python_tests_passed": 42,
+  "ui_fixture": "passed",
+  "frontend_tsc_vite_build": "passed",
+  "browser_video_codec_onsite_validated": false,
+  "original_cart_model_found": false,
+  "model_repo": "https://huggingface.co/yihong1120/Construction-Hazard-Detection",
+  "model_revision": "212ee245136b4e330f84b409f67f3d35eff59f42",
+  "labels": "verified embedded YOLO11n 10 classes; upstream latest class_names.txt has 11",
+  "depth_camera_issue": "USB disconnect then set_xu resource unavailable on retry; native RGB explicitly selected; not repaired in this task",
+  "original_person_history_count": 7,
+  "camera": {
+    "connected": true,
+    "width": 1920,
+    "height": 1080,
+    "fps": 4.97,
+    "source": "unitree_sdk2_video",
+    "label": "机身摄像头",
+    "depth_aligned": false,
+    "mount_extrinsics_verified": false
+  },
+  "live_samples": [
+    {
+      "at": 0.1394447239999863,
+      "frames": 184,
+      "active": true,
+      "counts": {
+        "helmet": 0,
+        "no_helmet": 0,
+        "unknown": 0
+      },
+      "age_s": 0.203,
+      "inference_ms": 93.4,
+      "error": null
+    },
+    {
+      "at": 1.1742485119998491,
+      "frames": 189,
+      "active": true,
+      "counts": {
+        "helmet": 0,
+        "no_helmet": 0,
+        "unknown": 0
+      },
+      "age_s": 0.228,
+      "inference_ms": 95.3,
+      "error": null
+    },
+    {
+      "at": 2.208294268999907,
+      "frames": 193,
+      "active": true,
+      "counts": {
+        "helmet": 0,
+        "no_helmet": 0,
+        "unknown": 0
+      },
+      "age_s": 0.265,
+      "inference_ms": 95.4,
+      "error": null
+    },
+    {
+      "at": 3.2324236859999473,
+      "frames": 198,
+      "active": true,
+      "counts": {
+        "helmet": 0,
+        "no_helmet": 0,
+        "unknown": 0
+      },
+      "age_s": 0.282,
+      "inference_ms": 98.7,
+      "error": null
+    },
+    {
+      "at": 4.255427162999695,
+      "frames": 202,
+      "active": true,
+      "counts": {
+        "helmet": 0,
+        "no_helmet": 0,
+        "unknown": 0
+      },
+      "age_s": 0.305,
+      "inference_ms": 97.3,
+      "error": null
+    },
+    {
+      "at": 5.278330251999705,
+      "frames": 207,
+      "active": true,
+      "counts": {
+        "helmet": 0,
+        "no_helmet": 0,
+        "unknown": 0
+      },
+      "age_s": 0.316,
+      "inference_ms": 91.6,
+      "error": null
+    },
+    {
+      "at": 6.309013864999997,
+      "frames": 211,
+      "active": true,
+      "counts": {
+        "helmet": 0,
+        "no_helmet": 0,
+        "unknown": 0
+      },
+      "age_s": 0.348,
+      "inference_ms": 93.4,
+      "error": null
+    },
+    {
+      "at": 7.331392175000019,
+      "frames": 216,
+      "active": true,
+      "counts": {
+        "helmet": 0,
+        "no_helmet": 0,
+        "unknown": 0
+      },
+      "age_s": 0.368,
+      "inference_ms": 94.4,
+      "error": null
+    },
+    {
+      "at": 8.366519514999709,
+      "frames": 220,
+      "active": true,
+      "counts": {
+        "helmet": 0,
+        "no_helmet": 0,
+        "unknown": 0
+      },
+      "age_s": 0.399,
+      "inference_ms": 95.1,
+      "error": null
+    },
+    {
+      "at": 9.408683203999772,
+      "frames": 225,
+      "active": true,
+      "counts": {
+        "helmet": 0,
+        "no_helmet": 0,
+        "unknown": 0
+      },
+      "age_s": 0.237,
+      "inference_ms": 92.8,
+      "error": null
+    }
+  ],
+  "live_processed_hz": 4.4232328349805226,
+  "unauthenticated_http": 401,
+  "preview_http": 200,
+  "frontend_contains_new_ui": true,
+  "live_history_count": 0,
+  "offline_real_model": {
+    "mode": "offline_public_samples",
+    "scenes": [
+      {
+        "image": "shwd_1.jpg",
+        "source": "https://github.com/njvisionpower/Safety-Helmet-Wearing-Dataset",
+        "counts": {
+          "helmet": 0,
+          "no_helmet": 4,
+          "unknown": 20
+        },
+        "people": [
+          {
+            "track_id": 1,
+            "bbox": [
+              875.0,
+              538.0,
+              1023.0,
+              768.0
+            ],
+            "state": "no_helmet",
+            "hits": 5,
+            "raw_state": "no_helmet",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                949.0,
+                653.0
+              ],
+              [
+                949.0,
+                653.0
+              ],
+              [
+                949.0,
+                653.0
+              ],
+              [
+                949.0,
+                653.0
+              ],
+              [
+                949.0,
+                653.0
+              ]
+            ],
+            "confidence": 0.535098671913147,
+            "head_bbox": [
+              985.2000122070312,
+              539.4000244140625,
+              1024.0,
+              564.5999755859375
+            ],
+            "confirmed_violation": true,
+            "depth": null,
+            "event_id": "05a4dcdb1dc2409493e8ec81c4fe304d"
+          },
+          {
+            "track_id": 2,
+            "bbox": [
+              29.0,
+              110.0,
+              85.0,
+              272.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                57.0,
+                191.0
+              ],
+              [
+                57.0,
+                191.0
+              ],
+              [
+                57.0,
+                191.0
+              ],
+              [
+                57.0,
+                191.0
+              ],
+              [
+                57.0,
+                191.0
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 3,
+            "bbox": [
+              201.0,
+              389.0,
+              332.0,
+              674.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                266.5,
+                531.5
+              ],
+              [
+                266.5,
+                531.5
+              ],
+              [
+                266.5,
+                531.5
+              ],
+              [
+                266.5,
+                531.5
+              ],
+              [
+                266.5,
+                531.5
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 4,
+            "bbox": [
+              320.0,
+              609.0,
+              469.0,
+              768.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                394.5,
+                688.5
+              ],
+              [
+                394.5,
+                688.5
+              ],
+              [
+                394.5,
+                688.5
+              ],
+              [
+                394.5,
+                688.5
+              ],
+              [
+                394.5,
+                688.5
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 5,
+            "bbox": [
+              61.0,
+              243.0,
+              169.0,
+              469.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                115.0,
+                356.0
+              ],
+              [
+                115.0,
+                356.0
+              ],
+              [
+                115.0,
+                356.0
+              ],
+              [
+                115.0,
+                356.0
+              ],
+              [
+                115.0,
+                356.0
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 6,
+            "bbox": [
+              437.0,
+              561.0,
+              554.0,
+              755.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                495.5,
+                658.0
+              ],
+              [
+                495.5,
+                658.0
+              ],
+              [
+                495.5,
+                658.0
+              ],
+              [
+                495.5,
+                658.0
+              ],
+              [
+                495.5,
+                658.0
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 7,
+            "bbox": [
+              761.0,
+              414.0,
+              862.0,
+              556.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                811.5,
+                485.0
+              ],
+              [
+                811.5,
+                485.0
+              ],
+              [
+                811.5,
+                485.0
+              ],
+              [
+                811.5,
+                485.0
+              ],
+              [
+                811.5,
+                485.0
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 8,
+            "bbox": [
+              846.0,
+              522.0,
+              974.0,
+              700.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                910.0,
+                611.0
+              ],
+              [
+                910.0,
+                611.0
+              ],
+              [
+                910.0,
+                611.0
+              ],
+              [
+                910.0,
+                611.0
+              ],
+              [
+                910.0,
+                611.0
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 9,
+            "bbox": [
+              837.0,
+              448.0,
+              940.0,
+              599.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                888.5,
+                523.5
+              ],
+              [
+                888.5,
+                523.5
+              ],
+              [
+                888.5,
+                523.5
+              ],
+              [
+                888.5,
+                523.5
+              ],
+              [
+                888.5,
+                523.5
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 10,
+            "bbox": [
+              711.0,
+              211.0,
+              789.0,
+              414.0
+            ],
+            "state": "no_helmet",
+            "hits": 5,
+            "raw_state": "no_helmet",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                750.0,
+                312.5
+              ],
+              [
+                750.0,
+                312.5
+              ],
+              [
+                750.0,
+                312.5
+              ],
+              [
+                750.0,
+                312.5
+              ],
+              [
+                750.0,
+                312.5
+              ]
+            ],
+            "confidence": 0.5039061903953552,
+            "head_bbox": [
+              748.7999877929688,
+              201.6999969482422,
+              779.2000122070312,
+              220.6999969482422
+            ],
+            "confirmed_violation": true,
+            "depth": null,
+            "event_id": "1771c6830f534740b1824d1afedf501f"
+          },
+          {
+            "track_id": 11,
+            "bbox": [
+              460.0,
+              197.0,
+              529.0,
+              422.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                494.5,
+                309.5
+              ],
+              [
+                494.5,
+                309.5
+              ],
+              [
+                494.5,
+                309.5
+              ],
+              [
+                494.5,
+                309.5
+              ],
+              [
+                494.5,
+                309.5
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 12,
+            "bbox": [
+              661.0,
+              683.0,
+              744.0,
+              768.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                702.5,
+                725.5
+              ],
+              [
+                702.5,
+                725.5
+              ],
+              [
+                702.5,
+                725.5
+              ],
+              [
+                702.5,
+                725.5
+              ],
+              [
+                702.5,
+                725.5
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 13,
+            "bbox": [
+              510.0,
+              225.0,
+              581.0,
+              474.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                545.5,
+                349.5
+              ],
+              [
+                545.5,
+                349.5
+              ],
+              [
+                545.5,
+                349.5
+              ],
+              [
+                545.5,
+                349.5
+              ],
+              [
+                545.5,
+                349.5
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 14,
+            "bbox": [
+              743.0,
+              233.0,
+              829.0,
+              425.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                786.0,
+                329.0
+              ],
+              [
+                786.0,
+                329.0
+              ],
+              [
+                786.0,
+                329.0
+              ],
+              [
+                786.0,
+                329.0
+              ],
+              [
+                786.0,
+                329.0
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 15,
+            "bbox": [
+              393.0,
+              169.0,
+              468.0,
+              365.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                430.5,
+                267.0
+              ],
+              [
+                430.5,
+                267.0
+              ],
+              [
+                430.5,
+                267.0
+              ],
+              [
+                430.5,
+                267.0
+              ],
+              [
+                430.5,
+                267.0
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 16,
+            "bbox": [
+              640.0,
+              198.0,
+              707.0,
+              402.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                673.5,
+                300.0
+              ],
+              [
+                673.5,
+                300.0
+              ],
+              [
+                673.5,
+                300.0
+              ],
+              [
+                673.5,
+                300.0
+              ],
+              [
+                673.5,
+                300.0
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 17,
+            "bbox": [
+              299.0,
+              151.0,
+              363.0,
+              331.0
+            ],
+            "state": "no_helmet",
+            "hits": 5,
+            "raw_state": "no_helmet",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                331.0,
+                241.0
+              ],
+              [
+                331.0,
+                241.0
+              ],
+              [
+                331.0,
+                241.0
+              ],
+              [
+                331.0,
+                241.0
+              ],
+              [
+                331.0,
+                241.0
+              ]
+            ],
+            "confidence": 0.5945513844490051,
+            "head_bbox": [
+              323.20001220703125,
+              151.10000610351562,
+              352.3999938964844,
+              167.3000030517578
+            ],
+            "confirmed_violation": true,
+            "depth": null,
+            "event_id": "99319a32fa334809b9fb0209ab949bea"
+          },
+          {
+            "track_id": 18,
+            "bbox": [
+              190.0,
+              305.0,
+              270.0,
+              461.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                230.0,
+                383.0
+              ],
+              [
+                230.0,
+                383.0
+              ],
+              [
+                230.0,
+                383.0
+              ],
+              [
+                230.0,
+                383.0
+              ],
+              [
+                230.0,
+                383.0
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 19,
+            "bbox": [
+              937.2000122070312,
+              160.89999389648438,
+              1024.0,
+              338.29998779296875
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                980.6000061035156,
+                249.59999084472656
+              ],
+              [
+                980.6000061035156,
+                249.59999084472656
+              ],
+              [
+                980.6000061035156,
+                249.59999084472656
+              ],
+              [
+                980.6000061035156,
+                249.59999084472656
+              ],
+              [
+                980.6000061035156,
+                249.59999084472656
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 20,
+            "bbox": [
+              936.4000244140625,
+              53.70000076293945,
+              986.7999877929688,
+              180.6999969482422
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                961.6000061035156,
+                117.19999885559082
+              ],
+              [
+                961.6000061035156,
+                117.19999885559082
+              ],
+              [
+                961.6000061035156,
+                117.19999885559082
+              ],
+              [
+                961.6000061035156,
+                117.19999885559082
+              ],
+              [
+                961.6000061035156,
+                117.19999885559082
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 21,
+            "bbox": [
+              347.29998779296875,
+              154.10000610351562,
+              394.29998779296875,
+              326.70001220703125
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                370.79998779296875,
+                240.40000915527344
+              ],
+              [
+                370.79998779296875,
+                240.40000915527344
+              ],
+              [
+                370.79998779296875,
+                240.40000915527344
+              ],
+              [
+                370.79998779296875,
+                240.40000915527344
+              ],
+              [
+                370.79998779296875,
+                240.40000915527344
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 22,
+            "bbox": [
+              513.7999877929688,
+              624.7999877929688,
+              647.7999877929688,
+              768.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                580.7999877929688,
+                696.3999938964844
+              ],
+              [
+                580.7999877929688,
+                696.3999938964844
+              ],
+              [
+                580.7999877929688,
+                696.3999938964844
+              ],
+              [
+                580.7999877929688,
+                696.3999938964844
+              ],
+              [
+                580.7999877929688,
+                696.3999938964844
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 23,
+            "bbox": [
+              815.4000244140625,
+              87.5999984741211,
+              864.5999755859375,
+              226.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                840.0,
+                156.79999923706055
+              ],
+              [
+                840.0,
+                156.79999923706055
+              ],
+              [
+                840.0,
+                156.79999923706055
+              ],
+              [
+                840.0,
+                156.79999923706055
+              ],
+              [
+                840.0,
+                156.79999923706055
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 24,
+            "bbox": [
+              461.6000061035156,
+              66.5999984741211,
+              502.3999938964844,
+              197.0
+            ],
+            "state": "no_helmet",
+            "hits": 5,
+            "raw_state": "no_helmet",
+            "seen_at": 1792720398.3522744,
+            "trail": [
+              [
+                482.0,
+                131.79999923706055
+              ],
+              [
+                482.0,
+                131.79999923706055
+              ],
+              [
+                482.0,
+                131.79999923706055
+              ],
+              [
+                482.0,
+                131.79999923706055
+              ],
+              [
+                482.0,
+                131.79999923706055
+              ]
+            ],
+            "confidence": 0.5,
+            "head_bbox": [
+              471.79998779296875,
+              67.4000015258789,
+              491.3999938964844,
+              79.0
+            ],
+            "confirmed_violation": true,
+            "depth": null,
+            "event_id": "2ceffdf44e26451e8b0686d05b94d6a4"
+          }
+        ],
+        "separate_records": 4,
+        "frame_processing_seconds": [
+          0.11556818700000804,
+          0.11848200100007489,
+          0.13167376599994896,
+          0.12585816899991187,
+          0.1288676009999108
+        ]
+      },
+      {
+        "image": "shwd_2.jpg",
+        "source": "https://github.com/njvisionpower/Safety-Helmet-Wearing-Dataset",
+        "counts": {
+          "helmet": 3,
+          "no_helmet": 2,
+          "unknown": 4
+        },
+        "people": [
+          {
+            "track_id": 25,
+            "bbox": [
+              446.0,
+              153.0,
+              544.0,
+              461.0
+            ],
+            "state": "no_helmet",
+            "hits": 5,
+            "raw_state": "no_helmet",
+            "seen_at": 1792720399.3487556,
+            "trail": [
+              [
+                495.0,
+                307.0
+              ],
+              [
+                495.0,
+                307.0
+              ],
+              [
+                495.0,
+                307.0
+              ],
+              [
+                495.0,
+                307.0
+              ],
+              [
+                495.0,
+                307.0
+              ]
+            ],
+            "confidence": 0.5292633771896362,
+            "head_bbox": [
+              474.0625,
+              137.109375,
+              513.4375,
+              164.765625
+            ],
+            "confirmed_violation": true,
+            "depth": null,
+            "event_id": "ed2d5a717d1e43dcb08ebac2ed25acdf"
+          },
+          {
+            "track_id": 26,
+            "bbox": [
+              92.0,
+              153.0,
+              163.0,
+              389.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720399.3487556,
+            "trail": [
+              [
+                127.5,
+                271.0
+              ],
+              [
+                127.5,
+                271.0
+              ],
+              [
+                127.5,
+                271.0
+              ],
+              [
+                127.5,
+                271.0
+              ],
+              [
+                127.5,
+                271.0
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 27,
+            "bbox": [
+              160.0,
+              123.0,
+              287.0,
+              470.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720399.3487556,
+            "trail": [
+              [
+                223.5,
+                296.5
+              ],
+              [
+                223.5,
+                296.5
+              ],
+              [
+                223.5,
+                296.5
+              ],
+              [
+                223.5,
+                296.5
+              ],
+              [
+                223.5,
+                296.5
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 28,
+            "bbox": [
+              539.0,
+              136.0,
+              627.0,
+              438.0
+            ],
+            "state": "helmet",
+            "hits": 5,
+            "raw_state": "helmet",
+            "seen_at": 1792720399.3487556,
+            "trail": [
+              [
+                583.0,
+                287.0
+              ],
+              [
+                583.0,
+                287.0
+              ],
+              [
+                583.0,
+                287.0
+              ],
+              [
+                583.0,
+                287.0
+              ],
+              [
+                583.0,
+                287.0
+              ]
+            ],
+            "confidence": 0.7185944318771362,
+            "head_bbox": [
+              554.53125,
+              128.359375,
+              596.71875,
+              160.390625
+            ],
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 29,
+            "bbox": [
+              375.0,
+              120.0,
+              447.0,
+              393.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720399.3487556,
+            "trail": [
+              [
+                411.0,
+                256.5
+              ],
+              [
+                411.0,
+                256.5
+              ],
+              [
+                411.0,
+                256.5
+              ],
+              [
+                411.0,
+                256.5
+              ],
+              [
+                411.0,
+                256.5
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 30,
+            "bbox": [
+              642.0,
+              128.0,
+              754.0,
+              432.0
+            ],
+            "state": "no_helmet",
+            "hits": 5,
+            "raw_state": "no_helmet",
+            "seen_at": 1792720399.3487556,
+            "trail": [
+              [
+                698.0,
+                280.0
+              ],
+              [
+                698.0,
+                280.0
+              ],
+              [
+                698.0,
+                280.0
+              ],
+              [
+                698.0,
+                280.0
+              ],
+              [
+                698.0,
+                280.0
+              ]
+            ],
+            "confidence": 0.6224589347839355,
+            "head_bbox": [
+              672.5,
+              126.796875,
+              708.75,
+              145.078125
+            ],
+            "confirmed_violation": true,
+            "depth": null,
+            "event_id": "7a32c28dbbd04fe394d3da23b0abcdd3"
+          },
+          {
+            "track_id": 31,
+            "bbox": [
+              249.0,
+              139.0,
+              353.0,
+              458.0
+            ],
+            "state": "helmet",
+            "hits": 5,
+            "raw_state": "helmet",
+            "seen_at": 1792720399.3487556,
+            "trail": [
+              [
+                301.0,
+                298.5
+              ],
+              [
+                301.0,
+                298.5
+              ],
+              [
+                301.0,
+                298.5
+              ],
+              [
+                301.0,
+                298.5
+              ],
+              [
+                301.0,
+                298.5
+              ]
+            ],
+            "confidence": 0.5717664957046509,
+            "head_bbox": [
+              260.390625,
+              131.640625,
+              317.109375,
+              170.859375
+            ],
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 32,
+            "bbox": [
+              4.0,
+              111.0,
+              78.0,
+              427.0
+            ],
+            "state": "helmet",
+            "hits": 5,
+            "raw_state": "helmet",
+            "seen_at": 1792720399.3487556,
+            "trail": [
+              [
+                41.0,
+                269.0
+              ],
+              [
+                41.0,
+                269.0
+              ],
+              [
+                41.0,
+                269.0
+              ],
+              [
+                41.0,
+                269.0
+              ],
+              [
+                41.0,
+                269.0
+              ]
+            ],
+            "confidence": 0.7592233419418335,
+            "head_bbox": [
+              1.25,
+              105.46875,
+              48.671875,
+              140.46875
+            ],
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 33,
+            "bbox": [
+              699.0,
+              136.0,
+              764.0,
+              414.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720399.3487556,
+            "trail": [
+              [
+                731.5,
+                275.0
+              ],
+              [
+                731.5,
+                275.0
+              ],
+              [
+                731.5,
+                275.0
+              ],
+              [
+                731.5,
+                275.0
+              ],
+              [
+                731.5,
+                275.0
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          }
+        ],
+        "separate_records": 2,
+        "frame_processing_seconds": [
+          0.08298233499999697,
+          0.08506519100001242,
+          0.09305704999997033,
+          0.090611213000102,
+          0.09150259000011829
+        ]
+      },
+      {
+        "image": "shwd_3.jpg",
+        "source": "https://github.com/njvisionpower/Safety-Helmet-Wearing-Dataset",
+        "counts": {
+          "helmet": 4,
+          "no_helmet": 0,
+          "unknown": 2
+        },
+        "people": [
+          {
+            "track_id": 34,
+            "bbox": [
+              51.0,
+              184.0,
+              75.0,
+              261.0
+            ],
+            "state": "helmet",
+            "hits": 5,
+            "raw_state": "helmet",
+            "seen_at": 1792720400.2375078,
+            "trail": [
+              [
+                63.0,
+                222.5
+              ],
+              [
+                63.0,
+                222.5
+              ],
+              [
+                63.0,
+                222.5
+              ],
+              [
+                63.0,
+                222.5
+              ],
+              [
+                63.0,
+                222.5
+              ]
+            ],
+            "confidence": 0.7386703491210938,
+            "head_bbox": [
+              53.216796875,
+              184.1640625,
+              66.580078125,
+              194.6484375
+            ],
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 35,
+            "bbox": [
+              92.0,
+              177.0,
+              124.0,
+              263.0
+            ],
+            "state": "helmet",
+            "hits": 5,
+            "raw_state": "helmet",
+            "seen_at": 1792720400.2375078,
+            "trail": [
+              [
+                108.0,
+                220.0
+              ],
+              [
+                108.0,
+                220.0
+              ],
+              [
+                108.0,
+                220.0
+              ],
+              [
+                108.0,
+                220.0
+              ],
+              [
+                108.0,
+                220.0
+              ]
+            ],
+            "confidence": 0.7122327089309692,
+            "head_bbox": [
+              106.8203125,
+              177.03125,
+              120.7421875,
+              188.375
+            ],
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 36,
+            "bbox": [
+              384.0,
+              163.0,
+              406.0,
+              238.0
+            ],
+            "state": "helmet",
+            "hits": 5,
+            "raw_state": "helmet",
+            "seen_at": 1792720400.2375078,
+            "trail": [
+              [
+                395.0,
+                200.5
+              ],
+              [
+                395.0,
+                200.5
+              ],
+              [
+                395.0,
+                200.5
+              ],
+              [
+                395.0,
+                200.5
+              ],
+              [
+                395.0,
+                200.5
+              ]
+            ],
+            "confidence": 0.6584183573722839,
+            "head_bbox": [
+              386.03125,
+              161.734375,
+              399.09375,
+              172.046875
+            ],
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 37,
+            "bbox": [
+              345.0,
+              168.0,
+              362.0,
+              202.0
+            ],
+            "state": "helmet",
+            "hits": 5,
+            "raw_state": "helmet",
+            "seen_at": 1792720400.2375078,
+            "trail": [
+              [
+                353.5,
+                185.0
+              ],
+              [
+                353.5,
+                185.0
+              ],
+              [
+                353.5,
+                185.0
+              ],
+              [
+                353.5,
+                185.0
+              ],
+              [
+                353.5,
+                185.0
+              ]
+            ],
+            "confidence": 0.517570972442627,
+            "head_bbox": [
+              344.78125,
+              166.546875,
+              355.09375,
+              173.765625
+            ],
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 38,
+            "bbox": [
+              259.0,
+              181.0,
+              274.0,
+              199.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720400.2375078,
+            "trail": [
+              [
+                266.5,
+                190.0
+              ],
+              [
+                266.5,
+                190.0
+              ],
+              [
+                266.5,
+                190.0
+              ],
+              [
+                266.5,
+                190.0
+              ],
+              [
+                266.5,
+                190.0
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          },
+          {
+            "track_id": 39,
+            "bbox": [
+              297.0,
+              181.0,
+              322.0,
+              205.0
+            ],
+            "state": "unknown",
+            "hits": 5,
+            "raw_state": "unknown",
+            "seen_at": 1792720400.2375078,
+            "trail": [
+              [
+                309.5,
+                193.0
+              ],
+              [
+                309.5,
+                193.0
+              ],
+              [
+                309.5,
+                193.0
+              ],
+              [
+                309.5,
+                193.0
+              ],
+              [
+                309.5,
+                193.0
+              ]
+            ],
+            "confidence": null,
+            "head_bbox": null,
+            "confirmed_violation": false,
+            "depth": null
+          }
+        ],
+        "separate_records": 0,
+        "frame_processing_seconds": [
+          0.06896815699997205,
+          0.0699190540001382,
+          0.07556171799978983,
+          0.07081372600009672,
+          0.09444206799980748
+        ]
+      }
+    ]
+  }
+}

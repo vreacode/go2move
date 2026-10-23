@@ -1,0 +1,9 @@
+{
+  "archive": "/home/unitree/go2move/models.rar",
+  "archive_sha256": "619f68def1321fed342d6fbe24260b3a9182e4dd40c92bf0bd14ce32de05e295",
+  "member": "models/helmet.pt",
+  "sha256": "aa1563af00d971e4e6d8087b0d36750d2fb4c9f04e7cb1f3129fad0e3c91d806",
+  "status": "selected_validated",
+  "selected_at": 1792743033.0685616,
+  "engine": "/home/unitree/go2_ros2_ws/models/helmet_custom/helmet.trt8.5.2.2.fp16.engine"
+}

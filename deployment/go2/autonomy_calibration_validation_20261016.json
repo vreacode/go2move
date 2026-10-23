@@ -1,0 +1,26 @@
+{
+  "tested_at": "2026-10-16T11:17:50.929631+08:00",
+  "passed": true,
+  "tests_run": 79,
+  "failure_count": 0,
+  "error_count": 0,
+  "duration_s": 51.231,
+  "command": "python3 -B -m unittest test_local_autonomy test_autonomy_worker test_autonomy_session test_rotation_guard test_rotation_worker",
+  "synthetic_motion_only": true,
+  "calibration_executed": false,
+  "new_checks": [
+    "Forward-only native worker rejects positive and negative yaw commands.",
+    "Forward-only worker rejects a deadline above 8 seconds before SDK import.",
+    "Session closes when a forward obstacle appears without ever sending a turn.",
+    "Session rejects a forward-only deadline above 8 seconds before ROS import.",
+    "Native foot-force and joint state are preserved in session evidence."
+  ],
+  "sha256": {
+    "local_autonomy.py": "f287873bc655c0bd013687b381c60bb5013d8cb0d51270c013abac2408c1f4e0",
+    "autonomy_guard.py": "a59ad0bd53b8cc91ca684aa93479b96e8bae09a134fb7e605523ba3896364d4a",
+    "official_sdk_worker.py": "6c3c2e432d9b90ee70f042080a5061029a5f07f7dc80aa9e3862a09d2bdb4fc0",
+    "run_local_autonomy.py": "6efd9b0d081e9eb7aa8f7e85c6a0f33f1d7cdd8232a421a80ed98a51f64c8cb1",
+    "test_autonomy_worker.py": "4d768f718295cb6cea2774937b7585cae44e5bc09686f2b0d78832d1f540d631",
+    "test_autonomy_session.py": "4ee2bfcdceed0c03ebc7b70eeb1c370d25e7fa6b420a199d0c83be9f349c3f10"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "ros_domain_id": 77,
+  "localhost_only": true,
+  "backend": "real ROS2 Foxy actions with synthetic server",
+  "motion_sent_to_robot": false,
+  "cmd_vel_publishers_created": false,
+  "checks": [
+    "successful_arrival",
+    "navigation_aborted",
+    "goal_rejected",
+    "cancel_ack_then_terminal_result",
+    "patrol_adapter_arrival_settle_and_rejection",
+    "patrol_adapter_cancel_waits_terminal",
+    "typed_foxy_feedback",
+    "live_domain_refused_before_goal"
+  ],
+  "passed": true,
+  "owned_executor_stopped": true
+}

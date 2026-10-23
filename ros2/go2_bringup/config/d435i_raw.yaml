@@ -1,0 +1,54 @@
+# Diagnostic raw RGB/depth/IMU profile; no alignment, filters or pointcloud processing.
+# Upstream realsense-ros 3.2.3 / private librealsense 2.51.1 RSUSB / Foxy.
+# No base_link mount is published until the physical D435i mount is confirmed.
+/camera/camera:
+  ros__parameters:
+    device_type: D435I
+    enable_color: true
+    enable_depth: true
+    enable_infra1: false
+    enable_infra2: false
+    enable_fisheye1: false
+    enable_fisheye2: false
+    enable_confidence: false
+    color_width: 640
+    color_height: 480
+    color_fps: 15.0
+    depth_width: 640
+    depth_height: 480
+    depth_fps: 15.0
+    enable_gyro: true
+    enable_accel: true
+    gyro_fps: 200.0
+    accel_fps: 100.0
+    unite_imu_method: linear_interpolation
+    align_depth: false
+    # With realsense-ros 3.2.3, keep aligned depth and CameraInfo at native RGB resolution.
+    # The depth-only fallback may still use decimation; full RGB alignment does not.
+    filters: ""
+    stereo_module.frames_queue_size: 1
+    enable_pointcloud: false
+    enable_sync: false
+    initial_reset: false
+    publish_tf: true
+    tf_publish_rate: 0.0
+    diagnostics_period: 5.0
+    wait_for_device_timeout: 15.0
+    reconnect_timeout: 6.0
+    pointcloud_qos: SENSOR_DATA
+    color_qos: SENSOR_DATA
+    depth_qos: SENSOR_DATA
+    gyro_qos: SENSOR_DATA
+    accel_qos: SENSOR_DATA
+    imu_qos: SENSOR_DATA
+    base_frame_id: d435i_link
+    depth_frame_id: d435i_depth_frame
+    depth_optical_frame_id: d435i_depth_optical_frame
+    color_frame_id: d435i_color_frame
+    color_optical_frame_id: d435i_color_optical_frame
+    gyro_frame_id: d435i_gyro_frame
+    gyro_optical_frame_id: d435i_gyro_optical_frame
+    accel_frame_id: d435i_accel_frame
+    accel_optical_frame_id: d435i_accel_optical_frame
+    imu_optical_frame_id: d435i_imu_optical_frame
+    aligned_depth_to_color_frame_id: d435i_aligned_depth_to_color_frame

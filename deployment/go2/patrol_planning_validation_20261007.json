@@ -1,0 +1,331 @@
+{
+  "environment": "synthetic map and pose; loopback ROS domain77",
+  "physical_motion": false,
+  "started_nodes": [
+    "map_server",
+    "planner_server",
+    "static_transform_publisher"
+  ],
+  "checks": [
+    {
+      "case": "around_wall",
+      "result": {
+        "passed": true,
+        "planning_only": true,
+        "motion_sent": false,
+        "scope": "current_pose_to_each_point",
+        "ordered_route_validated": false,
+        "frame_id": "map",
+        "segments": [
+          {
+            "index": 0,
+            "name": "around_wall",
+            "goal": {
+              "x": 1.0,
+              "y": 0.0,
+              "yaw": 0.0,
+              "name": "around_wall"
+            },
+            "success": true,
+            "path": [
+              [
+                2.9802322387695312e-08,
+                2.9802322387695312e-08
+              ],
+              [
+                -0.0010003745704949552,
+                0.09197409886083108
+              ],
+              [
+                -0.0018611610213099539,
+                0.14196666094611032
+              ],
+              [
+                -0.003423470309726895,
+                0.19194224762830459
+              ],
+              [
+                -0.006194657179634078,
+                0.2418653822223149
+              ],
+              [
+                -0.010905045433418081,
+                0.29164298611347306
+              ],
+              [
+                -0.020542115279170048,
+                0.3407055249915345
+              ],
+              [
+                0.02136271627787778,
+                0.3679813737866482
+              ],
+              [
+                0.033799773958321566,
+                0.4164099099697154
+              ],
+              [
+                0.047593528741501245,
+                0.4644695649216999
+              ],
+              [
+                0.05658820355814953,
+                0.5136539833792142
+              ],
+              [
+                0.07064383731251667,
+                0.5616375351196154
+              ],
+              [
+                0.11081431673190423,
+                0.591408958903088
+              ],
+              [
+                0.1264908153785882,
+                0.6388878261877267
+              ],
+              [
+                0.1460504851646789,
+                0.6849033755794665
+              ],
+              [
+                0.17136863129390179,
+                0.728019373536398
+              ],
+              [
+                0.2011431068352323,
+                0.6878511829354039
+              ],
+              [
+                0.24007247448075475,
+                0.7192280220870373
+              ],
+              [
+                0.279146800624531,
+                0.7504242353204518
+              ],
+              [
+                0.3033605918788993,
+                0.7941698490704567
+              ],
+              [
+                0.33379577299648133,
+                0.8338398402011364
+              ],
+              [
+                0.37059425071767294,
+                0.8676907013012567
+              ],
+              [
+                0.41970542698659585,
+                0.8583048292741893
+              ],
+              [
+                0.46349033211902224,
+                0.8341619913900189
+              ],
+              [
+                0.500000037252903,
+                0.8000000417232513
+              ],
+              [
+                0.5929657368803873,
+                0.7983828007933909
+              ],
+              [
+                0.6416428005940134,
+                0.7869574008428657
+              ],
+              [
+                0.685723344768931,
+                0.7633585387968793
+              ],
+              [
+                0.7295763422485635,
+                0.739339487840823
+              ],
+              [
+                0.7668327743833174,
+                0.7059933111964654
+              ],
+              [
+                0.8025925100236009,
+                0.6710470597601983
+              ],
+              [
+                0.8358162348839073,
+                0.6336815272820218
+              ],
+              [
+                0.8667709777768096,
+                0.5944157033326576
+              ],
+              [
+                0.8970428898489899,
+                0.5546211623343993
+              ],
+              [
+                0.9266594369211703,
+                0.5143364327302038
+              ],
+              [
+                0.949016424253827,
+                0.4696133027913163
+              ],
+              [
+                0.9589262449581355,
+                0.42060512335010003
+              ],
+              [
+                0.9624170744779263,
+                0.37072719291936096
+              ],
+              [
+                0.964529081650511,
+                0.3207718241329758
+              ],
+              [
+                0.9634376967465528,
+                0.2707836489496174
+              ],
+              [
+                0.9432877025498101,
+                0.22502368427848296
+              ],
+              [
+                0.9000000432133675,
+                0.20000003278255463
+              ],
+              [
+                0.9000000432133675,
+                0.10000003129243851
+              ],
+              [
+                1.0,
+                0.0
+              ]
+            ],
+            "poses": 44,
+            "length_m": 2.3763806430771837,
+            "endpoint_error_m": 0.0,
+            "start": {
+              "x": 0.0,
+              "y": 0.0,
+              "yaw": 0.0
+            },
+            "action_status": 4,
+            "planning_seconds": 0.00042656
+          }
+        ],
+        "warning": "Foxy plans each waypoint from the current TF pose; connecting these paths is not a validated patrol route.",
+        "preflight": {
+          "map": {
+            "frame_id": "map",
+            "width": 40,
+            "height": 40,
+            "resolution": 0.10000000149011612,
+            "origin": [
+              -2.0,
+              -2.0,
+              0.0
+            ]
+          },
+          "costmap": {
+            "frame_id": "map",
+            "width": 40,
+            "height": 40,
+            "resolution": 0.10000000149011612,
+            "origin": [
+              -2.0,
+              -2.0,
+              0.0
+            ]
+          },
+          "start": {
+            "x": 0.0,
+            "y": 0.0,
+            "yaw": 0.0
+          },
+          "planner_state": {
+            "id": 3,
+            "label": "active"
+          },
+          "planner_id": "GridBased",
+          "base_frame": "planning_base"
+        },
+        "elapsed_seconds": 0.307
+      }
+    },
+    {
+      "case": "occupied_cell",
+      "result": {
+        "passed": false,
+        "planning_only": true,
+        "motion_sent": false,
+        "scope": "current_pose_to_each_point",
+        "ordered_route_validated": false,
+        "frame_id": "map",
+        "segments": [
+          {
+            "index": 0,
+            "name": "occupied_cell",
+            "goal": {
+              "x": 0.55,
+              "y": 0.05,
+              "yaw": 0.0,
+              "name": "occupied_cell"
+            },
+            "success": false,
+            "error": {
+              "code": "goal_not_free",
+              "message": "occupied_cell is unknown or occupied on the map"
+            }
+          }
+        ],
+        "warning": "Foxy plans each waypoint from the current TF pose; connecting these paths is not a validated patrol route.",
+        "preflight": {
+          "map": {
+            "frame_id": "map",
+            "width": 40,
+            "height": 40,
+            "resolution": 0.10000000149011612,
+            "origin": [
+              -2.0,
+              -2.0,
+              0.0
+            ]
+          },
+          "costmap": {
+            "frame_id": "map",
+            "width": 40,
+            "height": 40,
+            "resolution": 0.10000000149011612,
+            "origin": [
+              -2.0,
+              -2.0,
+              0.0
+            ]
+          },
+          "start": {
+            "x": 0.0,
+            "y": 0.0,
+            "yaw": 0.0
+          },
+          "planner_state": {
+            "id": 3,
+            "label": "active"
+          },
+          "planner_id": "GridBased",
+          "base_frame": "planning_base"
+        },
+        "error": {
+          "code": "goal_not_free",
+          "message": "occupied_cell is unknown or occupied on the map"
+        },
+        "elapsed_seconds": 0.716
+      }
+    }
+  ],
+  "passed": true,
+  "owned_nodes_stopped": true
+}

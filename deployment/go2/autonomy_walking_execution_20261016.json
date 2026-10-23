@@ -1,0 +1,98 @@
+{
+  "recorded_at": "2026-10-16T11:07:18.431075+08:00",
+  "execution_report": "runtime/autonomy/onsite-20261016T030241280Z/execution.json",
+  "tested_revision": "startup settling fix before walking-transition correction",
+  "requested_limits": {
+    "radius_m": 1.0,
+    "speed_command_m_s": 0.08,
+    "duration_s": 20.0,
+    "clearance_m": 0.7041232746604094
+  },
+  "session_completed": true,
+  "reason": "Session time limit reached",
+  "nonzero_commands_attempted": true,
+  "odometry_max_displacement_from_session_start_m": 0.061802589190262026,
+  "peak_observed_horizontal_speed_m_s": 0.1820249367789501,
+  "peak_observed_abs_yaw_speed_rad_s": 0.13209277391433716,
+  "state_sample_counts": {
+    "waiting": 7,
+    "preflight": 108,
+    "walking": 203,
+    "settling": 34
+  },
+  "walking_to_settling_transitions": 21,
+  "stop_acknowledged": true,
+  "stop_responses": [
+    {
+      "api": 1003,
+      "code": 0,
+      "zero_move_code": 0,
+      "errors": [],
+      "source": "official SDK StopMove"
+    },
+    {
+      "api": 1003,
+      "code": 0,
+      "zero_move_code": 0,
+      "errors": [],
+      "source": "official SDK StopMove"
+    },
+    {
+      "api": 1003,
+      "code": 0,
+      "zero_move_code": 0,
+      "errors": [],
+      "source": "official SDK StopMove"
+    }
+  ],
+  "final_native_horizontal_speed_m_s": 1.0069117003993705e-06,
+  "final_native_yaw_speed_rad_s": 0.0,
+  "final_motor_faults": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "final_max_motor_temperature_c": 58,
+  "findings": [
+    "Startup synchronization reached worker readiness.",
+    "Odometry indicates a small movement, not stable sustained autonomous walking.",
+    "Stationarity check incorrectly ran during forward walking; yaw oscillation repeatedly requested StopMove.",
+    "No obstacle-driven turn was observed; physical obstacle avoidance remains unvalidated.",
+    "The 0.08 m/s command ceiling did not imply an equal instantaneous measured speed; peak feedback was recorded explicitly."
+  ],
+  "stable_physical_walking_validated": false,
+  "physical_obstacle_avoidance_validated": false,
+  "followup": "Correct turn-to-walk state transition and repeat same supervised command limits.",
+  "followup_readonly_wait": {
+    "report": "runtime/autonomy/onsite-20261016T030726008024Z/standing_clearance.json",
+    "duration_s": 120.01108937800018,
+    "ready": false,
+    "reason": "Robot remained prone; standing gate denied execution",
+    "motion_commands_sent": 0,
+    "final_height_m": 0.06697551906108856,
+    "final_max_temperature_c": 56,
+    "final_motor_faults": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+# Geometric depth fallback: no RGB texture or IMU, no alignment claimed.
+# No base_link mount is published until the physical D455 mount is confirmed.
+/camera/camera:
+  ros__parameters:
+    device_type: D455
+    enable_color: false
+    enable_depth: true
+    enable_infra1: false
+    enable_infra2: false
+    enable_fisheye1: false
+    enable_fisheye2: false
+    enable_confidence: false
+    color_width: 640
+    color_height: 480
+    color_fps: 15.0
+    depth_width: 640
+    depth_height: 480
+    depth_fps: 15.0
+    enable_gyro: false
+    enable_accel: false
+    gyro_fps: 200.0
+    accel_fps: 100.0
+    unite_imu_method: linear_interpolation
+    align_depth: false
+    # Upstream decimation reduces cloud traffic; latest-frame queue limits latency.
+    filters: decimation
+    decimation.filter_magnitude: 2
+    stereo_module.frames_queue_size: 1
+    enable_pointcloud: true
+    pointcloud_texture_stream: RS2_STREAM_ANY
+    enable_sync: false
+    initial_reset: false
+    publish_tf: true
+    tf_publish_rate: 0.0
+    diagnostics_period: 5.0
+    wait_for_device_timeout: 15.0
+    reconnect_timeout: 6.0
+    pointcloud_qos: SENSOR_DATA
+    color_qos: SENSOR_DATA
+    depth_qos: SENSOR_DATA
+    gyro_qos: SENSOR_DATA
+    accel_qos: SENSOR_DATA
+    imu_qos: SENSOR_DATA
+    base_frame_id: d455_link
+    depth_frame_id: d455_depth_frame
+    depth_optical_frame_id: d455_depth_optical_frame
+    color_frame_id: d455_color_frame
+    color_optical_frame_id: d455_color_optical_frame
+    gyro_frame_id: d455_gyro_frame
+    gyro_optical_frame_id: d455_gyro_optical_frame
+    accel_frame_id: d455_accel_frame
+    accel_optical_frame_id: d455_accel_optical_frame
+    imu_optical_frame_id: d455_imu_optical_frame
+    aligned_depth_to_color_frame_id: d455_aligned_depth_to_color_frame

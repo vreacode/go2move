@@ -1,0 +1,224 @@
+{
+  "sampled_at": "2026-10-07 10:20:35 +0800",
+  "readonly": true,
+  "duration_seconds": 5,
+  "counts": {
+    "low": 100,
+    "sport": 100
+  },
+  "latest": {
+    "low": {
+      "received_at": 1791339635.479937,
+      "tick": 1268874,
+      "soc": 61,
+      "bms_status": 8,
+      "bms_current_raw": -3484,
+      "bms_bq_ntc": [
+        32,
+        33
+      ],
+      "bms_mcu_ntc": [
+        35,
+        34
+      ],
+      "power_v": 30.039758682250977,
+      "power_a": 1.8116332292556763,
+      "temperature_ntc1": 50,
+      "temperature_ntc2": 45,
+      "motor_temperatures": [
+        38,
+        38,
+        43,
+        37,
+        40,
+        42,
+        74,
+        46,
+        46,
+        83,
+        45,
+        48
+      ],
+      "motor_modes": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "motor_lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "bit_flag": 4,
+      "foot_force": [
+        36,
+        41,
+        34,
+        40
+      ],
+      "wireless_remote_raw": [
+        85,
+        81,
+        0,
+        0,
+        0,
+        0,
+        0,
+        128,
+        0,
+        0,
+        0,
+        128,
+        0,
+        0,
+        0,
+        128,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        128
+      ],
+      "remote_keys_raw": 0,
+      "remote_float_values_raw": [
+        -0.0,
+        -0.0,
+        -0.0,
+        0.0,
+        0.0
+      ],
+      "remote_axes": {
+        "lx": -0.0,
+        "rx": -0.0,
+        "ry": -0.0,
+        "ly": 0.0
+      }
+    },
+    "sport": {
+      "received_at": 1791339635.4856505,
+      "source_stamp": [
+        1791337849,
+        635149393
+      ],
+      "mode": 0,
+      "error_code": 100,
+      "gait_type": 0,
+      "body_height": 0.31657662987709045,
+      "position": [
+        -0.19119304418563843,
+        0.007938984781503677,
+        0.3049783408641815
+      ],
+      "velocity": [
+        -2.686103839355525e-10,
+        -2.85639023545059e-09,
+        5.465155794581733e-08
+      ],
+      "yaw_speed": 0.0031957929022610188,
+      "rpy": [
+        -0.05527381971478462,
+        0.0009539086022414267,
+        -0.2020232230424881
+      ]
+    }
+  },
+  "stability": {
+    "body_height_min": 0.3165627419948578,
+    "body_height_max": 0.316588431596756,
+    "max_abs_roll": 0.05554043874144554,
+    "max_abs_pitch": 0.0018550704699009657,
+    "max_linear_speed": 1.281506921039435e-06,
+    "max_abs_yaw_speed": 0.017044229432940483,
+    "modes": [
+      0
+    ],
+    "error_codes": [
+      100
+    ],
+    "tick_first": 1263924,
+    "tick_last": 1268874,
+    "tick_delta": 4950,
+    "motor_temperature_max": [
+      38,
+      38,
+      43,
+      37,
+      40,
+      42,
+      74,
+      46,
+      46,
+      84,
+      45,
+      48
+    ],
+    "remote_keys_observed": [
+      0
+    ],
+    "remote_max_abs_float": 0.0
+  },
+  "robot_commands_sent": 0,
+  "services_changed": false,
+  "audio_played": false,
+  "remote_decode_note": "Verified against installed official SDK joystick.py extract(): keys bytes2/3; lx bytes4:8, rx8:12, ry12:16, ly20:24. Bytes16:20 are not a named joystick axis.",
+  "rotation_adapter_review": {
+    "source_files": [
+      "deployment/go2/official_sdk_worker.py",
+      "deployment/go2/low_speed_bridge.py"
+    ],
+    "reusable_guards": [
+      "non-finite velocity rejection and angular clamp 0.20rad/s",
+      "angular ramp 0.01rad/s per50ms",
+      "0.25s state/lowstate/command watchdog",
+      "height>0.20m and roll/pitch<0.35rad gate",
+      "latched stop and final zero Move plus StopMove"
+    ],
+    "gaps_for_this_test": [
+      "no motor temperature or battery guard",
+      "no remote takeover detection in worker",
+      "no cumulative yaw or 90degree cap",
+      "no translational drift guard for in-place rotation",
+      "LaserScan obstacle check only runs when linear velocity norm is nonzero; pure yaw skips it"
+    ],
+    "continuous_gait": "Optional flag sends extra1019 gait API; default disabled. Not needed merely to reuse bounds/watchdog logic.",
+    "recommendation": "Do not treat old worker as a complete in-place turn guard. Two rear hip temperatures returned to83/74C after the unexplained collapse; stable5-second stance alone does not establish turn safety. Root decides whether to proceed; no motion was performed here.",
+    "official_temperature_protection_threshold": "not established; no threshold claimed"
+  }
+}

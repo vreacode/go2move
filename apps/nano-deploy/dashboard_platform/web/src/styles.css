@@ -1692,3 +1692,208 @@ select {
     transition: none;
   }
 }
+
+
+/* Go2 desktop workspace. Folding a tool also unmounts its live connections. */
+.go2-console {
+  background: rgb(var(--color-page));
+}
+
+.go2-sidebar {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: 100vh;
+  flex: 0 0 220px;
+}
+
+.go2-sidebar > aside {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border-color: rgb(var(--color-base));
+  background: rgb(var(--color-panel));
+  box-shadow: none;
+}
+
+.go2-sidebar nav button {
+  box-shadow: none;
+}
+
+.go2-sidebar nav button[aria-current="page"] {
+  border-color: rgb(var(--color-accent-300));
+  color: rgb(var(--color-accent-600));
+  background: rgb(var(--color-accent-100) / 0.5);
+}
+
+.go2-main {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 28px 32px 40px;
+}
+
+.go2-header {
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(var(--color-base));
+}
+
+.go2-header-stop {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgb(239 68 68 / 0.3);
+  border-radius: 8px;
+  padding: 6px 10px;
+  color: #be123c;
+  background: rgb(239 68 68 / 0.08);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.go2-header-stop:disabled {
+  opacity: 0.5;
+}
+
+[data-theme="dark"] .go2-header-stop {
+  color: #fda4af;
+}
+
+.go2-fold {
+  overflow: hidden;
+  border: 1px solid rgb(var(--color-base));
+  border-radius: 14px;
+  background: rgb(var(--color-panel));
+}
+
+.go2-fold-toggle {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 17px 20px;
+  color: rgb(var(--color-primary));
+  text-align: left;
+}
+
+.go2-fold-toggle > span {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+
+.go2-fold-toggle strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.go2-fold-toggle small {
+  color: rgb(var(--color-muted));
+  font-size: 12px;
+}
+
+.go2-fold-toggle:hover {
+  background: rgb(var(--color-card));
+}
+
+.go2-fold-toggle:focus-visible,
+.go2-header-stop:focus-visible {
+  outline: 2px solid rgb(var(--color-accent-500));
+  outline-offset: -3px;
+}
+
+.go2-fold-toggle > svg {
+  flex: 0 0 auto;
+  color: rgb(var(--color-muted));
+  transition: transform 150ms ease;
+}
+
+.go2-fold-open {
+  transform: rotate(180deg);
+}
+
+.go2-fold-content {
+  padding: 0 16px 16px;
+}
+
+@media (min-width: 761px) and (max-width: 1100px) {
+  .go2-sidebar {
+    flex-basis: 180px;
+  }
+
+  .go2-sidebar > aside {
+    padding: 14px 10px;
+  }
+
+  .go2-sidebar > aside > div:first-child {
+    margin-bottom: 20px;
+  }
+
+  .go2-sidebar > aside > div:last-child {
+    display: none;
+  }
+
+  .go2-sidebar nav button {
+    gap: 8px;
+    padding: 12px 8px;
+  }
+
+  .go2-main {
+    padding: 22px 20px 32px;
+  }
+}
+
+@media (max-width: 760px) {
+  .go2-main {
+    padding: 16px;
+  }
+
+  .go2-fold-toggle {
+    padding: 15px;
+  }
+
+  .go2-fold-content {
+    padding: 0 10px 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .go2-fold-toggle > svg {
+    transition: none;
+  }
+}
+
+.go2-health-hint {
+  padding: 10px 16px;
+  border-bottom: 1px solid rgb(var(--color-base));
+  color: rgb(var(--color-secondary));
+  background: rgb(var(--color-panel));
+  font-size: 11px;
+  line-height: 1.5;
+}
+.go2-health-line { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; }
+.go2-health-line strong { font-size: 12px; font-weight: 600; }
+.go2-health-hint p { margin-top: 3px; color: rgb(var(--color-muted)); overflow-wrap: anywhere; }
+.go2-health-hint.has-fault { background: rgb(239 68 68 / 0.08); color: #be123c; }
+.go2-health-hint.has-fault p { color: inherit; }
+.go2-health-hint.is-offline { color: rgb(var(--color-muted)); }
+[data-theme="dark"] .go2-health-hint.has-fault { color: #fda4af; }
+.go2-local-speech { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: rgb(var(--color-secondary)); }
+.go2-local-speech input { width: 15px; height: 15px; accent-color: rgb(var(--color-accent-600)); }
+@media (max-width: 760px) { .go2-health-hint { padding: 10px 12px; } }
+
+.go2-target-tabs { display: flex; gap: 4px; padding: 4px; margin-bottom: 10px; border-radius: 11px; background: rgb(var(--color-panel)); }
+.go2-target-tabs button { flex: 1; padding: 7px 4px; border-radius: 8px; font-size: 12px; color: rgb(var(--color-muted)); }
+.go2-target-tabs button[aria-selected="true"] { color: rgb(var(--color-primary)); background: rgb(var(--color-card)); box-shadow: 0 1px 3px rgb(0 0 0 / 0.06); }
+.go2-target-tabs button:disabled { opacity: 0.5; }
+.go2-search-task { margin-top: 12px; padding: 10px 12px; border: 1px solid rgb(var(--color-base)); border-radius: 11px; color: rgb(var(--color-secondary)); font-size: 12px; }
+.go2-search-task strong { font-weight: 600; }
+.go2-search-task p { margin-top: 5px; color: rgb(var(--color-muted)); font-size: 11px; line-height: 1.5; }
+.go2-search-task.has-candidate { border-color: rgb(var(--color-accent-500) / 0.3); background: rgb(var(--color-accent-500) / 0.06); }
+.go2-task-progress { height: 4px; margin-top: 8px; overflow: hidden; border-radius: 4px; background: rgb(var(--color-base)); }
+.go2-task-progress span { display: block; height: 100%; background: rgb(var(--color-accent-600)); transition: width 300ms ease; }
+.go2-review-button { padding: 4px 8px; border: 1px solid rgb(var(--color-base)); border-radius: 7px; color: rgb(var(--color-secondary)); font-size: 11px; }
+.go2-review-button:hover { background: rgb(var(--color-panel)); }
+.go2-review-button:disabled { cursor: default; opacity: 0.45; }

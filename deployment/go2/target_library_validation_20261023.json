@@ -1,0 +1,78 @@
+{
+  "completed_at": 1792725605.594048,
+  "features": [
+    "persistent target library for photo/capture/description",
+    "legacy current reference and discovery reference import",
+    "reuse references without automatic search",
+    "delete targets and individual discovery records with backup",
+    "target deletion preserves discovery evidence; discovery deletion preserves target",
+    "current target deletion stops search and prevents restore after restart"
+  ],
+  "targets_total": 2,
+  "history_total": 7,
+  "original_target_preserved": true,
+  "original_history_preserved": true,
+  "ui_refresh_interval_ms": 250,
+  "native_capture_target_fps": 5,
+  "native_capture_unchanged": true,
+  "person_browser_updates_per_s": 3.6168349593630147,
+  "helmet_processed_hz": 4.207240525226479,
+  "helmet_max_capture_age_s": 0.45768117904663086,
+  "live_soak_seconds": 59.050466830000005,
+  "live_soak_errors": 0,
+  "browser_mobile": {
+    "width": 450,
+    "scrollWidth": 438,
+    "library": true
+  },
+  "browser_alerts": [],
+  "video_decode_checks": [
+    {
+      "file": "/home/unitree/go2_ros2_ws/validation/target_library_20261023/downloads/安全帽多人追踪_1792725505866.webm",
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "vp8",
+            "width": 960,
+            "height": 720,
+            "nb_read_frames": "29"
+          }
+        ]
+      },
+      "full_decode_exit": 0
+    },
+    {
+      "file": "/home/unitree/go2_ros2_ws/validation/target_library_20261023/downloads/安全帽多人追踪_1792725399307.webm",
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "vp8",
+            "width": 960,
+            "height": 720,
+            "nb_read_frames": "34"
+          }
+        ]
+      },
+      "full_decode_exit": 0
+    }
+  ],
+  "python_tests_passed": 97,
+  "new_python_tests": 7,
+  "ui_checks_passed": true,
+  "frontend_build_passed": true,
+  "final_search_active": false,
+  "final_helmet_active": true,
+  "final_helmet_error": null,
+  "unused_depth_services_stopped": true,
+  "camera_source": "native",
+  "motion_sent": false,
+  "speech_sent": false,
+  "limits": [
+    "stationary mostly empty scene performance sample; onsite multi-person performance remains to be measured",
+    "5 FPS native capture bounds display throughput; no 25/30 FPS claim",
+    "deleted entries are hidden with recovery backups, not a secure erase",
+    "references overwritten before this feature and absent from discovery history were not recovered"
+  ]
+}

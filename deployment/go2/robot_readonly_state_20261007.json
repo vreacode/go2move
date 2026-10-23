@@ -1,0 +1,211 @@
+{
+  "sampled_at": "2026-10-07 09:54:00 +0800",
+  "readonly": true,
+  "duration_seconds": 5,
+  "topics": [
+    "rt/lf/lowstate",
+    "rt/lf/sportmodestate"
+  ],
+  "counts": {
+    "sport": 101,
+    "low": 100
+  },
+  "observed": {
+    "mode": [
+      0
+    ],
+    "error_code": [
+      100
+    ],
+    "soc": [
+      71
+    ],
+    "bms_status": [
+      8
+    ]
+  },
+  "latest": {
+    "sport": {
+      "received_at": 1791338040.202604,
+      "source_stamp": [
+        1791336255,
+        326588171
+      ],
+      "mode": 0,
+      "error_code": 100,
+      "gait_type": 0,
+      "progress": 0.0,
+      "body_height": 0.07715848833322525,
+      "position": [
+        -0.19000574946403503,
+        0.021969405934214592,
+        0.06533974409103394
+      ],
+      "velocity": [
+        -1.7447052869101753e-07,
+        -5.692120197409167e-08,
+        -5.35135404788889e-06
+      ],
+      "rpy": [
+        0.01097018737345934,
+        -0.03302893042564392,
+        0.012479564175009727
+      ]
+    },
+    "low": {
+      "received_at": 1791338040.18124,
+      "tick": 5515565,
+      "soc": 71,
+      "bms_status": 8,
+      "bms_current_raw": -1824,
+      "bms_bq_ntc": [
+        30,
+        31
+      ],
+      "bms_mcu_ntc": [
+        34,
+        32
+      ],
+      "bms_cell_vol_raw": [
+        3900,
+        3904,
+        3905,
+        3904,
+        3905,
+        3904,
+        3906,
+        3901,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "power_v": 30.66835594177246,
+      "power_a": 0.20509055256843567,
+      "temperature_ntc1": 49,
+      "temperature_ntc2": 44,
+      "motor_temperatures": [
+        37,
+        37,
+        42,
+        36,
+        37,
+        40,
+        74,
+        43,
+        44,
+        83,
+        42,
+        42
+      ],
+      "motor_modes": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "motor_lost": [
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        5,
+        15,
+        5
+      ],
+      "bit_flag": 36,
+      "foot_force": [
+        9,
+        6,
+        8,
+        13
+      ]
+    }
+  },
+  "hottest_motor_mapping": {
+    "6": {
+      "sdk_name": "RR_0",
+      "joint": "rear right hip",
+      "temperature_c": 74
+    },
+    "9": {
+      "sdk_name": "RL_0",
+      "joint": "rear left hip",
+      "temperature_c": 83
+    }
+  },
+  "motor_mapping_source": "/home/unitree/go2_sdk2_python/example/go2/low_level/unitree_legged_const.py",
+  "interpretation": {
+    "cause": "unconfirmed; all samples are after reported collapse, not a pre-collapse trace",
+    "sport_error_code_100": "not established as a new fault: existing normal standing report also has mode=0/error_code=100/body_height~0.313m",
+    "bms_status_8": "raw value; not decoded",
+    "temperature": "83 C and 74 C measured; exact software protection threshold not established",
+    "source_clock_offset_seconds": 1784.8760161399841,
+    "clock_note": "use local receive/ACK times for timeline; robot source clock differs",
+    "low_battery": "current SOC71 percent does not support low-charge explanation by itself",
+    "fixed_standing_timeout": "no official evidence located for a fixed-duration stand-to-prone behavior"
+  },
+  "prior_normal_standing_source": "/home/unitree/go2_ros2_ws/tests/motion-20261005-203543/balance-preparation.json",
+  "local_process_audit": {
+    "scope": "NX host only; not remote robot controller or handset history",
+    "observed_services": [
+      "native_camera",
+      "native_camera_ros",
+      "dashboard agent",
+      "dashboard server",
+      "person_search service process"
+    ],
+    "motion_processes_found": [],
+    "names_checked": [
+      "official_sdk_worker",
+      "low_speed_bridge",
+      "prepare_walking",
+      "go2 platform motion",
+      "nav2",
+      "sport controller"
+    ],
+    "voice_process_found": false
+  },
+  "manual_sources": [
+    {
+      "url": "https://marketing.unitree.com/article/en/Go2/User_Manual.html",
+      "description": "manufacturer official manual landing page, linked from official Go2 APP page; pages served as images"
+    },
+    {
+      "url": "https://static.generation-robots.com/media/Go2-User-Manual.pdf",
+      "description": "Unitree Robotics original V1.0 manual text distributed by Generation Robots; reseller-hosted PDF, copyright Unitree Robotics 2023",
+      "relevant_pages": [
+        6,
+        19
+      ],
+      "statements": [
+        "yellow slow flashing low-battery warning precedes automatic crouching within 10 minutes",
+        "lower body height/more knee bends increase motor load, consumption and heating"
+      ],
+      "does_not_prove": "this incident was caused by protection or long standing"
+    }
+  ],
+  "actions_taken": [
+    "read existing files/processes/logs",
+    "5-second ChannelSubscriber only; no Client or command Publisher imported",
+    "saved this report using go2_platform_write.write"
+  ],
+  "robot_commands_sent": 0,
+  "tests_stopped": true
+}

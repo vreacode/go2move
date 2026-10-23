@@ -455,25 +455,17 @@ class MediaManager:
         prefix = "visible" if stream_mode == "visible_raw" else "ir"
         filename = f"{prefix}_{now.strftime('%Y%m%d_%H%M%S')}.mp4"
         output_path = self.settings.recording_output_dir / filename
-        command = [
-            "ffmpeg",
-            "-nostdin",
-            "-loglevel",
-            "error",
-            "-rtsp_transport",
-            "tcp",
-            "-i",
-            stream_url,
-            "-map",
-            "0:v:0",
-            "-an",
-            "-c",
-            "copy",
-            "-fflags",
-            "+genpts",
-            "-y",
-            str(output_path),
-        ]
+        # Native Go2 MJPEG is already shared by the SDK camera worker.
+        # Keep RTSP-only options on RTSP inputs and encode MJPEG as browser H264.
+        rtsp_options = ["-rtsp_transport", "tcp"] if stream_url.lower().startswith("rtsp://") else []
+        native_mjpeg = stream_url == "http://127.0.0.1:8766/stream.mjpg"
+        input_options = ["-f", "mpjpeg", "-r", "5", "-probesize", "32768", "-analyzeduration", "0"] if native_mjpeg else rtsp_options
+        codec_options = (["-vf", "scale=960:-2", "-c:v", "libx264", "-preset", "ultrafast",
+                          "-crf", "23", "-pix_fmt", "yuv420p", "-r", "5", "-movflags", "+faststart"]
+                         if native_mjpeg else ["-c", "copy"])
+        command = ["ffmpeg", "-nostdin", "-loglevel", "error"] + input_options + [
+            "-i", stream_url, "-map", "0:v:0", "-an"] + codec_options + [
+            "-fflags", "+genpts", "-y", str(output_path)]
         env = os.environ.copy()
         self.process = await asyncio.create_subprocess_exec(
             *command,
@@ -543,6 +535,23 @@ class MediaManager:
             prefix = "visible" if stream_mode == "visible_raw" else "ir"
             filename = f"{prefix}_{timestamp}.jpg"
             output_path = self.settings.media_snapshot_path / filename
+            # The shared native worker already has a complete original JPEG.
+            # Request it directly instead of asking ffmpeg to probe an endless stream.
+            if stream_url == "http://127.0.0.1:8766/stream.mjpg":
+                import httpx
+                try:
+                    async with httpx.AsyncClient(trust_env=False, timeout=4.0) as client:
+                        response = await client.get("http://127.0.0.1:8766/snapshot.jpg")
+                        response.raise_for_status()
+                        jpeg = response.content
+                    if not jpeg.startswith(b"\xff\xd8"):
+                        raise RuntimeError("native camera returned an invalid JPEG")
+                    output_path.write_bytes(jpeg)
+                except httpx.HTTPError as exc:
+                    raise RuntimeError("native camera snapshot is unavailable") from exc
+                return GalleryItem(storage_kind="snapshot", media_type="image", filename=filename,
+                    created_at=datetime.fromtimestamp(output_path.stat().st_mtime, tz=timezone.utc).isoformat(),
+                    size_bytes=output_path.stat().st_size)
             capture_error: RuntimeError | None = None
             for attempt in range(2):
                 with suppress(FileNotFoundError):
@@ -552,8 +561,7 @@ class MediaManager:
                     "-nostdin",
                     "-loglevel",
                     "error",
-                    "-rtsp_transport",
-                    "tcp",
+                    *(["-rtsp_transport", "tcp"] if stream_url.lower().startswith("rtsp://") else []),
                     "-skip_frame",
                     "nokey",
                     "-i",

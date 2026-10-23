@@ -1,0 +1,28 @@
+Go2 项目代码封存 2026-10-23
+封存分支：archive/go2-20261023-164531
+封存标签：go2-snapshot-20261023-164531
+基础提交：6e980515adf60cd37bc291f66ef80a5987e7cee0
+仓库：https://github.com/vreacode/go2move
+
+本版包含：
+1. Orin NX / Ubuntu 20.04 / ROS2 Foxy 下的 Go2 URDF、TF、状态接口、XT-16 接入与 SLAM/Nav2 软件准备。
+2. 机身相机、照片/描述找人、目标列表及删除、发现记录、多人物安全帽识别、原训练 helmet.pt 的 TensorRT 适配、画面追踪与 Demo 录制界面。
+3. 原生语音/离线语音相关接入代码、深度相机接入代码、前后端与启动服务模板、相关测试及阶段报告。
+4. 外部开源组件的提交号和本地已跟踪补丁、当前 XT-16 配置、YOLOX 后处理源码、原训练安全帽导出脚本、模型来源和 SHA256 校验表。
+
+验收边界：
+- 原安全帽模型：24项相关测试和60秒空场约4.96Hz运行已通过；多人、遮挡与实物帽子识别准确率还需现场验收。
+- 目标跟随当前为距离/速度建议预览，移动跟随未验收；自主巡航/单点导航链路不应描述为已完成实机验收。
+- D435i 当前跳过；曾有USB看门狗/卡顿问题，接入代码不等于持续稳定运行。
+- 历史上发生过突然失稳及电机9过热故障；既有扫描/运动限制保留。恢复代码不构成执行实际运动的授权。
+
+恢复说明：
+1. 从本标签检出独立目录，按 deployment/go2 和对应功能报告恢复；当前运行目录无需切换分支。
+2. 将 deployment/go2/go2.env.example 复制为本机 go2.env，再从本机安全备份恢复真实凭据，不把凭据写入Git。
+3. 外部 ROS 工作空间按 external_dependencies.json 的上游提交号恢复，再按 external/patches 和 external/hesai 对照必要适配；不要自动覆盖在用配置。
+4. 模型文件保留本机，路径及 SHA256 见 local_model_checksums.json；外部工作空间、模型、虚拟环境、地图与运行数据不在此代码快照内。
+5. 机身相机和安全帽演示入口：bash deployment/go2/start_helmet_demo.sh 。网页“开始识别”只启用视觉识别。
+6. 原训练安全帽导出工具位于 external/export_original_helmet.py，使用隔离的 model_export_packages.txt 工具环境；模型目录需放回原路径，并将 external/yolox_postprocess.py 放回 person_search 模型目录。
+
+封存包含源码和必要描述/网格资源。登录密钥、真实环境文件及其备份、人物照片、录像、数据库、模型权重和压缩包、build/install、虚拟环境不上传。
+本地 Git bundle 和源码压缩包将生成在：/home/unitree/go2_ros2_ws/backups/code-archive-20261023-164531

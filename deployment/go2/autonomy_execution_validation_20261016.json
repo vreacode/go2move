@@ -1,0 +1,371 @@
+{
+  "recorded_at": "2026-10-16T10:49:22+0800",
+  "run_directory": "/home/unitree/go2move/deployment/go2/runtime/autonomy/onsite-20261016T023452595Z",
+  "physical_walking_validated": false,
+  "attempt_1": {
+    "mode": "execute",
+    "motion_started": true,
+    "radius_m": 1.0,
+    "max_speed_m_s": 0.08,
+    "duration_s": 30.0,
+    "clearance_m": 0.6347815070493501,
+    "started_at": 1792118366.9117708,
+    "ended_at": 1792118376.6959052,
+    "completed": false,
+    "error": "No walking progress for 5 seconds; stop",
+    "max_displacement_m": 0.0006456412060470233,
+    "stop_acknowledged": true,
+    "worker_shutdown": {
+      "shutdown": true,
+      "stop_responses": [
+        {
+          "api": 1003,
+          "code": 0,
+          "zero_move_code": 0,
+          "errors": [],
+          "source": "official SDK StopMove"
+        },
+        {
+          "api": 1003,
+          "code": 0,
+          "zero_move_code": 0,
+          "errors": [],
+          "source": "official SDK StopMove"
+        },
+        {
+          "api": 1003,
+          "code": 0,
+          "zero_move_code": 0,
+          "errors": [],
+          "source": "official SDK StopMove"
+        }
+      ],
+      "received_at": 4909.290484877
+    }
+  },
+  "readonly_queries": [
+    {
+      "name": "sport_version",
+      "api": 1,
+      "code": 0,
+      "data": "1.0.0.1"
+    },
+    {
+      "name": "check_mode",
+      "api": 1001,
+      "code": 0,
+      "data": "{\"form\":\"0\",\"name\":\"mcf\"}"
+    },
+    {
+      "name": "get_speed_level",
+      "api": 1026,
+      "code": 0,
+      "data": "{\"data\":-1}"
+    },
+    {
+      "name": "get_state",
+      "api": 1034,
+      "code": 0,
+      "data": ""
+    }
+  ],
+  "revision": {
+    "tested_at": "2026-10-16T10:45:50+0800",
+    "passed": true,
+    "tests_run": 68,
+    "failure_count": 0,
+    "error_count": 0,
+    "duration_s": 40.3519679230003,
+    "modules": [
+      "test_local_autonomy",
+      "test_autonomy_session",
+      "test_autonomy_worker",
+      "test_rotation_guard",
+      "test_rotation_worker"
+    ],
+    "clearance_m": 0.7041232746604094,
+    "synthetic_motion_only": true,
+    "physical_walking_validated": false,
+    "sha256": {
+      "local_autonomy.py": "3fce43c55ee43b85a1226aaee64e63ade4675f95449ef9ff3f1aa2c1ab383bb1",
+      "autonomy_guard.py": "e755d5ecbcc4ac4ff3b9ab906fe64d21c24940280e343839d860726d425ae5b2",
+      "official_sdk_worker.py": "da800a87f69a552a6e93e986c8c7afd5dac90bfdf5f63bd11a0e8f43834e28fd",
+      "run_local_autonomy.py": "b30d2891142552ce3edc45e72d8cc260154b911a37bc8c44e4d2f28d8f833026"
+    },
+    "failures": [],
+    "errors": []
+  },
+  "second_attempt": "Not started: 120-second read-only wait ended while the robot remained prone; no additional motion commands.",
+  "current_health": {
+    "sampled_at": 1792118962.1764655,
+    "height": 0.06688481569290161,
+    "rpy": [
+      0.0027144593186676502,
+      -0.09612773358821869,
+      0.049800705164670944
+    ],
+    "temperatures": [
+      35,
+      33,
+      35,
+      37,
+      33,
+      35,
+      54,
+      33,
+      33,
+      48,
+      33,
+      33
+    ],
+    "motor_faults": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "soc": 78
+  },
+  "diagnosis_status": "MCF startup readiness is a hypothesis, not confirmed root cause. Added healthy standing zero/StopMove synchronization with settling and a new execution baseline; same 0.08 m/s cap. Physical retest pending.",
+  "footprint_correction": "Match nav2_motion_test.yaml: +/-0.45 x +/-0.35 m with 0.01 m padding; clearance is now 0.704123 m. The earlier executed attempt used 0.634782 m and had no effective measured movement.",
+  "second_preflight": {
+    "readonly": true,
+    "scope": "standing_and_scan",
+    "ready": false,
+    "duration_s": 120.02213240200035,
+    "latest": {
+      "at": 5464.678411095,
+      "stamp": 1792118931.855088,
+      "nearest_m": 0.9067358970642091,
+      "angle_deg": 80.49999297311513,
+      "error": null
+    },
+    "samples": [
+      {
+        "at": 5344.782541922,
+        "stamp": 1792118811.955218,
+        "nearest_m": 0.8037968277931213,
+        "angle_deg": -94.50000567127069,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 0.03136301199992886
+      },
+      {
+        "at": 5349.685894437,
+        "stamp": 1792118816.854624,
+        "nearest_m": 0.7819401621818542,
+        "angle_deg": -87.50000572549526,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 5.033733623999979
+      },
+      {
+        "at": 5354.779121551,
+        "stamp": 1792118821.954542,
+        "nearest_m": 0.7817950248718262,
+        "angle_deg": -89.50000571000253,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 10.06047391500033
+      },
+      {
+        "at": 5359.776661812,
+        "stamp": 1792118826.954404,
+        "nearest_m": 0.6817272305488588,
+        "angle_deg": -101.00000562091931,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 15.0877822500006
+      },
+      {
+        "at": 5364.779672303,
+        "stamp": 1792118831.955171,
+        "nearest_m": 0.6839152574539186,
+        "angle_deg": -99.50000563253886,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 20.092155856000318
+      },
+      {
+        "at": 5369.779865866,
+        "stamp": 1792118836.954824,
+        "nearest_m": 0.6820682883262635,
+        "angle_deg": -99.50000563253886,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 25.093726551000145
+      },
+      {
+        "at": 5374.783143438,
+        "stamp": 1792118841.955102,
+        "nearest_m": 0.6827578544616698,
+        "angle_deg": -100.00000562866568,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 30.09740851800052
+      },
+      {
+        "at": 5379.78210666,
+        "stamp": 1792118846.954806,
+        "nearest_m": 0.6820829510688783,
+        "angle_deg": -100.5000056247925,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 35.12436355600039
+      },
+      {
+        "at": 5384.825373163,
+        "stamp": 1792118851.954637,
+        "nearest_m": 0.6838779449462892,
+        "angle_deg": -99.50000563253886,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 40.14197674800016
+      },
+      {
+        "at": 5389.786519833,
+        "stamp": 1792118856.955322,
+        "nearest_m": 0.6837047934532167,
+        "angle_deg": -99.50000563253886,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 45.161210832000506
+      },
+      {
+        "at": 5394.875928722,
+        "stamp": 1792118862.054417,
+        "nearest_m": 0.6840651631355286,
+        "angle_deg": -99.50000563253886,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 50.18736000200079
+      },
+      {
+        "at": 5399.87228718,
+        "stamp": 1792118867.055196,
+        "nearest_m": 0.6819052696228028,
+        "angle_deg": -100.5000056247925,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 55.21487789799994
+      },
+      {
+        "at": 5404.880270645,
+        "stamp": 1792118872.055139,
+        "nearest_m": 0.6599851846694945,
+        "angle_deg": -94.00000567514387,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 60.22357405599996
+      },
+      {
+        "at": 5409.981489456,
+        "stamp": 1792118877.154703,
+        "nearest_m": 0.6901475191116333,
+        "angle_deg": -94.00000567514387,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 65.23017914899992
+      },
+      {
+        "at": 5414.97874366,
+        "stamp": 1792118882.154855,
+        "nearest_m": 0.6876232028007507,
+        "angle_deg": -92.50000568676343,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 70.25869436300036
+      },
+      {
+        "at": 5419.976697586,
+        "stamp": 1792118887.154835,
+        "nearest_m": 0.6873077154159546,
+        "angle_deg": -92.50000568676343,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 75.28832713300017
+      },
+      {
+        "at": 5424.980200035,
+        "stamp": 1792118892.155008,
+        "nearest_m": 0.6890076994895936,
+        "angle_deg": -91.5000056945098,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 80.29163011700075
+      },
+      {
+        "at": 5430.015514952,
+        "stamp": 1792118897.154775,
+        "nearest_m": 0.7026117444038391,
+        "angle_deg": -93.00000568289023,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 85.29555963800067
+      },
+      {
+        "at": 5435.027993324,
+        "stamp": 1792118902.156787,
+        "nearest_m": 0.6934122443199158,
+        "angle_deg": -91.00000569838298,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 90.30809951500032
+      },
+      {
+        "at": 5440.030065838,
+        "stamp": 1792118907.154601,
+        "nearest_m": 0.6987155675888062,
+        "angle_deg": -91.00000569838298,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 95.31075140700068
+      },
+      {
+        "at": 5444.978588509,
+        "stamp": 1792118912.154468,
+        "nearest_m": 0.6997235417366028,
+        "angle_deg": -92.00000569063661,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 100.32186856499993
+      },
+      {
+        "at": 5450.074004643,
+        "stamp": 1792118917.255011,
+        "nearest_m": 0.6987057924270629,
+        "angle_deg": -92.50000568676343,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 105.32268230400041
+      },
+      {
+        "at": 5455.074437567,
+        "stamp": 1792118922.254258,
+        "nearest_m": 0.6445516347885132,
+        "angle_deg": -99.00000563641204,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 110.32313161300044
+      },
+      {
+        "at": 5460.082305646,
+        "stamp": 1792118927.254795,
+        "nearest_m": 0.664465367794037,
+        "angle_deg": -97.50000564803159,
+        "error": null,
+        "hold": "Robot must be standing stably at 25..40 cm before execution",
+        "elapsed_s": 115.33100766000007
+      }
+    ],
+    "motion_commands_sent": 0
+  }
+}

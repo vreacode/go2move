@@ -3,12 +3,14 @@ import {
   ArchiveBoxIcon,
   ArrowLeftIcon,
   ArrowPathIcon,
+  ArrowRightOnRectangleIcon,
   BoltIcon,
   CameraIcon,
   ChartBarIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronUpIcon,
+  ChevronDownIcon,
   CheckCircleIcon,
   ClockIcon,
   ExclamationTriangleIcon,
@@ -17,13 +19,17 @@ import {
   PlayCircleIcon,
   StopCircleIcon,
   WifiIcon,
+  UserCircleIcon,
+  SpeakerWaveIcon,
 } from "@heroicons/react/24/outline";
 import { VideoStream } from "./components/VideoStream";
+import { Go2VisionPanel } from "./components/Go2VisionPanel";
+import { Go2VoicePanel } from "./components/Go2VoicePanel";
 import { API_BASE, apiFetch, clearToken, loadToken, saveToken, wsUrl } from "./lib";
 import type { CaptureFrameItem, CaptureGalleryItem, CaptureStatus, ConnectionState, SiyiCameraStatus, SystemStatus } from "./types";
 
 type LoginResponse = { token: string; username: string };
-type Tab = "capture" | "monitor" | "archive";
+type Tab = "person" | "capture" | "monitor" | "archive";
 type CaptureMode = "visible_raw" | "ir_raw";
 const cruiseSpeeds = ["low", "medium", "high"] as const;
 
@@ -211,15 +217,15 @@ function Login({ onLogin }: { onLogin: (token: string) => void }) {
 
   return (
     <main className="mobile-auth">
-      <div className="mobile-auth-mark"><CameraIcon /></div>
-      <p className="mobile-kicker">CARMOVE / FIELD CONSOLE</p>
-      <h1>让每一段现场<br /><em>马上可用。</em></h1>
-      <p className="mobile-auth-copy">通过 Tailscale 连接小车，实时查看视频，记录带场景和备注的训练素材。</p>
+      <div className="mobile-auth-mark"><UserCircleIcon /></div>
+      <p className="mobile-kicker">GO2 / 移动工作台</p>
+      <h1>连接机器狗<br /><em>开始找人。</em></h1>
+      <p className="mobile-auth-copy">查看实时画面，选择目标人物，查阅发现记录。</p>
       <form className="mobile-auth-form" onSubmit={submit}>
         <label>账号<input value={form.username} onChange={(event) => setForm({ ...form, username: event.target.value })} autoComplete="username" /></label>
         <label>密码<input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} autoComplete="current-password" /></label>
         {error ? <div className="mobile-inline-error"><ExclamationTriangleIcon />{error}</div> : null}
-        <button className="mobile-primary-button" disabled={pending}>{pending ? "正在连接…" : "进入现场控制台"}</button>
+        <button className="mobile-primary-button" disabled={pending}>{pending ? "正在连接…" : "进入 Go2 工作台"}</button>
       </form>
       <p className="mobile-auth-foot"><WifiIcon /> Tailscale 私有网络 · 不暴露公网</p>
     </main>
@@ -228,7 +234,8 @@ function Login({ onLogin }: { onLogin: (token: string) => void }) {
 
 export default function MobileCaptureConsole() {
   const [token, setToken] = useState(loadToken());
-  const [tab, setTab] = useState<Tab>("capture");
+  const [tab, setTab] = useState<Tab>("person");
+  const [voiceExpanded, setVoiceExpanded] = useState(false);
   const [status, setStatus] = useState<SystemStatus | null>(null);
   const [cameraStatus, setCameraStatus] = useState<SiyiCameraStatus | null>(null);
   const [capture, setCapture] = useState<CaptureStatus | null>(null);
@@ -296,7 +303,7 @@ export default function MobileCaptureConsole() {
   }, [token]);
 
   useEffect(() => {
-    if (!token || !cruiseActive) return;
+    if (!token || !cruiseActive || tab === "person") return;
     let cancelled = false;
     const heartbeat = () => {
       void apiFetch<SystemStatus["motion_state"]>("/api/control/cruise/heartbeat", token, { method: "POST" })
@@ -316,7 +323,7 @@ export default function MobileCaptureConsole() {
       cancelled = true;
       window.clearInterval(timer);
     };
-  }, [token, cruiseActive]);
+  }, [token, cruiseActive, tab]);
 
   useEffect(() => {
     if (!token || tab !== "archive") return;
@@ -339,7 +346,7 @@ export default function MobileCaptureConsole() {
   }, [tab, token]);
 
   useEffect(() => {
-    if (!token) return;
+    if (!token || tab === "person") return;
     let cancelled = false;
     const refresh = () => {
       void apiFetch<CaptureStatus>("/api/capture/status", token).then((payload) => {
@@ -357,10 +364,10 @@ export default function MobileCaptureConsole() {
       cancelled = true;
       window.clearInterval(timer);
     };
-  }, [token]);
+  }, [token, tab]);
 
   useEffect(() => {
-    if (!token) return;
+    if (!token || tab === "person") return;
     let cancelled = false;
     const refresh = () => void apiFetch<SiyiCameraStatus>("/api/camera/status", token).then((payload) => {
       if (!cancelled) setCameraStatus(payload);
@@ -373,7 +380,7 @@ export default function MobileCaptureConsole() {
       cancelled = true;
       window.clearInterval(timer);
     };
-  }, [token]);
+  }, [token, tab]);
 
   useEffect(() => {
     if (!toast) return;
@@ -593,6 +600,8 @@ export default function MobileCaptureConsole() {
   function logout() {
     clearToken();
     setToken("");
+    setTab("person");
+    setVoiceExpanded(false);
   }
 
   if (!token) return <Login onLogin={setToken} />;
@@ -601,18 +610,20 @@ export default function MobileCaptureConsole() {
     <main className="mobile-app">
       <header className="mobile-topbar">
         <div>
-          <p className="mobile-kicker">CARMOVE / FIELD CONSOLE</p>
-          <h1>{tab === "capture" ? "现场采集" : tab === "monitor" ? "链路监控" : "采集记录"}</h1>
+          <p className="mobile-kicker">GO2 / 移动工作台</p>
+          <h1>{tab === "person" ? "找人工作台" : tab === "capture" ? "现场采集" : tab === "monitor" ? "链路监控" : "采集归档"}</h1>
         </div>
         <div className="mobile-topbar-actions">
-          <div className={`mobile-topbar-battery ${status?.battery_status?.low ? "is-warn" : ""}`}><BoltIcon /><strong>{batteryLabel(status)}</strong></div>
-          <button className="mobile-icon-button" aria-label="刷新状态" onClick={() => { void refreshCapture(); if (tab === "archive") void refreshGallery(); }} disabled={pending === "refresh"}>
-            <ArrowPathIcon className={pending === "refresh" ? "mobile-spin" : ""} />
-          </button>
+          {tab === "person" ? <button className="mobile-icon-button" aria-label="退出登录" onClick={logout}><ArrowRightOnRectangleIcon /></button> : <>
+            <div className={`mobile-topbar-battery ${status?.battery_status?.low ? "is-warn" : ""}`}><BoltIcon /><strong>{batteryLabel(status)}</strong></div>
+            <button className="mobile-icon-button" aria-label="刷新状态" onClick={() => { void refreshCapture(); if (tab === "archive") void refreshGallery(); }} disabled={pending === "refresh"}>
+              <ArrowPathIcon className={pending === "refresh" ? "mobile-spin" : ""} />
+            </button>
+          </>}
         </div>
       </header>
 
-      <section className="mobile-status-strip">
+      {tab !== "person" ? <section className="mobile-status-strip">
         <span className={`mobile-status-dot ${online ? "is-good" : "is-bad"}`} />
         <strong>{online ? "小车在线" : "等待小车"}</strong>
         <span className="mobile-status-divider" />
@@ -620,10 +631,21 @@ export default function MobileCaptureConsole() {
         <span className="mobile-status-divider" />
         <span className={chassisReady ? "mobile-status-ready" : ""}>{chassisReady ? "底盘就绪" : "底盘待检查"}</span>
         <button onClick={logout}>退出</button>
-      </section>
+      </section> : null}
 
       {error ? <button className="mobile-error-banner" onClick={() => setError("")}><ExclamationTriangleIcon />{error}<span>×</span></button> : null}
       {toast ? <div className="mobile-toast"><CheckCircleIcon />{toast}</div> : null}
+
+      {tab === "person" ? <div className="mobile-page">
+        <Go2VisionPanel token={token} />
+        <details open={voiceExpanded} onToggle={(event) => setVoiceExpanded(event.currentTarget.open)} className="overflow-hidden rounded-2xl border border-base bg-panel">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-4 text-sm font-medium text-secondary">
+            <span className="flex items-center gap-2"><SpeakerWaveIcon className="h-5 w-5 text-muted" />语音控制</span>
+            <ChevronDownIcon className={`h-4 w-4 text-muted transition-transform ${voiceExpanded ? "rotate-180" : ""}`} />
+          </summary>
+          {voiceExpanded ? <div className="border-t border-base [&>section]:!rounded-none [&>section]:!border-0 [&>section]:!p-4"><Go2VoicePanel token={token} /></div> : null}
+        </details>
+      </div> : null}
 
       {tab === "capture" ? (
         <div className="mobile-page mobile-capture-page">
@@ -721,10 +743,11 @@ export default function MobileCaptureConsole() {
         </div>
       ) : null}
 
-      <nav className="mobile-bottom-nav" aria-label="主导航">
+      <nav className="mobile-bottom-nav" aria-label="主导航" style={{ gridTemplateColumns: "repeat(4, minmax(0, 1fr))", borderRadius: 16 }}>
+        <button className={tab === "person" ? "is-active" : ""} aria-current={tab === "person" ? "page" : undefined} onClick={() => setTab("person")}><UserCircleIcon /><span>找人</span></button>
         <button className={tab === "capture" ? "is-active" : ""} onClick={() => setTab("capture")}><CameraIcon /><span>采集</span></button>
         <button className={tab === "monitor" ? "is-active" : ""} onClick={() => setTab("monitor")}><ChartBarIcon /><span>监控</span></button>
-        <button className={tab === "archive" ? "is-active" : ""} onClick={() => setTab("archive")}><ArchiveBoxIcon /><span>记录</span></button>
+        <button className={tab === "archive" ? "is-active" : ""} onClick={() => setTab("archive")}><ArchiveBoxIcon /><span>归档</span></button>
       </nav>
     </main>
   );

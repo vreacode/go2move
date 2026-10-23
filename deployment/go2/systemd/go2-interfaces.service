@@ -1,0 +1,18 @@
+[Unit]
+Description=Go2 standard ROS services (robot command output disabled)
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/unitree/go2move
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/home/unitree/go2move/deployment/go2/start_go2_interfaces.sh
+KillSignal=SIGINT
+TimeoutStopSec=15
+Restart=on-failure
+RestartSec=5
+StandardOutput=append:/home/unitree/go2_ros2_ws/runtime/logs/interfaces.log
+StandardError=inherit
+
+[Install]
+WantedBy=default.target

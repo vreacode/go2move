@@ -1,0 +1,17 @@
+[Unit]
+Description=Go2 native camera ROS2 Foxy image bridge
+After=go2-native-camera.service
+Wants=go2-native-camera.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/unitree/go2move
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/bin/bash -c 'source /home/unitree/go2move/deployment/go2/source_go2_platform.sh; export CYCLONEDDS_URI=/home/unitree/go2move/deployment/go2/native_camera_dds.xml; exec python3 /home/unitree/go2move/deployment/go2/native_camera_ros.py'
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=6
+
+[Install]
+WantedBy=default.target

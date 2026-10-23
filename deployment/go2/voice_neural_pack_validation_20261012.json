@@ -1,0 +1,293 @@
+{
+  "checked_at": "2026-10-12T10:53:12.264977+08:00",
+  "speech": {
+    "delivered": true,
+    "path": "/tmp/go2-speech-1lf3qr9d/neural.wav",
+    "sample_rate": 24000,
+    "duration": 2.220458333333333,
+    "voice": "kokoro_zf001",
+    "voice_label": "中文女声 001",
+    "engine": "kokoro",
+    "offline": true,
+    "cached": true,
+    "synthesis_seconds": 0.001,
+    "delivery": {
+      "path": "/tmp/go2-speech-1lf3qr9d/neural.wav",
+      "duration": 2.220458333333333,
+      "transport": "audiohub",
+      "acknowledged": true,
+      "unique_id": "28b99ed6-590a-462b-a146-b74a1e8eadf1",
+      "upload_ack": {
+        "api_id": 2001,
+        "request_id": 772278584,
+        "code": 0,
+        "received_at": 1791773641.1347218
+      },
+      "play_ack": {
+        "api_id": 1002,
+        "request_id": 772278942,
+        "code": 0,
+        "received_at": 1791773641.541483
+      },
+      "audibility_verified": false,
+      "cleanup": {
+        "unique_id": "28b99ed6-590a-462b-a146-b74a1e8eadf1",
+        "removed": true,
+        "ack": {
+          "api_id": 1009,
+          "request_id": 772281768,
+          "code": 0,
+          "received_at": 1791773644.3661869
+        }
+      }
+    },
+    "text": "你好，我是小机器狗。",
+    "started_at": 1791773632.8195186,
+    "completed_at": 1791773644.3674264,
+    "verification": "robot_audiohub_ack",
+    "audibility_verified": false,
+    "microphone_levels": {
+      "sample_rate": 16000,
+      "pcm_bits": 16,
+      "audio_saved": false,
+      "audibility_verified": false,
+      "error": null,
+      "baseline": {
+        "samples": 127664,
+        "frames": 399,
+        "peak": 5319,
+        "rms": 1046.45,
+        "duration": 7.979
+      },
+      "playback": {
+        "samples": 42240,
+        "frames": 132,
+        "peak": 32713,
+        "rms": 2867.65,
+        "duration": 2.64
+      }
+    }
+  },
+  "status": {
+    "voice_policy": {
+      "enabled": true,
+      "reason": "机身音频已由用户现场确认开启；运动控制保持暂停。"
+    },
+    "audio": {
+      "connected": true,
+      "mic_frames": 539,
+      "last_error": null
+    },
+    "tts": {
+      "voice_id": "kokoro_zf001",
+      "voice_label": "中文女声 001",
+      "engine": "kokoro",
+      "model_available": true,
+      "model": "Kokoro v1.1 Chinese FP32",
+      "chinese_voice_count": 100,
+      "voices": [
+        {
+          "id": "kokoro_zf001",
+          "label": "中文女声 001",
+          "available": true
+        },
+        {
+          "id": "kokoro_zf002",
+          "label": "中文女声 002",
+          "available": true
+        },
+        {
+          "id": "kokoro_zf003",
+          "label": "中文女声 003",
+          "available": true
+        },
+        {
+          "id": "kokoro_zm009",
+          "label": "中文男声 009",
+          "available": true
+        },
+        {
+          "id": "kokoro_zm010",
+          "label": "中文男声 010",
+          "available": true
+        },
+        {
+          "id": "espeak_child",
+          "label": "原合成童声",
+          "available": true
+        }
+      ]
+    },
+    "motion_enabled": false
+  },
+  "unauthenticated_routes_rejected": true,
+  "new_frontend_served": true,
+  "imported": {
+    "voice_id": "kokoro_zf001",
+    "voice_label": "中文女声 001",
+    "clips": [
+      {
+        "id": "hello",
+        "label": "打招呼",
+        "text": "你好，我是小机器狗。",
+        "robot_name": "go2_voice_pack_zf001_hello_6d85d7cd",
+        "unique_id": "075c8ec2-d14d-4428-847f-90bda0e3a744",
+        "sha256": "6d85d7cddc0589f3d799e2f9a55b09f2ed566f7a5e6d555b55c41fe85b541178",
+        "reused": false
+      },
+      {
+        "id": "ready",
+        "label": "准备就绪",
+        "text": "我准备好了。",
+        "robot_name": "go2_voice_pack_zf001_ready_4aa54682",
+        "unique_id": "c6eb7e3d-d08f-46c3-b283-59f6d8b41863",
+        "sha256": "4aa5468223237bc69d0930d662a92d96e7281d2e89a50ed1828b32f87415b708",
+        "reused": false
+      },
+      {
+        "id": "uncertain",
+        "label": "没有听清",
+        "text": "没听清，请再说一次。",
+        "robot_name": "go2_voice_pack_zf001_uncertain_a445f52b",
+        "unique_id": "d74979ec-25b0-418e-b1cd-0eec43f7b445",
+        "sha256": "a445f52b08ca6707cbb957191cf327c86074df0be8744a4fcf9681d95d4c8ca2",
+        "reused": false
+      },
+      {
+        "id": "found",
+        "label": "发现提示",
+        "text": "发现疑似目标，请确认。",
+        "robot_name": "go2_voice_pack_zf001_found_24a76d23",
+        "unique_id": "b3a97341-3fac-43cd-9647-b59cfcbf65ca",
+        "sha256": "24a76d237183858e8cec6dbd90364cb7d4fb4d23d9d018b3e222807339576f18",
+        "reused": false
+      }
+    ],
+    "imported_count": 4,
+    "played": false
+  },
+  "reimport": {
+    "voice_id": "kokoro_zf001",
+    "voice_label": "中文女声 001",
+    "clips": [
+      {
+        "id": "hello",
+        "label": "打招呼",
+        "text": "你好，我是小机器狗。",
+        "robot_name": "go2_voice_pack_zf001_hello_6d85d7cd",
+        "unique_id": "075c8ec2-d14d-4428-847f-90bda0e3a744",
+        "sha256": "6d85d7cddc0589f3d799e2f9a55b09f2ed566f7a5e6d555b55c41fe85b541178",
+        "reused": true
+      },
+      {
+        "id": "ready",
+        "label": "准备就绪",
+        "text": "我准备好了。",
+        "robot_name": "go2_voice_pack_zf001_ready_4aa54682",
+        "unique_id": "c6eb7e3d-d08f-46c3-b283-59f6d8b41863",
+        "sha256": "4aa5468223237bc69d0930d662a92d96e7281d2e89a50ed1828b32f87415b708",
+        "reused": true
+      },
+      {
+        "id": "uncertain",
+        "label": "没有听清",
+        "text": "没听清，请再说一次。",
+        "robot_name": "go2_voice_pack_zf001_uncertain_a445f52b",
+        "unique_id": "d74979ec-25b0-418e-b1cd-0eec43f7b445",
+        "sha256": "a445f52b08ca6707cbb957191cf327c86074df0be8744a4fcf9681d95d4c8ca2",
+        "reused": true
+      },
+      {
+        "id": "found",
+        "label": "发现提示",
+        "text": "发现疑似目标，请确认。",
+        "robot_name": "go2_voice_pack_zf001_found_24a76d23",
+        "unique_id": "b3a97341-3fac-43cd-9647-b59cfcbf65ca",
+        "sha256": "24a76d237183858e8cec6dbd90364cb7d4fb4d23d9d018b3e222807339576f18",
+        "reused": true
+      }
+    ],
+    "imported_count": 4,
+    "played": false
+  },
+  "original_library_preserved": true,
+  "before_count": 1,
+  "after_count": 5,
+  "health_after": {
+    "connected": true,
+    "faults": [],
+    "max_temperature_c": 40,
+    "body_height_m": 0.06642665714025497,
+    "motion_allowed": false
+  },
+  "tests": {
+    "backend_cases": 12,
+    "ui_cases": 13,
+    "frontend_build": "passed"
+  },
+  "model": {
+    "model": "Kokoro v1.1 Chinese FP32",
+    "source_url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/kokoro-multi-lang-v1_1.tar.bz2",
+    "sha256": "a3f4c73d043860e3fd2e5b06f36795eb81de0fc8e8de6df703245edddd87dbad",
+    "license": "Apache-2.0",
+    "model_card": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh",
+    "speakers": 103,
+    "chinese_speakers": 100,
+    "sample_rate": 24000
+  },
+  "tested_voices": [
+    {
+      "voice": "kokoro_zf001",
+      "sample_rate": 24000,
+      "channels": 1,
+      "duration": 2.220458333333333,
+      "peak": 14558,
+      "finite": true
+    },
+    {
+      "voice": "kokoro_zf002",
+      "sample_rate": 24000,
+      "channels": 1,
+      "duration": 2.5687083333333334,
+      "peak": 10786,
+      "finite": true
+    },
+    {
+      "voice": "kokoro_zf003",
+      "sample_rate": 24000,
+      "channels": 1,
+      "duration": 2.6286666666666667,
+      "peak": 12824,
+      "finite": true
+    },
+    {
+      "voice": "kokoro_zm009",
+      "sample_rate": 24000,
+      "channels": 1,
+      "duration": 2.3091666666666666,
+      "peak": 16698,
+      "finite": true
+    },
+    {
+      "voice": "kokoro_zm010",
+      "sample_rate": 24000,
+      "channels": 1,
+      "duration": 2.236,
+      "peak": 14847,
+      "finite": true
+    }
+  ],
+  "rejected_int8_model": {
+    "reason": "Non-finite NaN samples observed for two tested speakers; the active model uses FP32.",
+    "source_url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/kokoro-int8-multi-lang-v1_1.tar.bz2",
+    "sha256": "a1e94694776049035c4f2c6529f003aaece993c76aae9a78995831c3c4dcafc6"
+  },
+  "isolated_dependencies": {
+    "sherpa-onnx": "1.13.8",
+    "sherpa-onnx-core": "1.13.8",
+    "location": "/home/unitree/go2move/deployment/go2/runtime/tts/python"
+  },
+  "source_backup": "/tmp/go2-neural-voice-4yqufkt3",
+  "authenticated_selection_verified": true,
+  "invalid_selection_rejected": true
+}

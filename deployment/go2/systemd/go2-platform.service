@@ -1,0 +1,16 @@
+[Unit]
+Description=Go2 perception and SLAM (no motion bridge)
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/unitree/go2move
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/home/unitree/go2move/deployment/go2/start_go2_platform.sh rviz:=false nav2_preview:=false
+KillSignal=SIGINT
+TimeoutStopSec=15
+Restart=no
+
+[Install]
+WantedBy=default.target

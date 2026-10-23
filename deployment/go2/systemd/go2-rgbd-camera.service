@@ -1,0 +1,17 @@
+[Unit]
+Description=Go2 synchronized RealSense cache for person ranging (read-only)
+Wants=go2-depth-camera.service
+After=go2-depth-camera.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/unitree/go2move
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/bin/bash -c 'source /home/unitree/go2move/deployment/go2/source_go2_platform.sh; exec /usr/bin/python3 -B /home/unitree/go2move/deployment/go2/rgbd_camera.py'
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=6
+
+[Install]
+WantedBy=default.target

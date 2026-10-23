@@ -1,0 +1,602 @@
+{
+  "checked_at": "2026-10-12T11:25:55+08:00",
+  "recording_analysis": [
+    {
+      "filename": "mic-1791774176373012523-a74b46.wav",
+      "modified": "2026-10-12T11:03:01.868664+08:00",
+      "rate": 16000,
+      "channels": 1,
+      "width": 2,
+      "duration": 5.0,
+      "samples": 80000,
+      "rms": 1096.9,
+      "peak": 6024.0,
+      "peak_dbfs": -14.71,
+      "rms_min": 1001.37,
+      "rms_max": 1350.5,
+      "rms_window_0_2s": [
+        1027.8,
+        1036.0,
+        1043.8,
+        1043.4,
+        1001.4,
+        1046.4,
+        1007.1,
+        1045.8,
+        1065.9,
+        1044.9,
+        1076.0,
+        1026.8,
+        1035.2,
+        1068.0,
+        1075.9,
+        1341.1,
+        1350.5,
+        1146.7,
+        1147.7,
+        1154.8,
+        1180.7,
+        1128.3,
+        1043.5,
+        1088.7,
+        1107.7
+      ],
+      "clipped_percent": 0.0,
+      "dc": -0.03
+    },
+    {
+      "filename": "mic-1791773753944594417-6be318.wav",
+      "modified": "2026-10-12T10:55:59.444411+08:00",
+      "rate": 16000,
+      "channels": 1,
+      "width": 2,
+      "duration": 5.0,
+      "samples": 80000,
+      "rms": 1062.85,
+      "peak": 5511.0,
+      "peak_dbfs": -15.48,
+      "rms_min": 1010.01,
+      "rms_max": 1150.57,
+      "rms_window_0_2s": [
+        1081.1,
+        1034.6,
+        1016.1,
+        1047.0,
+        1085.5,
+        1070.6,
+        1088.5,
+        1109.3,
+        1150.6,
+        1141.3,
+        1083.5,
+        1125.5,
+        1087.0,
+        1015.6,
+        1021.7,
+        1022.9,
+        1058.7,
+        1041.6,
+        1037.5,
+        1038.4,
+        1068.6,
+        1029.8,
+        1010.0,
+        1048.9,
+        1039.1
+      ],
+      "clipped_percent": 0.0,
+      "dc": 0.03
+    },
+    {
+      "filename": "mic-1791769758943507643-87e6b8.wav",
+      "modified": "2026-10-12T09:49:24.448078+08:00",
+      "rate": 16000,
+      "channels": 1,
+      "width": 2,
+      "duration": 5.0,
+      "samples": 80000,
+      "rms": 1274.09,
+      "peak": 9098.0,
+      "peak_dbfs": -11.13,
+      "rms_min": 1183.94,
+      "rms_max": 1623.76,
+      "rms_window_0_2s": [
+        1183.9,
+        1265.6,
+        1232.3,
+        1227.0,
+        1232.0,
+        1242.8,
+        1218.2,
+        1266.0,
+        1216.6,
+        1216.4,
+        1223.8,
+        1623.8,
+        1563.3,
+        1350.2,
+        1310.7,
+        1446.3,
+        1216.1,
+        1193.8,
+        1211.0,
+        1243.6,
+        1219.3,
+        1209.1,
+        1195.4,
+        1234.9,
+        1189.7
+      ],
+      "clipped_percent": 0.0,
+      "dc": 0.12
+    },
+    {
+      "filename": "mic-1791769742255136435-2df2aa.wav",
+      "modified": "2026-10-12T09:49:07.775624+08:00",
+      "rate": 16000,
+      "channels": 1,
+      "width": 2,
+      "duration": 5.0,
+      "samples": 80000,
+      "rms": 1260.59,
+      "peak": 8417.0,
+      "peak_dbfs": -11.81,
+      "rms_min": 1178.46,
+      "rms_max": 1565.02,
+      "rms_window_0_2s": [
+        1257.5,
+        1198.7,
+        1178.5,
+        1210.0,
+        1264.9,
+        1237.0,
+        1565.0,
+        1491.3,
+        1320.3,
+        1244.5,
+        1257.4,
+        1220.8,
+        1196.3,
+        1210.1,
+        1245.2,
+        1219.9,
+        1203.0,
+        1192.8,
+        1213.5,
+        1271.0,
+        1250.6,
+        1205.3,
+        1275.1,
+        1277.7,
+        1233.6
+      ],
+      "clipped_percent": 0.0,
+      "dc": 0.14
+    },
+    {
+      "filename": "mic-1791769732382522503-39b24f.wav",
+      "modified": "2026-10-12T09:48:57.879354+08:00",
+      "rate": 16000,
+      "channels": 1,
+      "width": 2,
+      "duration": 5.0,
+      "samples": 80000,
+      "rms": 1225.75,
+      "peak": 6109.0,
+      "peak_dbfs": -14.59,
+      "rms_min": 1188.84,
+      "rms_max": 1265.06,
+      "rms_window_0_2s": [
+        1231.8,
+        1188.8,
+        1235.3,
+        1223.8,
+        1265.1,
+        1221.4,
+        1209.0,
+        1230.6,
+        1240.0,
+        1200.3,
+        1218.0,
+        1252.2,
+        1257.1,
+        1231.7,
+        1218.4,
+        1212.0,
+        1230.6,
+        1205.0,
+        1198.4,
+        1221.5,
+        1213.4,
+        1226.9,
+        1227.4,
+        1248.3,
+        1233.4
+      ],
+      "clipped_percent": 0.0,
+      "dc": -0.06
+    },
+    {
+      "filename": "mic-1791769521238903330-8f73b9.wav",
+      "modified": "2026-10-12T09:45:23.733477+08:00",
+      "rate": 16000,
+      "channels": 1,
+      "width": 2,
+      "duration": 2.0,
+      "samples": 32000,
+      "rms": 1250.72,
+      "peak": 6341.0,
+      "peak_dbfs": -14.27,
+      "rms_min": 1095.23,
+      "rms_max": 1300.35,
+      "rms_window_0_2s": [
+        1095.2,
+        1284.9,
+        1241.8,
+        1244.0,
+        1300.4,
+        1245.3,
+        1294.7,
+        1242.6,
+        1278.7,
+        1267.3
+      ],
+      "clipped_percent": 0.0,
+      "dc": 0.11
+    }
+  ],
+  "original_asr_comparison": [
+    {
+      "filename": "mic-1791774176373012523-a74b46.wav",
+      "restricted": {
+        "text": "",
+        "raw_text": "",
+        "confidence": 0.0,
+        "words": [],
+        "duration_seconds": 5.0,
+        "sample_rate": 16000,
+        "engine": "vosk",
+        "offline": true,
+        "restricted_vocabulary": true,
+        "unknown_speech": false
+      },
+      "general": {
+        "text": "我",
+        "raw_text": "我",
+        "confidence": 0.2105,
+        "words": [
+          {
+            "conf": 0.21054,
+            "end": 3.81,
+            "start": 0.0,
+            "word": "我"
+          }
+        ],
+        "duration_seconds": 5.0,
+        "sample_rate": 16000,
+        "engine": "vosk",
+        "offline": true,
+        "restricted_vocabulary": false,
+        "unknown_speech": false
+      }
+    },
+    {
+      "filename": "mic-1791773753944594417-6be318.wav",
+      "restricted": {
+        "text": "",
+        "raw_text": "",
+        "confidence": 0.0,
+        "words": [],
+        "duration_seconds": 5.0,
+        "sample_rate": 16000,
+        "engine": "vosk",
+        "offline": true,
+        "restricted_vocabulary": true,
+        "unknown_speech": false
+      },
+      "general": {
+        "text": "法",
+        "raw_text": "法",
+        "confidence": 0.1833,
+        "words": [
+          {
+            "conf": 0.183279,
+            "end": 4.98,
+            "start": 0.0,
+            "word": "法"
+          }
+        ],
+        "duration_seconds": 5.0,
+        "sample_rate": 16000,
+        "engine": "vosk",
+        "offline": true,
+        "restricted_vocabulary": false,
+        "unknown_speech": false
+      }
+    },
+    {
+      "filename": "mic-1791769758943507643-87e6b8.wav",
+      "restricted": {
+        "text": "",
+        "raw_text": "",
+        "confidence": 0.0,
+        "words": [],
+        "duration_seconds": 5.0,
+        "sample_rate": 16000,
+        "engine": "vosk",
+        "offline": true,
+        "restricted_vocabulary": true,
+        "unknown_speech": false
+      },
+      "general": {
+        "text": "我",
+        "raw_text": "我",
+        "confidence": 0.3977,
+        "words": [
+          {
+            "conf": 0.397685,
+            "end": 2.49,
+            "start": 0.0,
+            "word": "我"
+          }
+        ],
+        "duration_seconds": 5.0,
+        "sample_rate": 16000,
+        "engine": "vosk",
+        "offline": true,
+        "restricted_vocabulary": false,
+        "unknown_speech": false
+      }
+    }
+  ],
+  "clean_control_comparison": {
+    "sample": "/home/unitree/go2_ros2_ws/models/asr_validation/public_chinese.wav",
+    "restricted": {
+      "text": "[unk]停",
+      "raw_text": "[unk] 停",
+      "confidence": 0.0,
+      "words": [
+        {
+          "conf": 1.0,
+          "end": 5.04,
+          "start": 0.81,
+          "word": "[unk]"
+        },
+        {
+          "conf": 0.981787,
+          "end": 5.22,
+          "start": 5.04,
+          "word": "停"
+        }
+      ],
+      "duration_seconds": 5.547,
+      "sample_rate": 16000,
+      "engine": "vosk",
+      "offline": true,
+      "restricted_vocabulary": true,
+      "unknown_speech": true
+    },
+    "general": {
+      "text": "欢迎大家来体验打磨远推出的语音识别模型",
+      "raw_text": "欢迎 大家 来 体验 打磨 远 推出 的 语音识别 模型",
+      "confidence": 0.9063,
+      "words": [
+        {
+          "conf": 1.0,
+          "end": 1.32,
+          "start": 0.81,
+          "word": "欢迎"
+        },
+        {
+          "conf": 1.0,
+          "end": 1.74,
+          "start": 1.32,
+          "word": "大家"
+        },
+        {
+          "conf": 1.0,
+          "end": 1.98,
+          "start": 1.74,
+          "word": "来"
+        },
+        {
+          "conf": 1.0,
+          "end": 2.46,
+          "start": 1.98,
+          "word": "体验"
+        },
+        {
+          "conf": 0.817603,
+          "end": 2.82,
+          "start": 2.46,
+          "word": "打磨"
+        },
+        {
+          "conf": 0.521761,
+          "end": 3.0,
+          "start": 2.82,
+          "word": "远"
+        },
+        {
+          "conf": 1.0,
+          "end": 3.48,
+          "start": 3.0,
+          "word": "推出"
+        },
+        {
+          "conf": 1.0,
+          "end": 3.69,
+          "start": 3.48,
+          "word": "的"
+        },
+        {
+          "conf": 0.723141,
+          "end": 4.62,
+          "start": 3.72,
+          "word": "语音识别"
+        },
+        {
+          "conf": 1.0,
+          "end": 5.22,
+          "start": 4.62,
+          "word": "模型"
+        }
+      ],
+      "duration_seconds": 5.547,
+      "sample_rate": 16000,
+      "engine": "vosk",
+      "offline": true,
+      "restricted_vocabulary": false,
+      "unknown_speech": false
+    }
+  },
+  "fixed_route_comparison": [
+    {
+      "label": "original_user_capture",
+      "intent": "uncertain",
+      "text": "我",
+      "confidence": 0.2099,
+      "restricted_vocabulary": false,
+      "executed": false,
+      "listen_hint": "收到的声音变化较小，人声可能被背景声盖住；请靠近机器狗、降低周围噪声后重试。",
+      "level_variation_db": 2.75
+    },
+    {
+      "label": "clear_public_control",
+      "intent": "transcription",
+      "text": "欢迎大家来体验打磨远推出的语音识别模型",
+      "confidence": 0.9079,
+      "restricted_vocabulary": false,
+      "executed": false,
+      "listen_hint": null,
+      "level_variation_db": 55.37
+    }
+  ],
+  "initial_live_status": {
+    "audio": {
+      "connected": true,
+      "mic_frames": 12703,
+      "last_error": null
+    },
+    "voice_enabled": true,
+    "asr": {
+      "model_available": true,
+      "offline": true
+    },
+    "motion_enabled": false,
+    "device": {
+      "vui_switch": {
+        "ok": true,
+        "data": {
+          "enable": 1
+        },
+        "ack": {
+          "api_id": 1002,
+          "request_id": 773199426,
+          "code": 0,
+          "received_at": 1791774561.2238708
+        }
+      },
+      "volume": {
+        "ok": true,
+        "data": {
+          "volume": 10
+        },
+        "ack": {
+          "api_id": 1004,
+          "request_id": 773199431,
+          "code": 0,
+          "received_at": 1791774561.2275488
+        }
+      },
+      "play_mode": {
+        "ok": true,
+        "data": {
+          "play_mode": "no_cycle"
+        },
+        "ack": {
+          "api_id": 1010,
+          "request_id": 773199527,
+          "code": 0,
+          "received_at": 1791774561.418263
+        }
+      }
+    },
+    "health": {
+      "connected": true,
+      "faults": [],
+      "max_temperature_c": 42,
+      "motion_allowed": false
+    }
+  },
+  "after_live_check": {
+    "checked_at": "2026-10-12T11:23:45.198855+08:00",
+    "new_frontend_served": true,
+    "phases": [
+      "recording",
+      "recognizing"
+    ],
+    "link_test": {
+      "text": "",
+      "intent": "uncertain",
+      "executed": false,
+      "reply": "没有听清，请再说一次。",
+      "recognition": {
+        "text": "",
+        "raw_text": "",
+        "confidence": 0.0,
+        "words": [],
+        "duration_seconds": 2.0,
+        "sample_rate": 16000,
+        "engine": "vosk",
+        "offline": true,
+        "restricted_vocabulary": false,
+        "unknown_speech": false
+      },
+      "recording": {
+        "path": "/home/unitree/go2move/deployment/go2/runtime/voice/mic-1791775420891979637-53aaa8.wav",
+        "frames": 101,
+        "samples": 32000,
+        "sample_rate": 16000,
+        "duration": 2.0,
+        "rms": 1010.5521047149177,
+        "peak": 5064,
+        "level_variation_db": 2.0,
+        "input_source": "robot_body_microphone"
+      },
+      "listen_hint": "收到的声音变化较小，人声可能被背景声盖住；请靠近机器狗、降低周围噪声后重试。"
+    },
+    "after_audio": {
+      "connected": true,
+      "mic_frames": 124,
+      "last_error": null,
+      "receiving": false,
+      "input_source": "robot_body_microphone"
+    },
+    "after_capture": {
+      "phase": "idle"
+    },
+    "human_speech_accuracy_verified": false,
+    "test_conditions": "Uncontrolled two-second microphone link test; no reference utterance requested.",
+    "health": {
+      "connected": true,
+      "faults": [],
+      "max_temperature_c": 43,
+      "motion_allowed": false
+    }
+  },
+  "findings": {
+    "transcription_only_command_grammar": "confirmed and fixed",
+    "weak_speech_over_steady_sound": "suspected from low level variation and low-confidence offline decoding; source not established",
+    "user_utterance_and_distance": "not supplied yet",
+    "microphone_transport": "connected; full five-second recordings and two-second link test received"
+  },
+  "tests": {
+    "backend": 18,
+    "ui": 15,
+    "frontend_build": "passed",
+    "clear_local_recording_transcribed_without_execution": true
+  },
+  "backup": "/tmp/go2-microphone-diagnosis-x78pfydz",
+  "human_speech_accuracy_verified": false
+}
